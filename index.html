@@ -2,5489 +2,2042 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1,
-               maximum-scale=1,
-               user-scalable=no,
-               viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07080c">
 
-<meta name="theme-color" content="#050507">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<title>jCoin PvP</title>
+<title>Lira Game — Telegram Bot Project</title>
 
 <style>
-/* =========================================================
-   jCoin PvP
-   ONE FILE APPLICATION
-   HTML + CSS + JAVASCRIPT
-   ========================================================= */
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #050507;
-    color: #ffffff;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "SF Pro Text",
-        Inter,
-        Arial,
-        sans-serif;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    overflow-x: hidden;
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#06070a;
+    color:#fff;
+    overflow-x:hidden;
 }
 
-button,
-input {
-    font: inherit;
+body:before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,rgba(120,80,255,.13),transparent 65%);
+    top:-300px;
+    left:-250px;
+    pointer-events:none;
+    z-index:-1;
 }
 
-button {
-    border: 0;
-    cursor: pointer;
+body:after{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,rgba(0,190,255,.09),transparent 65%);
+    right:-300px;
+    bottom:-300px;
+    pointer-events:none;
+    z-index:-1;
 }
 
-button:active {
-    transform: scale(.97);
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
-.hidden {
-    display: none !important;
+button{
+    font-family:inherit;
 }
 
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
+/* HEADER */
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -5;
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:72px;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(6,7,10,.72);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.nav{
+    width:min(1150px,92%);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-weight:800;
+    font-size:20px;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#7c4dff,#3f8cff);
+    box-shadow:0 0 30px rgba(100,70,255,.35);
+}
+
+.nav-links{
+    display:flex;
+    gap:26px;
+    color:#999;
+    font-size:14px;
+}
+
+.nav-links a{
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+.nav-btn{
+    padding:11px 18px;
+    border-radius:12px;
+    background:#fff;
+    color:#000;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* HERO */
+
+.hero{
+    min-height:760px;
+    padding-top:160px;
+    width:min(1150px,92%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.hero-content{
+    width:65%;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    border-radius:999px;
+    background:rgba(124,77,255,.1);
+    border:1px solid rgba(124,77,255,.25);
+    color:#bdaeff;
+    font-size:12px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#62ff9b;
+    box-shadow:0 0 12px #62ff9b;
+}
+
+.hero h1{
+    font-size:clamp(48px,7vw,88px);
+    line-height:.95;
+    letter-spacing:-5px;
+    margin-bottom:28px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#fff,#a995ff,#62cfff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:650px;
+    color:#9499a5;
+    font-size:18px;
+    line-height:1.7;
+    margin-bottom:35px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:15px 23px;
+    border-radius:14px;
+    font-size:14px;
+    font-weight:800;
+    border:1px solid rgba(255,255,255,.1);
+    transition:.25s;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:#fff;
+    color:#000;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 35px rgba(255,255,255,.12);
+}
+
+.btn-dark{
+    background:rgba(255,255,255,.04);
+    color:#fff;
+}
+
+.btn-dark:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.hero-card{
+    position:absolute;
+    right:0;
+    width:330px;
+    height:420px;
+    border-radius:28px;
+    padding:24px;
+    background:linear-gradient(145deg,#11131b,#090a0e);
+    border:1px solid rgba(255,255,255,.09);
+    box-shadow:0 40px 100px rgba(0,0,0,.55);
+    transform:rotate(4deg);
+}
+
+.phone-top{
+    display:flex;
+    justify-content:space-between;
+    color:#777;
+    font-size:11px;
+    margin-bottom:30px;
+}
+
+.bot-avatar{
+    width:80px;
+    height:80px;
+    margin:auto;
+    border-radius:25px;
+    display:grid;
+    place-items:center;
+    font-size:38px;
+    background:linear-gradient(135deg,#6c45ff,#238dff);
+    box-shadow:0 15px 40px rgba(90,60,255,.3);
+}
+
+.hero-card h3{
+    text-align:center;
+    margin-top:17px;
+}
+
+.hero-card small{
+    display:block;
+    text-align:center;
+    color:#777;
+    margin-top:6px;
+}
+
+.balance{
+    margin-top:25px;
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.balance span{
+    display:block;
+    color:#777;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.balance strong{
+    font-size:26px;
+}
+
+.mini-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:10px;
+}
+
+.mini-buttons div{
+    background:#151720;
+    border-radius:11px;
+    padding:11px;
+    text-align:center;
+    font-size:11px;
+    color:#bbb;
+}
+
+/* GENERAL */
+
+.section{
+    width:min(1150px,92%);
+    margin:auto;
+    padding:100px 0;
+}
+
+.section-head{
+    margin-bottom:45px;
+}
+
+.section-head span{
+    color:#8e75ff;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.section-head h2{
+    margin-top:12px;
+    font-size:42px;
+    letter-spacing:-2px;
+}
+
+.section-head p{
+    color:#777d89;
+    margin-top:12px;
+    line-height:1.6;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.stat{
+    padding:28px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.025);
+    border-radius:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:34px;
+    margin-bottom:7px;
+}
+
+.stat span{
+    color:#777;
+    font-size:13px;
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.feature{
+    min-height:210px;
+    padding:25px;
+    border-radius:22px;
+    background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+    border:1px solid rgba(255,255,255,.07);
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:translateY(-5px);
+    border-color:rgba(142,117,255,.3);
+}
+
+.feature-icon{
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:rgba(124,77,255,.12);
+    font-size:22px;
+    margin-bottom:18px;
+}
+
+.feature h3{
+    margin-bottom:9px;
+    font-size:18px;
+}
+
+.feature p{
+    color:#7e838e;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* GAMES */
+
+.games{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.game{
+    padding:20px;
+    min-height:150px;
+    border-radius:18px;
+    background:#0c0e13;
+    border:1px solid rgba(255,255,255,.07);
+    cursor:pointer;
+    transition:.25s;
+}
+
+.game:hover{
+    background:#11131a;
+    transform:translateY(-3px);
+    border-color:rgba(142,117,255,.25);
+}
+
+.game-icon{
+    font-size:29px;
+    margin-bottom:17px;
+}
+
+.game h3{
+    font-size:15px;
+}
+
+.game p{
+    color:#686e79;
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* ADMIN */
+
+.admin-layout{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:18px;
+}
+
+.admin-menu{
+    padding:15px;
+    border-radius:22px;
+    background:#0b0d12;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.admin-menu button{
+    width:100%;
+    text-align:left;
+    padding:13px 15px;
+    margin-bottom:5px;
+    border:0;
+    border-radius:11px;
+    color:#999;
+    background:transparent;
+    cursor:pointer;
+}
+
+.admin-menu button:hover,
+.admin-menu button.active{
+    color:#fff;
+    background:rgba(124,77,255,.12);
+}
+
+.admin-window{
+    min-height:420px;
+    padding:28px;
+    border-radius:22px;
+    background:#0b0d12;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.admin-title{
+    font-size:22px;
+    margin-bottom:22px;
+}
+
+.admin-cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.admin-card{
+    padding:18px;
+    background:rgba(255,255,255,.035);
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.admin-card strong{
+    display:block;
+    margin-bottom:7px;
+}
+
+.admin-card span{
+    color:#727782;
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* COMMANDS */
+
+.commands{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.command-box{
+    background:#0b0d12;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.command-head{
+    padding:17px 20px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    font-weight:800;
+}
+
+.command-list{
+    padding:8px;
+}
+
+.command{
+    padding:12px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    border-radius:9px;
+}
+
+.command:hover{
+    background:rgba(255,255,255,.035);
+}
+
+.command code{
+    color:#a995ff;
+    font-family:monospace;
+}
+
+.command span{
+    color:#666c77;
+    font-size:11px;
+    text-align:right;
+}
+
+/* DATABASE */
+
+.database{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.db-card{
+    padding:25px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.07);
+    background:#0b0d12;
+}
+
+.db-card h3{
+    margin-bottom:12px;
+}
+
+.db-card p{
+    color:#777d88;
+    font-size:13px;
+    line-height:1.7;
+}
+
+.tag{
+    display:inline-block;
+    padding:6px 9px;
+    margin:3px;
+    border-radius:8px;
+    background:rgba(124,77,255,.1);
+    color:#aaa0ff;
+    font-size:10px;
+}
+
+/* SALE */
+
+.sale{
+    padding:75px 40px;
+    text-align:center;
+    border-radius:30px;
     background:
-        radial-gradient(
-            circle at 20% 10%,
-            rgba(99, 66, 255, .12),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 85% 30%,
-            rgba(0, 220, 180, .08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(255, 50, 110, .08),
-            transparent 30%
-        ),
-        #050507;
+        radial-gradient(circle at 50% 0%,rgba(125,80,255,.22),transparent 55%),
+        #0b0d12;
+    border:1px solid rgba(255,255,255,.08);
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -4;
-    opacity: .18;
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        );
-    background-size: 35px 35px;
+.sale h2{
+    font-size:48px;
+    letter-spacing:-2px;
+    margin-bottom:15px;
 }
 
-/* =========================================================
-   SPLASH
-   ========================================================= */
-
-#splash {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #050507;
-    transition:
-        opacity .7s ease,
-        visibility .7s ease;
-}
-
-#splash.hide {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.splash-content {
-    text-align: center;
-    animation: splashIn 1s ease;
-}
-
-.splash-logo {
-    width: 100px;
-    height: 100px;
-    border-radius: 30px;
-    margin: 0 auto 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 52px;
-    background:
-        linear-gradient(
-            145deg,
-            #7147ff,
-            #4522b7
-        );
-    box-shadow:
-        0 0 50px rgba(113,71,255,.45),
-        inset 0 1px 0 rgba(255,255,255,.25);
-    animation: logoFloat 2s ease-in-out infinite;
-}
-
-.splash-title {
-    font-size: 32px;
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.splash-sub {
-    color: #777780;
-    margin-top: 7px;
-    font-size: 14px;
-}
-
-.splash-loader {
-    width: 160px;
-    height: 4px;
-    border-radius: 99px;
-    background: #202024;
-    margin: 28px auto 0;
-    overflow: hidden;
-}
-
-.splash-loader::after {
-    content: "";
-    display: block;
-    width: 55%;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(90deg,#6840ff,#a17fff);
-    animation: loader 1.5s ease infinite;
-}
-
-@keyframes splashIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(.95);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@keyframes logoFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-7px);
-    }
-}
-
-@keyframes loader {
-    from {
-        transform: translateX(-120%);
-    }
-    to {
-        transform: translateX(260%);
-    }
-}
-
-/* =========================================================
-   AUTH
-   ========================================================= */
-
-#authScreen {
-    min-height: 100vh;
-    min-height: 100svh;
-    padding:
-        max(30px, env(safe-area-inset-top))
-        20px
-        max(30px, env(safe-area-inset-bottom));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.auth-box {
-    width: 100%;
-    max-width: 430px;
-    padding: 30px 22px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 30px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(31,31,37,.96),
-            rgba(13,13,16,.98)
-        );
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.5),
-        inset 0 1px 0 rgba(255,255,255,.04);
-    animation: authIn .7s ease;
-}
-
-@keyframes authIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-.auth-brand {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.auth-brand-icon {
-    width: 74px;
-    height: 74px;
-    margin: 0 auto 17px;
-    border-radius: 23px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 38px;
-    background: linear-gradient(145deg,#7147ff,#4220b2);
-    box-shadow: 0 15px 40px rgba(92,57,255,.35);
-}
-
-.auth-brand h1 {
-    margin: 0;
-    font-size: 29px;
-}
-
-.auth-brand p {
-    margin: 7px 0 0;
-    color: #77777f;
-    font-size: 14px;
-}
-
-.auth-tabs {
-    display: flex;
-    padding: 4px;
-    border-radius: 15px;
-    background: #101014;
-    margin-bottom: 20px;
-}
-
-.auth-tab {
-    flex: 1;
-    padding: 12px;
-    border-radius: 11px;
-    color: #777780;
-    background: transparent;
-    font-weight: 700;
-}
-
-.auth-tab.active {
-    color: #ffffff;
-    background: #28282e;
-}
-
-.field {
-    margin-bottom: 14px;
-}
-
-.field label {
-    display: block;
-    color: #888890;
-    font-size: 12px;
-    margin: 0 0 7px 4px;
-}
-
-.field input {
-    width: 100%;
-    height: 54px;
-    padding: 0 16px;
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 15px;
-    outline: none;
-    color: #fff;
-    background: #111115;
-    transition: .2s;
-}
-
-.field input:focus {
-    border-color: rgba(111,73,255,.7);
-    box-shadow: 0 0 0 3px rgba(111,73,255,.1);
-}
-
-.primary-btn {
-    width: 100%;
-    min-height: 55px;
-    margin-top: 6px;
-    border-radius: 16px;
-    color: #fff;
-    font-weight: 800;
-    background: linear-gradient(135deg,#7048ff,#4a25c7);
-    box-shadow: 0 12px 35px rgba(91,55,255,.25);
-}
-
-.auth-note {
-    color: #626269;
-    font-size: 11px;
-    line-height: 1.5;
-    text-align: center;
-    margin-top: 17px;
-}
-
-/* =========================================================
-   APP
-   ========================================================= */
-
-#app {
-    min-height: 100vh;
-    min-height: 100svh;
-    padding-bottom: 100px;
-}
-
-.app-shell {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-    padding:
-        max(12px, env(safe-area-inset-top))
-        14px
-        100px;
-}
-
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
-.topbar {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.brand-mini {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.brand-mini-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg,#7048ff,#3c1da6);
-    box-shadow: 0 8px 25px rgba(93,55,255,.25);
-    font-size: 23px;
-}
-
-.brand-mini-text strong {
-    display: block;
-    font-size: 16px;
-}
-
-.brand-mini-text span {
-    display: block;
-    margin-top: 2px;
-    color: #77777f;
-    font-size: 11px;
-}
-
-.top-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.icon-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    color: #fff;
-    background: #202025;
-    border: 1px solid rgba(255,255,255,.05);
-}
-
-/* =========================================================
-   BALANCE CARD
-   ========================================================= */
-
-.balance-card {
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
-    border-radius: 24px;
-    background:
-        radial-gradient(
-            circle at 100% 0%,
-            rgba(112,72,255,.35),
-            transparent 40%
-        ),
-        linear-gradient(
-            145deg,
-            #1d1d24,
-            #111116
-        );
-    border: 1px solid rgba(255,255,255,.07);
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
-}
-
-.balance-card::after {
-    content: "";
-    position: absolute;
-    width: 160px;
-    height: 160px;
-    right: -70px;
-    bottom: -80px;
-    border-radius: 50%;
-    background: rgba(110,70,255,.12);
-    filter: blur(15px);
-}
-
-.balance-top {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.balance-label {
-    color: #7e7e86;
-    font-size: 12px;
-}
-
-.balance-value {
-    margin-top: 5px;
-    font-size: 31px;
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.coin {
-    color: #ffd84f;
-}
-
-.balance-side {
-    text-align: right;
-}
-
-.level {
-    color: #a78fff;
-    font-weight: 800;
-    font-size: 13px;
-}
-
-.xp-mini {
-    margin-top: 6px;
-    width: 100px;
-    height: 5px;
-    border-radius: 99px;
-    overflow: hidden;
-    background: #303038;
-}
-
-.xp-mini i {
-    display: block;
-    height: 100%;
-    width: 64%;
-    background: linear-gradient(90deg,#7048ff,#b08cff);
-}
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-.stats-row {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.stat {
-    padding: 13px 10px;
-    border-radius: 17px;
-    background: #151519;
-    border: 1px solid rgba(255,255,255,.05);
-    text-align: center;
-}
-
-.stat strong {
-    display: block;
-    font-size: 17px;
-}
-
-.stat span {
-    display: block;
-    margin-top: 3px;
-    color: #707078;
-    font-size: 10px;
-}
-
-/* =========================================================
-   SECTION TITLE
-   ========================================================= */
-
-.section-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 22px 3px 11px;
-}
-
-.section-title h2 {
-    margin: 0;
-    font-size: 19px;
-}
-
-.section-title span {
-    color: #6e6e77;
-    font-size: 11px;
-}
-
-/* =========================================================
-   GAME CARD
-   ========================================================= */
-
-.game-card {
-    padding: 15px;
-    border-radius: 25px;
-    background: #151519;
-    border: 1px solid rgba(255,255,255,.07);
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
-}
-
-.round-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px 3px 13px;
-}
-
-.round-status {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-weight: 800;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #37e78b;
-    box-shadow: 0 0 13px #37e78b;
-    animation: pulseDot 1.2s infinite;
-}
-
-@keyframes pulseDot {
-    50% {
-        opacity: .4;
-        transform: scale(.75);
-    }
-}
-
-.round-number {
-    color: #6e6e76;
-    font-size: 12px;
-}
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-.timer {
-    text-align: center;
-    margin-bottom: 13px;
-}
-
-.timer-label {
-    color: #73737c;
-    font-size: 11px;
-}
-
-.timer-number {
-    margin-top: 1px;
-    font-size: 35px;
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.timer-number.warning {
-    color: #ffbd4a;
-    animation: timerPulse .5s infinite alternate;
-}
-
-@keyframes timerPulse {
-    to {
-        transform: scale(1.05);
-    }
-}
-
-/* =========================================================
-   ARENA
-   ========================================================= */
-
-.arena {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / .93;
-    overflow: hidden;
-    border-radius: 23px;
-    background: #101014;
-    border: 1px solid rgba(255,255,255,.08);
-    box-shadow:
-        inset 0 0 50px rgba(0,0,0,.45),
-        0 15px 50px rgba(0,0,0,.25);
-}
-
-/* grid */
-.arena::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: .12;
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.18) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.18) 1px,
-            transparent 1px
-        );
-    background-size: 36px 36px;
-}
-
-/* central circle */
-.arena-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 105px;
-    height: 105px;
-    transform: translate(-50%,-50%);
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.09);
-    background: rgba(255,255,255,.025);
-    box-shadow:
-        0 0 60px rgba(112,72,255,.08);
-}
-
-/* =========================================================
-   PLAYER ZONES
-   ========================================================= */
-
-.zone {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    transition:
-        width .65s cubic-bezier(.2,.8,.2,1),
-        height .65s cubic-bezier(.2,.8,.2,1),
-        transform .65s cubic-bezier(.2,.8,.2,1),
-        opacity .4s;
-}
-
-.zone::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.13),
-            transparent 45%
-        );
-    pointer-events: none;
-}
-
-.zone-me {
-    left: 0;
-    top: 0;
-    width: 48%;
-    height: 51%;
-    border-radius: 22px 0 50px 0;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(104,69,255,.94),
-            rgba(55,30,180,.88)
-        );
-    clip-path: polygon(0 0,100% 0,64% 100%,0 76%);
-}
-
-.zone-player2 {
-    right: 0;
-    top: 0;
-    width: 52%;
-    height: 51%;
-    border-radius: 0 22px 0 50px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,195,164,.9),
-            rgba(0,110,99,.85)
-        );
-    clip-path: polygon(0 0,100% 0,100% 75%,36% 100%);
-}
-
-.zone-player3 {
-    left: 0;
-    bottom: 0;
-    width: 47%;
-    height: 49%;
-    border-radius: 0 50px 0 22px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,92,105,.92),
-            rgba(174,37,65,.88)
-        );
-    clip-path: polygon(0 25%,36% 0,100% 100%,0 100%);
-}
-
-.zone-player4 {
-    right: 0;
-    bottom: 0;
-    width: 53%;
-    height: 49%;
-    border-radius: 50px 0 22px 0;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,169,61,.9),
-            rgba(178,87,20,.88)
-        );
-    clip-path: polygon(64% 0,100% 25%,100% 100%,0 100%);
-}
-
-.zone-inner {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    transform: translateY(-2px);
-}
-
-.zone-avatar {
-    width: 47px;
-    height: 47px;
-    margin: 0 auto 5px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 23px;
-    background: rgba(255,255,255,.92);
-    box-shadow: 0 7px 25px rgba(0,0,0,.22);
-}
-
-.zone-name {
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.zone-percent {
-    margin-top: 2px;
-    font-size: 14px;
-    font-weight: 900;
-}
-
-.zone-score {
-    margin-top: 1px;
-    opacity: .7;
-    font-size: 9px;
-}
-
-/* =========================================================
-   BALL
-   ========================================================= */
-
-.ball {
-    position: absolute;
-    z-index: 20;
-    left: 50%;
-    top: 50%;
-    width: 43px;
-    height: 43px;
-    margin-left: -21.5px;
-    margin-top: -21.5px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    background:
-        radial-gradient(
-            circle at 32% 25%,
-            #fff,
-            #d7d7df 25%,
-            #777783 65%,
-            #34343b
-        );
-    box-shadow:
-        0 0 20px rgba(255,255,255,.35),
-        0 0 50px rgba(111,73,255,.25);
-    transition:
-        left .5s cubic-bezier(.2,.8,.2,1),
-        top .5s cubic-bezier(.2,.8,.2,1);
-}
-
-.ball.spinning {
-    animation:
-        ballSpin .55s linear infinite,
-        ballGlow .9s ease-in-out infinite alternate;
-}
-
-.ball.result {
-    animation:
-        resultBall .5s ease forwards;
-}
-
-@keyframes ballSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes ballGlow {
-    from {
-        box-shadow:
-            0 0 20px rgba(255,255,255,.3),
-            0 0 30px rgba(111,73,255,.2);
-    }
-    to {
-        box-shadow:
-            0 0 25px rgba(255,255,255,.7),
-            0 0 75px rgba(111,73,255,.5);
-    }
-}
-
-@keyframes resultBall {
-    50% {
-        transform: scale(1.35);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* =========================================================
-   RESULT OVERLAY
-   ========================================================= */
-
-.result-overlay {
-    position: absolute;
-    z-index: 30;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .3s;
-    background: rgba(0,0,0,.08);
-}
-
-.result-overlay.show {
-    opacity: 1;
-}
-
-.result-box {
-    min-width: 190px;
-    padding: 18px;
-    border-radius: 20px;
-    text-align: center;
-    background: rgba(17,17,22,.92);
-    border: 1px solid rgba(255,255,255,.1);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 25px 70px rgba(0,0,0,.45);
-    transform: scale(.7);
-    transition: transform .35s cubic-bezier(.2,.9,.2,1);
-}
-
-.result-overlay.show .result-box {
-    transform: scale(1);
-}
-
-.result-icon {
-    font-size: 34px;
-}
-
-.result-title {
-    margin-top: 5px;
-    font-size: 20px;
-    font-weight: 900;
-}
-
-.result-sub {
-    margin-top: 4px;
-    color: #85858d;
-    font-size: 11px;
-}
-
-/* =========================================================
-   BET / ACTION PANEL
-   ========================================================= */
-
-.action-panel {
-    margin-top: 12px;
-    padding: 14px;
-    border-radius: 19px;
-    background: #101014;
-    border: 1px solid rgba(255,255,255,.05);
-}
-
-.action-label {
-    display: flex;
-    justify-content: space-between;
-    color: #777780;
-    font-size: 11px;
-    margin-bottom: 9px;
-}
-
-.score-input-wrap {
-    position: relative;
-}
-
-.score-input {
-    width: 100%;
-    height: 54px;
-    padding: 0 65px 0 16px;
-    outline: none;
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,.07);
-    background: #19191e;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.score-unit {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #ffd84f;
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.quick-values {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 7px;
-    margin-top: 8px;
-}
-
-.quick {
-    height: 38px;
-    border-radius: 12px;
-    color: #aaaab2;
-    background: #1c1c21;
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.quick:hover {
-    color: #fff;
-}
-
-.join-btn {
-    width: 100%;
-    height: 51px;
-    margin-top: 9px;
-    border-radius: 15px;
-    color: #fff;
-    font-weight: 900;
-    background: linear-gradient(135deg,#7048ff,#4a26c8);
-}
-
-.join-btn:disabled {
-    opacity: .45;
-    cursor: not-allowed;
-}
-
-/* =========================================================
-   PLAYERS
-   ========================================================= */
-
-.players-card {
-    padding: 15px;
-    border-radius: 22px;
-    background: #151519;
-    border: 1px solid rgba(255,255,255,.06);
-}
-
-.player-row {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,.045);
-}
-
-.player-row:last-child {
-    border-bottom: 0;
-}
-
-.player-avatar {
-    flex: 0 0 auto;
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #27272e;
-    font-size: 21px;
-}
-
-.player-main {
-    min-width: 0;
-    flex: 1;
-}
-
-.player-name {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-weight: 800;
-    font-size: 13px;
-}
-
-.player-meta {
-    margin-top: 3px;
-    color: #73737b;
-    font-size: 10px;
-}
-
-.player-score {
-    text-align: right;
-}
-
-.player-score strong {
-    display: block;
-    color: #ffd84f;
-    font-size: 14px;
-}
-
-.player-score span {
-    display: block;
-    color: #777780;
-    margin-top: 2px;
-    font-size: 10px;
-}
-
-/* =========================================================
-   ONLINE
-   ========================================================= */
-
-.online-card {
-    padding: 14px;
-    border-radius: 20px;
-    background: linear-gradient(
-        145deg,
-        #15151a,
-        #101014
-    );
-    border: 1px solid rgba(255,255,255,.06);
-}
-
-.online-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.online-title {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-weight: 800;
-}
-
-.online-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #3de995;
-    box-shadow: 0 0 12px #3de995;
-}
-
-.online-count {
-    color: #4fe99c;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.avatar-stack {
-    display: flex;
-    padding-top: 13px;
-}
-
-.stack-avatar {
-    width: 35px;
-    height: 35px;
-    margin-right: -7px;
-    border: 2px solid #15151a;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #292930;
-    font-size: 16px;
-}
-
-/* =========================================================
-   BOTTOM NAV
-   ========================================================= */
-
-.bottom-nav {
-    position: fixed;
-    z-index: 100;
-    left: 50%;
-    bottom: max(9px, env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    max-width: 600px;
-    height: 68px;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    padding: 6px;
-    border-radius: 22px;
-    background: rgba(25,25,30,.94);
-    border: 1px solid rgba(255,255,255,.08);
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.5),
-        inset 0 1px 0 rgba(255,255,255,.04);
-    backdrop-filter: blur(20px);
-}
-
-.nav-btn {
-    position: relative;
-    border-radius: 17px;
-    color: #65656d;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-}
-
-.nav-btn.active {
-    color: #fff;
-    background: #303037;
-}
-
-.nav-icon {
-    font-size: 20px;
-    line-height: 1;
-}
-
-.nav-label {
-    font-size: 9px;
-    font-weight: 800;
-}
-
-/* =========================================================
-   PAGES
-   ========================================================= */
-
-.page {
-    animation: pageIn .35s ease;
-}
-
-@keyframes pageIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-/* =========================================================
-   TOP PAGE
-   ========================================================= */
-
-.leader-hero {
-    padding: 20px;
-    border-radius: 25px;
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(112,72,255,.35),
-            transparent 50%
-        ),
-        #151519;
-    border: 1px solid rgba(255,255,255,.07);
-    text-align: center;
-}
-
-.leader-hero-icon {
-    font-size: 46px;
-}
-
-.leader-hero h2 {
-    margin: 8px 0 3px;
-}
-
-.leader-hero p {
-    margin: 0;
-    color: #74747c;
-    font-size: 11px;
-}
-
-.podium {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr 1fr;
-    gap: 8px;
-    align-items: end;
-    margin-top: 20px;
-}
-
-.podium-item {
-    text-align: center;
-}
-
-.podium-avatar {
-    width: 55px;
-    height: 55px;
-    margin: 0 auto 7px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #27272e;
-    border: 2px solid #3a3a43;
-    font-size: 25px;
-}
-
-.podium-item.first .podium-avatar {
-    width: 70px;
-    height: 70px;
-    border-color: #ffd84f;
-    box-shadow: 0 0 30px rgba(255,216,79,.18);
-}
-
-.podium-place {
-    color: #777780;
-    font-size: 10px;
-}
-
-.podium-name {
-    margin-top: 4px;
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.podium-points {
-    margin-top: 3px;
-    color: #ffd84f;
-    font-size: 11px;
-    font-weight: 900;
-}
-
-/* =========================================================
-   SHOP
-   ========================================================= */
-
-.shop-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 10px;
-}
-
-.skin-card {
-    padding: 14px;
-    border-radius: 21px;
-    background: #151519;
-    border: 1px solid rgba(255,255,255,.06);
-    text-align: center;
-}
-
-.skin-preview {
-    width: 76px;
-    height: 76px;
-    margin: 4px auto 11px;
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 39px;
-    background: linear-gradient(145deg,#7048ff,#3920a5);
-}
-
-.skin-name {
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.skin-price {
-    color: #ffd84f;
-    margin-top: 4px;
-    font-size: 11px;
-}
-
-.skin-buy {
-    width: 100%;
-    height: 39px;
-    margin-top: 10px;
-    border-radius: 12px;
-    color: #fff;
-    background: #292930;
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.skin-buy.owned {
-    color: #4ee99a;
-}
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
-
-.profile-card {
-    padding: 22px;
-    border-radius: 25px;
-    text-align: center;
-    background:
-        radial-gradient(
-            circle at 50% 0,
-            rgba(112,72,255,.3),
-            transparent 45%
-        ),
-        #151519;
-    border: 1px solid rgba(255,255,255,.07);
-}
-
-.profile-avatar {
-    width: 92px;
-    height: 92px;
-    margin: 0 auto 12px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 46px;
-    background: linear-gradient(145deg,#7048ff,#3d20a5);
-    box-shadow: 0 15px 45px rgba(94,57,255,.3);
-}
-
-.profile-name {
-    font-size: 22px;
-    font-weight: 900;
-}
-
-.profile-id {
-    color: #66666f;
-    margin-top: 3px;
-    font-size: 10px;
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 8px;
-    margin-top: 18px;
-}
-
-.profile-stat {
-    padding: 13px;
-    border-radius: 15px;
-    background: #101014;
-}
-
-.profile-stat strong {
-    display: block;
-    font-size: 18px;
-}
-
-.profile-stat span {
-    display: block;
-    color: #6c6c75;
-    margin-top: 4px;
-    font-size: 10px;
-}
-
-/* =========================================================
-   SETTINGS
-   ========================================================= */
-
-.settings-list {
-    overflow: hidden;
-    border-radius: 22px;
-    background: #151519;
-    border: 1px solid rgba(255,255,255,.06);
-}
-
-.setting-row {
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    border-bottom: 1px solid rgba(255,255,255,.045);
-}
-
-.setting-row:last-child {
-    border-bottom: 0;
-}
-
-.setting-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.setting-icon {
-    width: 35px;
-    height: 35px;
-    border-radius: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #24242b;
-}
-
-.setting-text strong {
-    display: block;
-    font-size: 12px;
-}
-
-.setting-text span {
-    display: block;
-    color: #676770;
-    margin-top: 3px;
-    font-size: 9px;
-}
-
-.logout-btn {
-    width: 100%;
-    height: 50px;
-    margin-top: 12px;
-    border-radius: 15px;
-    color: #ff6979;
-    background: rgba(255,74,94,.09);
-    font-weight: 800;
-}
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-#toastContainer {
-    position: fixed;
-    z-index: 10000;
-    left: 50%;
-    top: max(20px, env(safe-area-inset-top));
-    transform: translateX(-50%);
-    width: min(92%, 420px);
-    pointer-events: none;
-}
-
-.toast {
-    padding: 13px 15px;
-    margin-bottom: 8px;
-    border-radius: 15px;
-    color: #fff;
-    background: rgba(30,30,36,.96);
-    border: 1px solid rgba(255,255,255,.08);
-    box-shadow: 0 15px 50px rgba(0,0,0,.4);
-    backdrop-filter: blur(20px);
-    font-size: 12px;
-    font-weight: 700;
-    animation:
-        toastIn .35s ease,
-        toastOut .35s ease 2.7s forwards;
-}
-
-@keyframes toastIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: none;
-    }
+.sale p{
+    max-width:650px;
+    margin:auto;
+    color:#777d89;
+    line-height:1.7;
 }
 
-@keyframes toastOut {
-    to {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
+.sale-buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
-/* =========================================================
-   PARTICLES
-   ========================================================= */
+/* FOOTER */
 
-.particle {
-    position: fixed;
-    z-index: 999;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    pointer-events: none;
-    background: #fff;
-    animation: particleFly .8s ease-out forwards;
+footer{
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:35px 0;
+    color:#555b65;
+    font-size:12px;
 }
 
-@keyframes particleFly {
-    from {
-        opacity: 1;
-        transform: translate(0,0) scale(1);
-    }
-    to {
-        opacity: 0;
-        transform:
-            translate(
-                var(--dx),
-                var(--dy)
-            )
-            scale(0);
-    }
+.footer-inner{
+    width:min(1150px,92%);
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
 }
 
-/* =========================================================
-   MODAL
-   ========================================================= */
+/* MODAL */
 
-.modal {
-    position: fixed;
-    z-index: 500;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    background: rgba(0,0,0,.65);
-    backdrop-filter: blur(5px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s;
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
 }
 
-.modal.open {
-    opacity: 1;
-    pointer-events: auto;
+.modal.show{
+    display:flex;
 }
 
-.modal-card {
-    width: min(100%,600px);
-    padding: 18px;
-    border-radius: 27px 27px 0 0;
-    background: #17171c;
-    border-top: 1px solid rgba(255,255,255,.1);
-    transform: translateY(100%);
-    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+.modal-box{
+    width:min(600px,100%);
+    max-height:85vh;
+    overflow:auto;
+    padding:30px;
+    border-radius:25px;
+    background:#0d0f15;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 40px 100px #000;
 }
 
-.modal.open .modal-card {
-    transform: translateY(0);
+.modal-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
 }
 
-.modal-handle {
-    width: 45px;
-    height: 5px;
-    border-radius: 99px;
-    margin: 0 auto 18px;
-    background: #414149;
+.close{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:10px;
+    background:#181a21;
+    color:#aaa;
+    cursor:pointer;
 }
 
-.modal-title {
-    font-size: 20px;
-    font-weight: 900;
+.modal-content{
+    color:#858b96;
+    line-height:1.7;
+    font-size:14px;
 }
 
-.modal-text {
-    color: #85858d;
-    line-height: 1.6;
-    font-size: 12px;
-    margin-top: 8px;
+.modal-content ul{
+    padding-left:20px;
+    margin-top:12px;
 }
 
-.modal-close {
-    width: 100%;
-    height: 49px;
-    margin-top: 17px;
-    border-radius: 15px;
-    color: #fff;
-    background: #29292f;
-    font-weight: 800;
+.modal-content li{
+    margin:7px 0;
 }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE */
 
-@media (min-width: 700px) {
+@media(max-width:900px){
 
-    .app-shell {
-        padding-left: 0;
-        padding-right: 0;
+    .hero{
+        min-height:auto;
+        padding-top:140px;
+        padding-bottom:90px;
     }
 
-    .arena {
-        aspect-ratio: 1 / .78;
+    .hero-content{
+        width:100%;
     }
+
+    .hero-card{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .games{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .admin-layout{
+        grid-template-columns:1fr;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
 }
 
-@media (max-width: 360px) {
+@media(max-width:600px){
 
-    .balance-value {
-        font-size: 27px;
+    .hero h1{
+        font-size:52px;
+        letter-spacing:-3px;
     }
 
-    .zone-avatar {
-        width: 39px;
-        height: 39px;
-        font-size: 18px;
+    .hero p{
+        font-size:15px;
     }
 
-    .zone-name {
-        font-size: 8px;
+    .section{
+        padding:70px 0;
     }
 
-    .zone-percent {
-        font-size: 12px;
+    .section-head h2{
+        font-size:32px;
+    }
+
+    .stats,
+    .features,
+    .games,
+    .commands,
+    .database{
+        grid-template-columns:1fr;
+    }
+
+    .sale{
+        padding:50px 20px;
+    }
+
+    .sale h2{
+        font-size:35px;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        gap:10px;
     }
 }
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-button:focus-visible,
-input:focus-visible {
-    outline: 2px solid #7b5cff;
-    outline-offset: 2px;
-}
-
-/* =========================================================
-   END CSS
-   ========================================================= */
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     SPLASH
-     ======================================================= -->
+<header class="header">
+    <nav class="nav">
 
-<div id="splash">
+        <a href="#" class="logo">
+            <div class="logo-icon">₽</div>
+            Lira Game
+        </a>
 
-    <div class="splash-content">
-
-        <div class="splash-logo">
-            🪙
+        <div class="nav-links">
+            <a href="#features">Функции</a>
+            <a href="#games">Игры</a>
+            <a href="#admin">Админ-панель</a>
+            <a href="#database">Система</a>
         </div>
 
-        <div class="splash-title">
-            jCoin PvP
+        <a href="#sale" class="nav-btn">
+            Проект на продаже
+        </a>
+
+    </nav>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            <span class="dot"></span>
+            Telegram Game Bot • Full Project
         </div>
 
-        <div class="splash-sub">
-            Enter the arena
-        </div>
+        <h1>
+            Lira<br>
+            <span class="gradient">Game</span>
+        </h1>
 
-        <div class="splash-loader"></div>
+        <p>
+            Полноценный игровой Telegram-бот с собственной экономикой,
+            множеством игр, профилями игроков, статистикой, базой данных
+            и расширенной административной системой.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#features" class="btn btn-primary">
+                Смотреть функционал
+            </a>
+
+            <a href="#admin" class="btn btn-dark">
+                Админ-панель →
+            </a>
+
+        </div>
 
     </div>
 
-</div>
 
-<!-- =======================================================
-     AUTH SCREEN
-     ======================================================= -->
+    <div class="hero-card">
 
-<section id="authScreen" class="hidden">
-
-    <div class="auth-box">
-
-        <div class="auth-brand">
-
-            <div class="auth-brand-icon">
-                ⚔️
-            </div>
-
-            <h1>jCoin PvP</h1>
-
-            <p>
-                PvP арена на виртуальных jCoin
-            </p>
-
+        <div class="phone-top">
+            <span>9:41</span>
+            <span>● ● ●</span>
         </div>
 
-        <div class="auth-tabs">
+        <div class="bot-avatar">₽</div>
 
-            <button
-                id="loginTab"
-                class="auth-tab active"
-                onclick="switchAuth('login')">
-                Войти
-            </button>
+        <h3>Lira Game</h3>
+        <small>Игровой Telegram Bot</small>
 
-            <button
-                id="registerTab"
-                class="auth-tab"
-                onclick="switchAuth('register')">
-                Регистрация
-            </button>
-
+        <div class="balance">
+            <span>ВАШ БАЛАНС</span>
+            <strong>125 500 ₺</strong>
         </div>
 
-        <form id="authForm">
-
-            <div class="field">
-
-                <label>
-                    Никнейм
-                </label>
-
-                <input
-                    id="authUsername"
-                    type="text"
-                    maxlength="20"
-                    autocomplete="off"
-                    placeholder="Например: Player777"
-                    required>
-
-            </div>
-
-            <div class="field">
-
-                <label>
-                    Пароль
-                </label>
-
-                <input
-                    id="authPassword"
-                    type="password"
-                    maxlength="40"
-                    placeholder="••••••••"
-                    required>
-
-            </div>
-
-            <button
-                class="primary-btn"
-                type="submit"
-                id="authSubmit">
-                Войти в арену
-            </button>
-
-        </form>
-
-        <div class="auth-note">
-            Это локальная демоверсия.
-            Данные аккаунта сохраняются только
-            в браузере на этом устройстве.
+        <div class="mini-buttons">
+            <div>🎮 Игры</div>
+            <div>👤 Профиль</div>
+            <div>🏆 Топ</div>
+            <div>🎁 Бонус</div>
         </div>
 
     </div>
 
 </section>
 
-<!-- =======================================================
-     MAIN APP
-     ======================================================= -->
 
-<div id="app" class="hidden">
+<!-- STATS -->
+
+<section class="section">
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>17+</strong>
+            <span>игровых механик</span>
+        </div>
+
+        <div class="stat">
+            <strong>12</strong>
+            <span>разделов админ-панели</span>
+        </div>
+
+        <div class="stat">
+            <strong>SQLite</strong>
+            <span>система хранения данных</span>
+        </div>
+
+        <div class="stat">
+            <strong>Aiogram</strong>
+            <span>Telegram Bot API</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="section" id="features">
+
+    <div class="section-head">
+
+        <span>01 — Functional</span>
+
+        <h2>Функционал бота</h2>
+
+        <p>
+            Основные возможности проекта, реализованные в текущем коде.
+        </p>
+
+    </div>
 
-    <main class="app-shell">
 
-        <!-- ================================================
-             HOME PAGE
-             ================================================ -->
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">💰</div>
+            <h3>Экономика</h3>
+            <p>
+                Баланс игроков, банк, переводы, выдача и списание игровой
+                валюты, ежедневные показатели и управление экономикой.
+            </p>
+        </div>
 
-        <section
-            id="pageHome"
-            class="page">
+        <div class="feature">
+            <div class="feature-icon">👤</div>
+            <h3>Профили</h3>
+            <p>
+                Профиль игрока, никнейм, описание, репутация, отображение
+                баланса и дополнительные настройки приватности.
+            </p>
+        </div>
 
-            <header class="topbar">
+        <div class="feature">
+            <div class="feature-icon">🎁</div>
+            <h3>Бонусная система</h3>
+            <p>
+                Бонусы, ежедневные активности, промокоды и дополнительные
+                механики для удержания игроков.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🏆</div>
+            <h3>Рейтинги</h3>
+            <p>
+                ТОП игроков, чемпионы дня, статистика заработка и
+                отображение лидеров.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📊</div>
+            <h3>Статистика</h3>
+            <p>
+                Глобальная статистика игр, количество игроков, ставки,
+                выигрыши, RTP и популярность игровых режимов.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">💬</div>
+            <h3>Чаты</h3>
+            <p>
+                Учёт групп и супергрупп, VIP-чаты и управление игровыми
+                возможностями для отдельных чатов.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🛡️</div>
+            <h3>Анти-мульт</h3>
+            <p>
+                Инструменты проверки игроков и защиты игровой экономики
+                от мультиаккаунтов.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📢</div>
+            <h3>Рассылки</h3>
+            <p>
+                Массовая рассылка сообщений, фото и видео пользователям
+                с обработкой ошибок доставки.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🔐</div>
+            <h3>Админ-доступ</h3>
+            <p>
+                Отдельная административная панель и проверка прав
+                администратора перед выполнением операций.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section class="section" id="games">
+
+    <div class="section-head">
+
+        <span>02 — Games</span>
+
+        <h2>Игровой зал</h2>
+
+        <p>
+            В проекте реализован большой набор игровых режимов.
+            Нажмите на игру, чтобы посмотреть описание.
+        </p>
+
+    </div>
+
+
+    <div class="games">
+
+        <div class="game" onclick="openGame('x50')">
+            <div class="game-icon">🎡</div>
+            <h3>Х50</h3>
+            <p>Цветные коэффициенты</p>
+        </div>
+
+        <div class="game" onclick="openGame('mega')">
+            <div class="game-icon">🎡</div>
+            <h3>Мегавил</h3>
+            <p>Колесо с секторами</p>
+        </div>
+
+        <div class="game" onclick="openGame('hilo')">
+            <div class="game-icon">🧮</div>
+            <h3>Хило</h3>
+            <p>Карточная механика</p>
+        </div>
+
+        <div class="game" onclick="openGame('blackjack')">
+            <div class="game-icon">🃏</div>
+            <h3>Блэкджек</h3>
+            <p>Карточная игра</p>
+        </div>
 
-                <div class="brand-mini">
-
-                    <div class="brand-mini-icon">
-                        ⚔️
-                    </div>
-
-                    <div class="brand-mini-text">
-                        <strong>jCoin PvP</strong>
-                        <span>LIVE ARENA</span>
-                    </div>
-
-                </div>
-
-                <div class="top-actions">
-
-                    <button
-                        class="icon-btn"
-                        onclick="openModal('infoModal')">
-                        ℹ️
-                    </button>
-
-                    <button
-                        class="icon-btn"
-                        onclick="showPage('profile')">
-                        👤
-                    </button>
-
-                </div>
-
-            </header>
-
-            <!-- BALANCE -->
-
-            <div class="balance-card">
-
-                <div class="balance-top">
-
-                    <div>
-
-                        <div class="balance-label">
-                            Ваш баланс
-                        </div>
-
-                        <div
-                            id="balanceValue"
-                            class="balance-value">
-                            15 000
-                        </div>
-
-                    </div>
-
-                    <div class="balance-side">
-
-                        <div
-                            id="levelValue"
-                            class="level">
-                            LVL 1
-                        </div>
-
-                        <div class="xp-mini">
-                            <i id="xpBar"></i>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- STATS -->
-
-            <div class="stats-row">
-
-                <div class="stat">
-                    <strong id="winsStat">0</strong>
-                    <span>Побед</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="roundsStat">0</strong>
-                    <span>Раундов</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="onlineStat">24</strong>
-                    <span>Онлайн</span>
-                </div>
-
-            </div>
-
-            <!-- GAME -->
-
-            <div class="section-title">
-
-                <h2>
-                    ⚡ Арена
-                </h2>
-
-                <span id="gameModeText">
-                    PvP
-                </span>
-
-            </div>
-
-            <div class="game-card">
-
-                <div class="round-header">
-
-                    <div class="round-status">
-
-                        <span class="status-dot"></span>
-
-                        <span id="roundStatus">
-                            Приём действий
-                        </span>
-
-                    </div>
-
-                    <div
-                        id="roundNumber"
-                        class="round-number">
-                        Раунд #1001
-                    </div>
-
-                </div>
-
-                <div class="timer">
-
-                    <div class="timer-label">
-                        До следующего этапа
-                    </div>
-
-                    <div
-                        id="timerNumber"
-                        class="timer-number">
-                        20
-                    </div>
-
-                </div>
-
-                <!-- ARENA -->
-
-                <div
-                    id="arena"
-                    class="arena">
-
-                    <div class="arena-center"></div>
-
-                    <!-- MY ZONE -->
-
-                    <div
-                        id="zoneMe"
-                        class="zone zone-me">
-
-                        <div class="zone-inner">
-
-                            <div class="zone-avatar">
-                                🧑‍💻
-                            </div>
-
-                            <div
-                                id="zoneMeName"
-                                class="zone-name">
-                                Вы
-                            </div>
-
-                            <div
-                                id="zoneMePercent"
-                                class="zone-percent">
-                                35%
-                            </div>
-
-                            <div
-                                id="zoneMeScore"
-                                class="zone-score">
-                                350
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- PLAYER 2 -->
-
-                    <div
-                        id="zonePlayer2"
-                        class="zone zone-player2">
-
-                        <div class="zone-inner">
-
-                            <div class="zone-avatar">
-                                🐸
-                            </div>
-
-                            <div
-                                id="zonePlayer2Name"
-                                class="zone-name">
-                                FrogMaster
-                            </div>
-
-                            <div
-                                id="zonePlayer2Percent"
-                                class="zone-percent">
-                                30%
-                            </div>
-
-                            <div
-                                id="zonePlayer2Score"
-                                class="zone-score">
-                                300
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- PLAYER 3 -->
-
-                    <div
-                        id="zonePlayer3"
-                        class="zone zone-player3">
-
-                        <div class="zone-inner">
-
-                            <div class="zone-avatar">
-                                🦊
-                            </div>
-
-                            <div
-                                id="zonePlayer3Name"
-                                class="zone-name">
-                                FoxPlayer
-                            </div>
-
-                            <div
-                                id="zonePlayer3Percent"
-                                class="zone-percent">
-                                20%
-                            </div>
-
-                            <div
-                                id="zonePlayer3Score"
-                                class="zone-score">
-                                200
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- PLAYER 4 -->
-
-                    <div
-                        id="zonePlayer4"
-                        class="zone zone-player4">
-
-                        <div class="zone-inner">
-
-                            <div class="zone-avatar">
-                                🐼
-                            </div>
-
-                            <div
-                                id="zonePlayer4Name"
-                                class="zone-name">
-                                PandaX
-                            </div>
-
-                            <div
-                                id="zonePlayer4Percent"
-                                class="zone-percent">
-                                15%
-                            </div>
-
-                            <div
-                                id="zonePlayer4Score"
-                                class="zone-score">
-                                150
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- BALL -->
-
-                    <div
-                        id="ball"
-                        class="ball">
-                        ⚪
-                    </div>
-
-                    <!-- RESULT -->
-
-                    <div
-                        id="resultOverlay"
-                        class="result-overlay">
-
-                        <div class="result-box">
-
-                            <div
-                                id="resultIcon"
-                                class="result-icon">
-                                🏆
-                            </div>
-
-                            <div
-                                id="resultTitle"
-                                class="result-title">
-                                Результат
-                            </div>
-
-                            <div
-                                id="resultSub"
-                                class="result-sub">
-                                Обновляем арену...
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- ACTION -->
-
-                <div class="action-panel">
-
-                    <div class="action-label">
-
-                        <span>
-                            Количество очков участия
-                        </span>
-
-                        <span>
-                            jCoin
-                        </span>
-
-                    </div>
-
-                    <div class="score-input-wrap">
-
-                        <input
-                            id="scoreInput"
-                            class="score-input"
-                            type="number"
-                            min="100"
-                            max="5000"
-                            value="500"
-                            step="50">
-
-                        <span class="score-unit">
-                            jCoin
-                        </span>
-
-                    </div>
-
-                    <div class="quick-values">
-
-                        <button
-                            class="quick"
-                            onclick="setScore(100)">
-                            100
-                        </button>
-
-                        <button
-                            class="quick"
-                            onclick="setScore(500)">
-                            500
-                        </button>
-
-                        <button
-                            class="quick"
-                            onclick="setScore(1000)">
-                            1K
-                        </button>
-
-                        <button
-                            class="quick"
-                            onclick="setScore(2500)">
-                            2.5K
-                        </button>
-
-                    </div>
-
-                    <button
-                        id="joinButton"
-                        class="join-btn"
-                        onclick="joinRound()">
-                        ⚔️ Войти в раунд
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- PLAYERS -->
-
-            <div class="section-title">
-
-                <h2>
-                    👥 Игроки
-                </h2>
-
-                <span id="playerTotal">
-                    4 участника
-                </span>
-
-            </div>
-
-            <div class="players-card">
-
-                <div class="player-row">
-
-                    <div class="player-avatar">
-                        🧑‍💻
-                    </div>
-
-                    <div class="player-main">
-
-                        <div
-                            id="playerMeName"
-                            class="player-name">
-                            Вы
-                        </div>
-
-                        <div
-                            id="playerMeMeta"
-                            class="player-meta">
-                            Ваши очки участия
-                        </div>
-
-                    </div>
-
-                    <div class="player-score">
-
-                        <strong id="playerMeScore">
-                            500
-                        </strong>
-
-                        <span id="playerMePercent">
-                            35%
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="player-row">
-
-                    <div class="player-avatar">
-                        🐸
-                    </div>
-
-                    <div class="player-main">
-
-                        <div
-                            id="listPlayer2"
-                            class="player-name">
-                            FrogMaster
-                        </div>
-
-                        <div class="player-meta">
-                            Участник
-                        </div>
-
-                    </div>
-
-                    <div class="player-score">
-
-                        <strong id="listScore2">
-                            300
-                        </strong>
-
-                        <span id="listPercent2">
-                            30%
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="player-row">
-
-                    <div class="player-avatar">
-                        🦊
-                    </div>
-
-                    <div class="player-main">
-
-                        <div
-                            id="listPlayer3"
-                            class="player-name">
-                            FoxPlayer
-                        </div>
-
-                        <div class="player-meta">
-                            Участник
-                        </div>
-
-                    </div>
-
-                    <div class="player-score">
-
-                        <strong id="listScore3">
-                            200
-                        </strong>
-
-                        <span id="listPercent3">
-                            20%
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="player-row">
-
-                    <div class="player-avatar">
-                        🐼
-                    </div>
-
-                    <div class="player-main">
-
-                        <div
-                            id="listPlayer4"
-                            class="player-name">
-                            PandaX
-                        </div>
-
-                        <div class="player-meta">
-                            Участник
-                        </div>
-
-                    </div>
-
-                    <div class="player-score">
-
-                        <strong id="listScore4">
-                            150
-                        </strong>
-
-                        <span id="listPercent4">
-                            15%
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- ONLINE -->
-
-            <div class="section-title">
-
-                <h2>
-                    🟢 Онлайн
-                </h2>
-
-                <span>
-                    LIVE
-                </span>
-
-            </div>
-
-            <div class="online-card">
-
-                <div class="online-head">
-
-                    <div class="online-title">
-
-                        <span class="online-dot"></span>
-
-                        Игроки в сети
-
-                    </div>
-
-                    <div
-                        id="onlineCount"
-                        class="online-count">
-                        24 онлайн
-                    </div>
-
-                </div>
-
-                <div
-                    id="avatarStack"
-                    class="avatar-stack">
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ================================================
-             LEADERBOARD
-             ================================================ -->
-
-        <section
-            id="pageTop"
-            class="page hidden">
-
-            <header class="topbar">
-
-                <div class="brand-mini">
-
-                    <div class="brand-mini-icon">
-                        🏆
-                    </div>
-
-                    <div class="brand-mini-text">
-
-                        <strong>
-                            Топ игроков
-                        </strong>
-
-                        <span>
-                            LEADERBOARD
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </header>
-
-            <div class="leader-hero">
-
-                <div class="leader-hero-icon">
-                    🏆
-                </div>
-
-                <h2>
-                    Лучшие бойцы
-                </h2>
-
-                <p>
-                    Рейтинг по XP и победам
-                </p>
-
-                <div class="podium">
-
-                    <div class="podium-item">
-
-                        <div class="podium-avatar">
-                            🦊
-                        </div>
-
-                        <div class="podium-place">
-                            #2
-                        </div>
-
-                        <div class="podium-name">
-                            FoxPlayer
-                        </div>
-
-                        <div class="podium-points">
-                            8 940 XP
-                        </div>
-
-                    </div>
-
-                    <div class="podium-item first">
-
-                        <div class="podium-avatar">
-                            👑
-                        </div>
-
-                        <div class="podium-place">
-                            #1
-                        </div>
-
-                        <div class="podium-name">
-                            DarkWolf
-                        </div>
-
-                        <div class="podium-points">
-                            12 480 XP
-                        </div>
-
-                    </div>
-
-                    <div class="podium-item">
-
-                        <div class="podium-avatar">
-                            🐸
-                        </div>
-
-                        <div class="podium-place">
-                            #3
-                        </div>
-
-                        <div class="podium-name">
-                            FrogMaster
-                        </div>
-
-                        <div class="podium-points">
-                            7 620 XP
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="section-title">
-                <h2>Рейтинг</h2>
-                <span>Сезон #12</span>
-            </div>
-
-            <div class="players-card">
-
-                <div class="player-row">
-                    <div class="player-avatar">👑</div>
-                    <div class="player-main">
-                        <div class="player-name">DarkWolf</div>
-                        <div class="player-meta">156 побед</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>12 480</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-                <div class="player-row">
-                    <div class="player-avatar">🦊</div>
-                    <div class="player-main">
-                        <div class="player-name">FoxPlayer</div>
-                        <div class="player-meta">119 побед</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>8 940</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-                <div class="player-row">
-                    <div class="player-avatar">🐸</div>
-                    <div class="player-main">
-                        <div class="player-name">FrogMaster</div>
-                        <div class="player-meta">103 победы</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>7 620</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-                <div class="player-row">
-                    <div class="player-avatar">🐼</div>
-                    <div class="player-main">
-                        <div class="player-name">PandaX</div>
-                        <div class="player-meta">88 побед</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>6 930</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-                <div class="player-row">
-                    <div class="player-avatar">🐯</div>
-                    <div class="player-main">
-                        <div class="player-name">TigerOne</div>
-                        <div class="player-meta">76 побед</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>5 480</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-                <div class="player-row">
-                    <div class="player-avatar">🐙</div>
-                    <div class="player-main">
-                        <div class="player-name">OctoPlay</div>
-                        <div class="player-meta">64 победы</div>
-                    </div>
-                    <div class="player-score">
-                        <strong>4 910</strong>
-                        <span>XP</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ================================================
-             SHOP
-             ================================================ -->
-
-        <section
-            id="pageShop"
-            class="page hidden">
-
-            <header class="topbar">
-
-                <div class="brand-mini">
-
-                    <div class="brand-mini-icon">
-                        🎨
-                    </div>
-
-                    <div class="brand-mini-text">
-                        <strong>Магазин</strong>
-                        <span>SKINS</span>
-                    </div>
-
-                </div>
-
-            </header>
-
-            <div class="balance-card">
-
-                <div class="balance-top">
-
-                    <div>
-
-                        <div class="balance-label">
-                            Ваши jCoin
-                        </div>
-
-                        <div
-                            id="shopBalance"
-                            class="balance-value">
-                            15 000
-                        </div>
-
-                    </div>
-
-                    <div class="balance-side">
-                        🪙
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="section-title">
-                <h2>Скины</h2>
-                <span>Виртуальные предметы</span>
-            </div>
-
-            <div class="shop-grid">
-
-                <div class="skin-card">
-
-                    <div class="skin-preview">
-                        🐸
-                    </div>
-
-                    <div class="skin-name">
-                        Frog
-                    </div>
-
-                    <div class="skin-price">
-                        1 000 jCoin
-                    </div>
-
-                    <button
-                        class="skin-buy"
-                        onclick="buySkin('frog',1000)">
-                        Купить
-                    </button>
-
-                </div>
-
-                <div class="skin-card">
-
-                    <div class="skin-preview">
-                        🦊
-                    </div>
-
-                    <div class="skin-name">
-                        Fox
-                    </div>
-
-                    <div class="skin-price">
-                        2 000 jCoin
-                    </div>
-
-                    <button
-                        class="skin-buy"
-                        onclick="buySkin('fox',2000)">
-                        Купить
-                    </button>
-
-                </div>
-
-                <div class="skin-card">
-
-                    <div class="skin-preview">
-                        🐼
-                    </div>
-
-                    <div class="skin-name">
-                        Panda
-                    </div>
-
-                    <div class="skin-price">
-                        3 500 jCoin
-                    </div>
-
-                    <button
-                        class="skin-buy"
-                        onclick="buySkin('panda',3500)">
-                        Купить
-                    </button>
-
-                </div>
-
-                <div class="skin-card">
-
-                    <div class="skin-preview">
-                        🐲
-                    </div>
-
-                    <div class="skin-name">
-                        Dragon
-                    </div>
-
-                    <div class="skin-price">
-                        5 000 jCoin
-                    </div>
-
-                    <button
-                        class="skin-buy"
-                        onclick="buySkin('dragon',5000)">
-                        Купить
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ================================================
-             PROFILE
-             ================================================ -->
-
-        <section
-            id="pageProfile"
-            class="page hidden">
-
-            <header class="topbar">
-
-                <div class="brand-mini">
-
-                    <div class="brand-mini-icon">
-                        👤
-                    </div>
-
-                    <div class="brand-mini-text">
-                        <strong>Профиль</strong>
-                        <span>PLAYER</span>
-                    </div>
-
-                </div>
-
-            </header>
-
-            <div class="profile-card">
-
-                <div
-                    id="profileAvatar"
-                    class="profile-avatar">
-                    🧑‍💻
-                </div>
-
-                <div
-                    id="profileName"
-                    class="profile-name">
-                    Player
-                </div>
-
-                <div
-                    id="profileId"
-                    class="profile-id">
-                    ID #000001
-                </div>
-
-                <div class="profile-grid">
-
-                    <div class="profile-stat">
-
-                        <strong id="profileWins">
-                            0
-                        </strong>
-
-                        <span>
-                            Побед
-                        </span>
-
-                    </div>
-
-                    <div class="profile-stat">
-
-                        <strong id="profileXP">
-                            0
-                        </strong>
-
-                        <span>
-                            XP
-                        </span>
-
-                    </div>
-
-                    <div class="profile-stat">
-
-                        <strong id="profileRounds">
-                            0
-                        </strong>
-
-                        <span>
-                            Раундов
-                        </span>
-
-                    </div>
-
-                    <div class="profile-stat">
-
-                        <strong id="profileLevel">
-                            1
-                        </strong>
-
-                        <span>
-                            Уровень
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="section-title">
-                <h2>Настройки</h2>
-                <span>APP</span>
-            </div>
-
-            <div class="settings-list">
-
-                <div class="setting-row">
-
-                    <div class="setting-left">
-
-                        <div class="setting-icon">
-                            📳
-                        </div>
-
-                        <div class="setting-text">
-
-                            <strong>
-                                Вибрация
-                            </strong>
-
-                            <span>
-                                Сигнал при результате
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="icon-btn"
-                        id="vibrationToggle"
-                        onclick="toggleVibration()">
-                        ON
-                    </button>
-
-                </div>
-
-                <div class="setting-row">
-
-                    <div class="setting-left">
-
-                        <div class="setting-icon">
-                            🔊
-                        </div>
-
-                        <div class="setting-text">
-
-                            <strong>
-                                Звуки
-                            </strong>
-
-                            <span>
-                                Интерфейсные звуки
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="icon-btn"
-                        id="soundToggle"
-                        onclick="toggleSound()">
-                        ON
-                    </button>
-
-                </div>
-
-            </div>
-
-            <button
-                class="logout-btn"
-                onclick="logout()">
-                Выйти из аккаунта
+        <div class="game" onclick="openGame('mines')">
+            <div class="game-icon">💣</div>
+            <h3>Мины</h3>
+            <p>Риск и множители</p>
+        </div>
+
+        <div class="game" onclick="openGame('tower')">
+            <div class="game-icon">🗼</div>
+            <h3>Башня</h3>
+            <p>Несколько уровней</p>
+        </div>
+
+        <div class="game" onclick="openGame('bridges')">
+            <div class="game-icon">🌉</div>
+            <h3>Мосты</h3>
+            <p>Пошаговая игра</p>
+        </div>
+
+        <div class="game" onclick="openGame('pirate')">
+            <div class="game-icon">🏴‍☠️</div>
+            <h3>Пират</h3>
+            <p>Рискованная игра</p>
+        </div>
+
+        <div class="game" onclick="openGame('roulette')">
+            <div class="game-icon">🔫</div>
+            <h3>Рулетка</h3>
+            <p>Групповая игра</p>
+        </div>
+
+        <div class="game" onclick="openGame('flip')">
+            <div class="game-icon">🪙</div>
+            <h3>Флип</h3>
+            <p>Монетка</p>
+        </div>
+
+        <div class="game" onclick="openGame('overgo')">
+            <div class="game-icon">🚀</div>
+            <h3>ОверГо</h3>
+            <p>Коэффициенты</p>
+        </div>
+
+        <div class="game" onclick="openGame('slots')">
+            <div class="game-icon">🍬</div>
+            <h3>Слоты</h3>
+            <p>Игровые комбинации</p>
+        </div>
+
+        <div class="game" onclick="openGame('hunt')">
+            <div class="game-icon">🏹</div>
+            <h3>Охота</h3>
+            <p>Обычная игра</p>
+        </div>
+
+        <div class="game" onclick="openGame('jackpot')">
+            <div class="game-icon">🎟️</div>
+            <h3>Джекпот</h3>
+            <p>Джекпот-механика</p>
+        </div>
+
+        <div class="game" onclick="openGame('emoji')">
+            <div class="game-icon">🎯</div>
+            <h3>Эмодзи-игры</h3>
+            <p>Дартс • Боулинг • Спин</p>
+        </div>
+
+        <div class="game" onclick="openGame('sports')">
+            <div class="game-icon">⚽</div>
+            <h3>Спортивные</h3>
+            <p>Футбол • Баскетбол • Кубик</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section class="section" id="admin">
+
+    <div class="section-head">
+
+        <span>03 — Administration</span>
+
+        <h2>Функции админов</h2>
+
+        <p>
+            Расширенная панель управления проектом.
+        </p>
+
+    </div>
+
+
+    <div class="admin-layout">
+
+        <div class="admin-menu">
+
+            <button class="active" onclick="adminTab(this,'stats')">
+                📊 Статистика
             </button>
 
-        </section>
+            <button onclick="adminTab(this,'users')">
+                👥 Пользователи
+            </button>
 
-    </main>
+            <button onclick="adminTab(this,'economy')">
+                💰 Экономика
+            </button>
 
-    <!-- ====================================================
-         BOTTOM NAV
-         ==================================================== -->
+            <button onclick="adminTab(this,'mail')">
+                📢 Рассылка
+            </button>
 
-    <nav class="bottom-nav">
+            <button onclick="adminTab(this,'promo')">
+                🎁 Промокоды
+            </button>
 
-        <button
-            class="nav-btn active"
-            data-page="home"
-            onclick="showPage('home')">
+            <button onclick="adminTab(this,'gamesAdmin')">
+                🎮 Игры
+            </button>
 
-            <span class="nav-icon">
-                ⚔️
-            </span>
+            <button onclick="adminTab(this,'tools')">
+                🔧 Инструменты
+            </button>
 
-            <span class="nav-label">
-                PvP
-            </span>
+            <button onclick="adminTab(this,'databaseAdmin')">
+                🗄 База игроков
+            </button>
 
-        </button>
-
-        <button
-            class="nav-btn"
-            data-page="top"
-            onclick="showPage('top')">
-
-            <span class="nav-icon">
-                🏆
-            </span>
-
-            <span class="nav-label">
-                Топ
-            </span>
-
-        </button>
-
-        <button
-            class="nav-btn"
-            data-page="shop"
-            onclick="showPage('shop')">
-
-            <span class="nav-icon">
-                🎨
-            </span>
-
-            <span class="nav-label">
-                Скины
-            </span>
-
-        </button>
-
-        <button
-            class="nav-btn"
-            data-page="profile"
-            onclick="showPage('profile')">
-
-            <span class="nav-icon">
-                👤
-            </span>
-
-            <span class="nav-label">
-                Профиль
-            </span>
-
-        </button>
-
-    </nav>
-
-</div>
-
-<!-- =======================================================
-     MODAL
-     ======================================================= -->
-
-<div
-    id="infoModal"
-    class="modal"
-    onclick="closeModalOutside(event)">
-
-    <div class="modal-card">
-
-        <div class="modal-handle"></div>
-
-        <div class="modal-title">
-            ⚔️ Как работает jCoin PvP
-        </div>
-
-        <div class="modal-text">
-
-            Каждый раунд длится 20 секунд.
-
-            <br><br>
-
-            В период подготовки игроки выбирают
-            количество виртуальных очков участия.
-
-            <br><br>
-
-            Чем больше значение, тем больше визуальная
-            зона игрока на арене.
-
-            <br><br>
-
-            После завершения подготовки шарик
-            перемещается по арене и выбирает одну
-            из зон для определения результата.
-
-            <br><br>
-
-            В этой демоверсии результат используется
-            только для XP, статистики и рейтинга.
-            jCoin не являются реальными деньгами.
+            <button onclick="adminTab(this,'chats')">
+                💬 Чаты
+            </button>
 
         </div>
 
-        <button
-            class="modal-close"
-            onclick="closeModal('infoModal')">
-            Понятно
-        </button>
+
+        <div class="admin-window" id="adminWindow">
+
+            <div class="admin-title">
+                📊 Статистика
+            </div>
+
+            <div class="admin-cards">
+
+                <div class="admin-card">
+                    <strong>👥 Игроки</strong>
+                    <span>
+                        Просмотр общего количества игроков,
+                        активных и заблокированных пользователей.
+                    </span>
+                </div>
+
+                <div class="admin-card">
+                    <strong>💰 Экономика</strong>
+                    <span>
+                        Общая сумма валюты на балансах и в банках.
+                    </span>
+                </div>
+
+                <div class="admin-card">
+                    <strong>🎮 Игровая статистика</strong>
+                    <span>
+                        Количество игр, ставки, выигрыши и RTP.
+                    </span>
+                </div>
+
+                <div class="admin-card">
+                    <strong>🏆 Богатейший игрок</strong>
+                    <span>
+                        Определение лидера по совокупному состоянию.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COMMANDS -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <span>04 — Commands</span>
+
+        <h2>Команды проекта</h2>
+
+        <p>
+            Основные пользовательские и административные команды.
+        </p>
+
+    </div>
+
+
+    <div class="commands">
+
+        <div class="command-box">
+
+            <div class="command-head">
+                👤 Пользовательские
+            </div>
+
+            <div class="command-list">
+
+                <div class="command">
+                    <code>Б</code>
+                    <span>Баланс</span>
+                </div>
+
+                <div class="command">
+                    <code>Банк</code>
+                    <span>Банк игрока</span>
+                </div>
+
+                <div class="command">
+                    <code>Профиль</code>
+                    <span>Профиль</span>
+                </div>
+
+                <div class="command">
+                    <code>Дать [сумма]</code>
+                    <span>Перевод</span>
+                </div>
+
+                <div class="command">
+                    <code>Чд</code>
+                    <span>Чемпионы дня</span>
+                </div>
+
+                <div class="command">
+                    <code>Бонус</code>
+                    <span>Бонусная система</span>
+                </div>
+
+                <div class="command">
+                    <code>Помощь</code>
+                    <span>Игровой зал</span>
+                </div>
+
+                <div class="command">
+                    <code>Ласт</code>
+                    <span>История</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="command-box">
+
+            <div class="command-head">
+                🛡️ Администраторские
+            </div>
+
+            <div class="command-list">
+
+                <div class="command">
+                    <code>/admin</code>
+                    <span>Админ-панель</span>
+                </div>
+
+                <div class="command">
+                    <code>/give</code>
+                    <span>Выдача валюты</span>
+                </div>
+
+                <div class="command">
+                    <code>/addpromo</code>
+                    <span>Создание промо</span>
+                </div>
+
+                <div class="command">
+                    <code>/fast</code>
+                    <span>Фаст-конкурс</span>
+                </div>
+
+                <div class="command">
+                    <code>/ban_duper</code>
+                    <span>Блокировка</span>
+                </div>
+
+                <div class="command">
+                    <code>/unban_duper</code>
+                    <span>Разблокировка</span>
+                </div>
+
+                <div class="command">
+                    <code>/on</code>
+                    <span>Включить бота</span>
+                </div>
+
+                <div class="command">
+                    <code>/off</code>
+                    <span>Выключить бота</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DATABASE -->
+
+<section class="section" id="database">
+
+    <div class="section-head">
+
+        <span>05 — System</span>
+
+        <h2>Система проекта</h2>
+
+        <p>
+            Архитектура и основные элементы, присутствующие в проекте.
+        </p>
+
+    </div>
+
+
+    <div class="database">
+
+        <div class="db-card">
+
+            <h3>🗄 SQLite</h3>
+
+            <p>
+                Хранение пользователей, балансов, банков,
+                игровой статистики, логов и активных игровых сессий.
+            </p>
+
+            <br>
+
+            <span class="tag">users</span>
+            <span class="tag">games_log</span>
+            <span class="tag">chats</span>
+            <span class="tag">promo</span>
+
+        </div>
+
+
+        <div class="db-card">
+
+            <h3>🎮 Active Games</h3>
+
+            <p>
+                Активные игровые состояния сохраняются для отдельных
+                режимов, включая игры с пошаговой механикой.
+            </p>
+
+            <br>
+
+            <span class="tag">Tower</span>
+            <span class="tag">Mines</span>
+            <span class="tag">Bridges</span>
+            <span class="tag">Flip</span>
+
+        </div>
+
+
+        <div class="db-card">
+
+            <h3>📜 Логи</h3>
+
+            <p>
+                Система игровых логов позволяет администратору
+                просматривать историю игровых операций и результаты.
+            </p>
+
+            <br>
+
+            <span class="tag">Bet</span>
+            <span class="tag">Win</span>
+            <span class="tag">Coefficient</span>
+            <span class="tag">Game</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ADMIN DETAILS -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <span>06 — Admin Tools</span>
+
+        <h2>Что может администратор</h2>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">👥</div>
+            <h3>Управление игроками</h3>
+            <p>
+                Поиск по ID, просмотр последних игроков,
+                просмотр богатейших игроков, бан и разбан.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">💸</div>
+            <h3>Управление валютой</h3>
+            <p>
+                Выдать, забрать, обнулить баланс или раздать валюту
+                всем игрокам.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🎁</div>
+            <h3>Промокоды</h3>
+            <p>
+                Создание, просмотр, удаление, настройка количества
+                использований и тестирование промокодов.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📢</div>
+            <h3>Массовая рассылка</h3>
+            <p>
+                Рассылка текста, фото или видео всем пользователям
+                с отображением успешных и неудачных отправок.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">⭐</div>
+            <h3>Уровни игроков</h3>
+            <p>
+                Просмотр уровней, установка уровня отдельному игроку
+                или массовое изменение.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">💬</div>
+            <h3>VIP-чаты</h3>
+            <p>
+                Добавление, удаление и просмотр VIP-чатов.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🧹</div>
+            <h3>Сбросы</h3>
+            <p>
+                Сброс лимитов, чемпионов дня и отдельные инструменты
+                управления экономикой.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🔴</div>
+            <h3>On / Off</h3>
+            <p>
+                Возможность быстро отключить или включить работу бота.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📜</div>
+            <h3>Глобальные логи</h3>
+            <p>
+                Просмотр истории игровых операций с пагинацией
+                и обновлением данных.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SALE -->
+
+<section class="section" id="sale">
+
+    <div class="sale">
+
+        <div class="badge">
+            💼 PROJECT FOR SALE
+        </div>
+
+        <h2>Готовый Telegram-проект</h2>
+
+        <p>
+            Полный исходный код игрового Telegram-бота,
+            система экономики, игры, админ-панель и база данных.
+            Подходит для дальнейшего развития, ребрендинга
+            и запуска собственного игрового проекта.
+        </p>
+
+        <div class="sale-buttons">
+
+            <a
+                href="https://t.me/azvaren"
+                target="_blank"
+                class="btn btn-primary"
+            >
+                🧑‍💻 Связаться с разработчиком
+            </a>
+
+            <a
+                href="https://t.me/LiraGame_Bot"
+                target="_blank"
+                class="btn btn-dark"
+            >
+                🤖 Открыть бота
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <span>
+            © 2026 Lira Game Project
+        </span>
+
+        <span>
+            Telegram Bot • Python • Aiogram • SQLite
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-top">
+
+            <h2 id="modalTitle">
+                Игра
+            </h2>
+
+            <button class="close" onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="modal-content" id="modalContent"></div>
 
     </div>
 
 </div>
 
-<!-- =======================================================
-     TOAST
-     ======================================================= -->
-
-<div id="toastContainer"></div>
-
-<!-- =======================================================
-     JAVASCRIPT
-     ======================================================= -->
 
 <script>
 
-/* =========================================================
-   CONFIG
-   ========================================================= */
+/* GAME MODALS */
 
-const CONFIG = {
+const games = {
 
-    START_BALANCE: 15000,
+    x50:{
+        title:"🎡 Х50",
+        text:`
+            <p>
+            Игра с выбором цветового исхода и различными
+            коэффициентами выигрыша.
+            </p>
+            <ul>
+                <li>Цветные исходы</li>
+                <li>Система ставок</li>
+                <li>История результатов</li>
+                <li>Игровая статистика</li>
+            </ul>
+        `
+    },
 
-    MIN_SCORE: 100,
+    mega:{
+        title:"🎡 Мегавил",
+        text:`
+            <p>
+            Колесо с несколькими секторами и различными
+            коэффициентами.
+            </p>
+            <ul>
+                <li>Сектора 1 / 2 / 5 / 8 / 10 / 15 / 20 / 40</li>
+                <li>Ставки игроков</li>
+                <li>История</li>
+                <li>Повтор игры</li>
+            </ul>
+        `
+    },
 
-    MAX_SCORE: 5000,
+    hilo:{
+        title:"🧮 Хило",
+        text:`
+            <p>
+            Карточная игра с выбором направления изменения
+            значения карты.
+            </p>
+            <ul>
+                <li>Ставка в Лирах</li>
+                <li>Выбор направления</li>
+                <li>Коэффициенты</li>
+                <li>Статистика</li>
+            </ul>
+        `
+    },
 
-    ROUND_WAIT: 20,
+    blackjack:{
+        title:"🃏 Блэкджек",
+        text:`
+            <p>
+            Карточный игровой режим с отдельной игровой логикой.
+            </p>
+            <ul>
+                <li>Игровая сессия</li>
+                <li>Ставка</li>
+                <li>Результат</li>
+                <li>Логирование</li>
+            </ul>
+        `
+    },
 
-    SPIN_TIME: 4500,
+    mines:{
+        title:"💣 Мины",
+        text:`
+            <p>
+            Игра с минными ячейками и риском увеличения выигрыша.
+            </p>
+            <ul>
+                <li>Настройка количества мин</li>
+                <li>Пошаговый выбор</li>
+                <li>Активная игровая сессия</li>
+                <li>Выигрыш / проигрыш</li>
+            </ul>
+        `
+    },
 
-    STORAGE_USERS: "jcoin_pvp_users_v1",
+    tower:{
+        title:"🗼 Башня",
+        text:`
+            <p>
+            Пошаговая игра с уровнями и коэффициентами.
+            </p>
+            <ul>
+                <li>4 режима сложности</li>
+                <li>7 уровней</li>
+                <li>Сохранение активной игры</li>
+                <li>Восстановление после перезапуска</li>
+            </ul>
+        `
+    },
 
-    STORAGE_SESSION: "jcoin_pvp_session_v1",
+    bridges:{
+        title:"🌉 Мосты",
+        text:`
+            <p>
+            Пошаговая игровая механика с сохранением
+            состояния активной игры.
+            </p>
+        `
+    },
 
-    STORAGE_SETTINGS: "jcoin_pvp_settings_v1"
+    pirate:{
+        title:"🏴‍☠️ Пират",
+        text:`
+            <p>
+            Риск-игра с выбором количества мин.
+            </p>
+            <ul>
+                <li>1–2 мины</li>
+                <li>Ставка</li>
+                <li>Результат</li>
+                <li>Логирование</li>
+            </ul>
+        `
+    },
+
+    roulette:{
+        title:"🔫 Рулетка",
+        text:`
+            <p>
+            Групповой режим с приемом ставок игроков
+            и запуском игрового раунда.
+            </p>
+            <ul>
+                <li>Ставки</li>
+                <li>Раунды</li>
+                <li>История</li>
+                <li>Логи</li>
+            </ul>
+        `
+    },
+
+    flip:{
+        title:"🪙 Флип",
+        text:`
+            <p>
+            Быстрая игра с монеткой и сохранением
+            активной игровой сессии.
+            </p>
+        `
+    },
+
+    overgo:{
+        title:"🚀 ОверГо",
+        text:`
+            <p>
+            Игра с коэффициентами и выбором целевого значения.
+            </p>
+            <ul>
+                <li>Ставка</li>
+                <li>Коэффициент</li>
+                <li>Статистика</li>
+            </ul>
+        `
+    },
+
+    slots:{
+        title:"🍬 Слоты",
+        text:`
+            <p>
+            Игровой слот-механизм с результатами и логированием.
+            </p>
+        `
+    },
+
+    hunt:{
+        title:"🏹 Охота",
+        text:`
+            <p>
+            Отдельный игровой режим с игровой валютой
+            и результатом раунда.
+            </p>
+        `
+    },
+
+    jackpot:{
+        title:"🎟️ Джекпот",
+        text:`
+            <p>
+            Джекпот-механика для игрового бота.
+            </p>
+        `
+    },
+
+    emoji:{
+        title:"🎯 Эмодзи-игры",
+        text:`
+            <p>
+            Набор игр на базе Telegram Emoji Dice:
+            </p>
+            <ul>
+                <li>🎯 Дартс</li>
+                <li>🎳 Боулинг</li>
+                <li>🎰 Спин</li>
+                <li>🎲 Кубик</li>
+            </ul>
+        `
+    },
+
+    sports:{
+        title:"⚽ Спортивные игры",
+        text:`
+            <p>
+            Игры на основе Telegram-анимаций:
+            </p>
+            <ul>
+                <li>⚽ Футбол</li>
+                <li>🏀 Баскетбол</li>
+                <li>🎲 Кубик</li>
+            </ul>
+        `
+    }
 
 };
 
 
-/* =========================================================
-   GLOBAL STATE
-   ========================================================= */
+function openGame(id){
 
-let authMode = "login";
+    const game = games[id];
 
-let currentUser = null;
+    if(!game) return;
 
-let timer = CONFIG.ROUND_WAIT;
+    document.getElementById("modalTitle").innerHTML =
+        game.title;
 
-let roundNumber = 1001;
+    document.getElementById("modalContent").innerHTML =
+        game.text;
 
-let roundPhase = "waiting";
-
-let roundInterval = null;
-
-let spinTimeout = null;
-
-let joinedThisRound = false;
-
-let vibrationEnabled = true;
-
-let soundEnabled = true;
-
-let lastResult = null;
-
-let audioContext = null;
+    document.getElementById("modal").classList.add("show");
+}
 
 
-/* =========================================================
-   DEMO PLAYERS
-   ========================================================= */
+function closeModal(){
 
-let demoPlayers = [
-
-    {
-        name: "FrogMaster",
-        avatar: "🐸",
-        score: 300
-    },
-
-    {
-        name: "FoxPlayer",
-        avatar: "🦊",
-        score: 200
-    },
-
-    {
-        name: "PandaX",
-        avatar: "🐼",
-        score: 150
-    }
-
-];
-
-
-/* =========================================================
-   DOM HELPER
-   ========================================================= */
-
-function $(id) {
-
-    return document.getElementById(id);
+    document.getElementById("modal")
+        .classList.remove("show");
 
 }
 
 
-/* =========================================================
-   FORMAT NUMBER
-   ========================================================= */
+document.getElementById("modal").addEventListener(
+    "click",
+    function(e){
 
-function formatNumber(value) {
-
-    return Number(value || 0)
-        .toLocaleString("ru-RU");
-
-}
-
-
-/* =========================================================
-   STORAGE
-   ========================================================= */
-
-function getUsers() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(CONFIG.STORAGE_USERS)
-        ) || {};
-
-    } catch (error) {
-
-        return {};
-
-    }
-
-}
-
-
-function saveUsers(users) {
-
-    localStorage.setItem(
-        CONFIG.STORAGE_USERS,
-        JSON.stringify(users)
-    );
-
-}
-
-
-function getSettings() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(CONFIG.STORAGE_SETTINGS)
-        ) || {};
-
-    } catch (error) {
-
-        return {};
-
-    }
-
-}
-
-
-function saveSettings(settings) {
-
-    localStorage.setItem(
-        CONFIG.STORAGE_SETTINGS,
-        JSON.stringify(settings)
-    );
-
-}
-
-
-/* =========================================================
-   CREATE USER
-   ========================================================= */
-
-function createUser(username, password) {
-
-    return {
-
-        username: username,
-
-        password: password,
-
-        balance: CONFIG.START_BALANCE,
-
-        wins: 0,
-
-        rounds: 0,
-
-        xp: 0,
-
-        level: 1,
-
-        skins: ["default"],
-
-        selectedSkin: "default",
-
-        created: Date.now(),
-
-        playerId:
-            Math.floor(
-                100000 +
-                Math.random() * 899999
-            )
-
-    };
-
-}
-
-
-/* =========================================================
-   AUTH SWITCH
-   ========================================================= */
-
-function switchAuth(mode) {
-
-    authMode = mode;
-
-    $("loginTab")
-        .classList.toggle(
-            "active",
-            mode === "login"
-        );
-
-    $("registerTab")
-        .classList.toggle(
-            "active",
-            mode === "register"
-        );
-
-    $("authSubmit").textContent =
-        mode === "login"
-            ? "Войти в арену"
-            : "Создать аккаунт";
-
-}
-
-
-/* =========================================================
-   AUTH
-   ========================================================= */
-
-$("authForm").addEventListener(
-    "submit",
-    function(event) {
-
-        event.preventDefault();
-
-        const username =
-            $("authUsername")
-                .value
-                .trim();
-
-        const password =
-            $("authPassword")
-                .value;
-
-        if (username.length < 3) {
-
-            showToast(
-                "Никнейм должен быть минимум 3 символа"
-            );
-
-            return;
-
+        if(e.target === this){
+            closeModal();
         }
-
-        if (password.length < 4) {
-
-            showToast(
-                "Пароль должен быть минимум 4 символа"
-            );
-
-            return;
-
-        }
-
-        const users = getUsers();
-
-        const key =
-            username.toLowerCase();
-
-        if (authMode === "register") {
-
-            if (users[key]) {
-
-                showToast(
-                    "Такой никнейм уже существует"
-                );
-
-                return;
-
-            }
-
-            users[key] =
-                createUser(
-                    username,
-                    password
-                );
-
-            saveUsers(users);
-
-            localStorage.setItem(
-                CONFIG.STORAGE_SESSION,
-                key
-            );
-
-            currentUser =
-                users[key];
-
-            showToast(
-                "Аккаунт создан! +15 000 jCoin"
-            );
-
-            enterApp();
-
-            return;
-
-        }
-
-        if (!users[key]) {
-
-            showToast(
-                "Аккаунт не найден"
-            );
-
-            return;
-
-        }
-
-        if (users[key].password !== password) {
-
-            showToast(
-                "Неверный пароль"
-            );
-
-            return;
-
-        }
-
-        currentUser = users[key];
-
-        localStorage.setItem(
-            CONFIG.STORAGE_SESSION,
-            key
-        );
-
-        showToast(
-            "Добро пожаловать!"
-        );
-
-        enterApp();
 
     }
 );
 
 
-/* =========================================================
-   ENTER APP
-   ========================================================= */
+/* ADMIN TABS */
 
-function enterApp() {
+const adminData = {
 
-    $("authScreen")
-        .classList.add("hidden");
+    stats:{
+        title:"📊 Статистика",
+        cards:[
+            ["👥 Игроки","Общее количество игроков, активные и заблокированные."],
+            ["💰 Экономика","Баланс пользователей и средства в банке."],
+            ["🎮 Игры","Количество игр, ставки, выигрыши и RTP."],
+            ["👑 Богатейший","Определение игрока с максимальным состоянием."]
+        ]
+    },
 
-    $("app")
-        .classList.remove("hidden");
+    users:{
+        title:"👥 Пользователи",
+        cards:[
+            ["🔎 Поиск","Поиск игрока по Telegram ID."],
+            ["👥 Последние","Просмотр последних зарегистрированных игроков."],
+            ["💎 Богатейшие","Список игроков с большим балансом."],
+            ["🚫 Бан / Разбан","Блокировка и разблокировка игроков."]
+        ]
+    },
 
-    updateAllUI();
+    economy:{
+        title:"💰 Экономика",
+        cards:[
+            ["💰 Выдать","Выдача игровой валюты пользователю."],
+            ["➖ Забрать","Списание валюты."],
+            ["🧹 Обнулить","Сброс баланса пользователя."],
+            ["🎁 Раздать всем","Массовая выдача валюты."]
+        ]
+    },
 
-    startRoundLoop();
+    mail:{
+        title:"📢 Рассылка",
+        cards:[
+            ["📝 Текст","Массовая отправка текста."],
+            ["🖼 Фото","Рассылка изображений."],
+            ["🎬 Видео","Рассылка видео."],
+            ["📊 Результат","Количество успешных и неудачных отправок."]
+        ]
+    },
 
-}
+    promo:{
+        title:"🎁 Промокоды",
+        cards:[
+            ["➕ Создать","Создание нового промокода."],
+            ["📋 Список","Просмотр существующих промокодов."],
+            ["🗑 Удалить","Удаление промокода."],
+            ["⚙️ Настройки","Настройка использования промокодов."]
+        ]
+    },
 
+    gamesAdmin:{
+        title:"🎮 Игры",
+        cards:[
+            ["🃏 Hilo","Информация и управление шансами."],
+            ["📜 Логи","Просмотр игровых логов."],
+            ["📊 Overgo","Статистика Overgo."],
+            ["🗑 Рулетка","Инструмент удаления ставок."]
+        ]
+    },
 
-/* =========================================================
-   CHECK SESSION
-   ========================================================= */
+    tools:{
+        title:"🔧 Инструменты",
+        cards:[
+            ["➕ VIP-чаты","Добавление VIP-чата."],
+            ["➖ VIP-чаты","Удаление VIP-чата."],
+            ["⭐ Уровни","Управление уровнями игроков."],
+            ["🔄 Лимиты","Сброс лимитов."]
+        ]
+    },
 
-function checkSession() {
+    databaseAdmin:{
+        title:"🗄 База игроков",
+        cards:[
+            ["📥 Экспорт","Выгрузка пользователей в файл."],
+            ["📄 Список","Постраничный список игроков."],
+            ["🔍 Поиск","Поиск по Telegram ID."],
+            ["🛡 Защита","Работа с блокировками и анти-мульт."]
+        ]
+    },
 
-    const session =
-        localStorage.getItem(
-            CONFIG.STORAGE_SESSION
-        );
-
-    if (!session) {
-
-        $("authScreen")
-            .classList.remove("hidden");
-
-        return;
-
+    chats:{
+        title:"💬 Чаты",
+        cards:[
+            ["💬 Список","Просмотр известных чатов."],
+            ["🆔 ID","Хранение Telegram ID чатов."],
+            ["⭐ VIP","Работа с VIP-чатами."],
+            ["🔄 Синхронизация","Обновление списка известных чатов."]
+        ]
     }
 
-    const users = getUsers();
-
-    if (!users[session]) {
-
-        $("authScreen")
-            .classList.remove("hidden");
-
-        return;
-
-    }
-
-    currentUser = users[session];
-
-    $("app")
-        .classList.remove("hidden");
-
-    updateAllUI();
-
-    startRoundLoop();
-
-}
+};
 
 
-/* =========================================================
-   SAVE CURRENT USER
-   ========================================================= */
-
-function saveCurrentUser() {
-
-    if (!currentUser) return;
-
-    const users = getUsers();
-
-    users[
-        currentUser.username.toLowerCase()
-    ] = currentUser;
-
-    saveUsers(users);
-
-}
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-function logout() {
-
-    if (
-        !confirm(
-            "Выйти из текущего аккаунта?"
-        )
-    ) {
-
-        return;
-
-    }
-
-    localStorage.removeItem(
-        CONFIG.STORAGE_SESSION
-    );
-
-    currentUser = null;
-
-    clearInterval(roundInterval);
-
-    $("app")
-        .classList.add("hidden");
-
-    $("authScreen")
-        .classList.remove("hidden");
-
-    $("authPassword").value = "";
-
-}
-
-
-/* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
-
-function showPage(page) {
-
-    const pages = {
-
-        home: "pageHome",
-
-        top: "pageTop",
-
-        shop: "pageShop",
-
-        profile: "pageProfile"
-
-    };
-
-    Object
-        .values(pages)
-        .forEach(id => {
-
-            $(id)
-                .classList.add("hidden");
-
-        });
-
-    $(pages[page])
-        .classList.remove("hidden");
+function adminTab(button,id){
 
     document
-        .querySelectorAll(".nav-btn")
-        .forEach(btn => {
+        .querySelectorAll(".admin-menu button")
+        .forEach(btn => btn.classList.remove("active"));
 
-            btn.classList.toggle(
-                "active",
-                btn.dataset.page === page
-            );
+    button.classList.add("active");
 
-        });
+    const data = adminData[id];
 
-    updateAllUI();
+    let html = `
+        <div class="admin-title">
+            ${data.title}
+        </div>
 
+        <div class="admin-cards">
+    `;
+
+    data.cards.forEach(card => {
+
+        html += `
+            <div class="admin-card">
+                <strong>${card[0]}</strong>
+                <span>${card[1]}</span>
+            </div>
+        `;
+
+    });
+
+    html += `</div>`;
+
+    document.getElementById("adminWindow")
+        .innerHTML = html;
 }
 
 
-/* =========================================================
-   BALANCE UI
-   ========================================================= */
-
-function updateBalance() {
-
-    if (!currentUser) return;
-
-    $("balanceValue").textContent =
-        formatNumber(
-            currentUser.balance
-        );
-
-    $("shopBalance").textContent =
-        formatNumber(
-            currentUser.balance
-        );
-
-}
-
-
-/* =========================================================
-   LEVEL
-   ========================================================= */
-
-function calculateLevel() {
-
-    if (!currentUser) return 1;
-
-    return Math.max(
-        1,
-        Math.floor(
-            currentUser.xp / 1000
-        ) + 1
-    );
-
-}
-
-
-function updateLevel() {
-
-    if (!currentUser) return;
-
-    currentUser.level =
-        calculateLevel();
-
-    const level =
-        currentUser.level;
-
-    $("levelValue").textContent =
-        "LVL " + level;
-
-    const progress =
-        currentUser.xp % 1000;
-
-    $("xpBar").style.width =
-        Math.max(
-            3,
-            progress / 10
-        ) + "%";
-
-}
-
-
-/* =========================================================
-   PROFILE UI
-   ========================================================= */
-
-function updateProfile() {
-
-    if (!currentUser) return;
-
-    $("profileName").textContent =
-        currentUser.username;
-
-    $("profileId").textContent =
-        "ID #" +
-        currentUser.playerId;
-
-    $("profileWins").textContent =
-        formatNumber(
-            currentUser.wins
-        );
-
-    $("profileXP").textContent =
-        formatNumber(
-            currentUser.xp
-        );
-
-    $("profileRounds").textContent =
-        formatNumber(
-            currentUser.rounds
-        );
-
-    $("profileLevel").textContent =
-        currentUser.level;
-
-}
-
-
-/* =========================================================
-   MAIN STATS
-   ========================================================= */
-
-function updateStats() {
-
-    if (!currentUser) return;
-
-    $("winsStat").textContent =
-        formatNumber(
-            currentUser.wins
-        );
-
-    $("roundsStat").textContent =
-        formatNumber(
-            currentUser.rounds
-        );
-
-}
-
-
-/* =========================================================
-   SCORE
-   ========================================================= */
-
-function getMyScore() {
-
-    if (!currentUser) {
-
-        return 500;
-
-    }
-
-    if (!joinedThisRound) {
-
-        return 0;
-
-    }
-
-    return Number(
-        currentUser.roundScore || 500
-    );
-
-}
-
-
-function setScore(value) {
-
-    $("scoreInput").value =
-        value;
-
-    updateZonesPreview();
-
-}
-
-
-/* =========================================================
-   JOIN ROUND
-   ========================================================= */
-
-function joinRound() {
-
-    if (!currentUser) return;
-
-    if (roundPhase !== "waiting") {
-
-        showToast(
-            "Сейчас приём действий закрыт"
-        );
-
-        return;
-
-    }
-
-    const score =
-        Number(
-            $("scoreInput").value
-        );
-
-    if (
-        !Number.isFinite(score) ||
-        score < CONFIG.MIN_SCORE
-    ) {
-
-        showToast(
-            "Минимум — 100 jCoin"
-        );
-
-        return;
-
-    }
-
-    if (
-        score > CONFIG.MAX_SCORE
-    ) {
-
-        showToast(
-            "Максимум — 5 000 jCoin"
-        );
-
-        return;
-
-    }
-
-    /*
-       Безопасная механика:
-       выбранные jCoin НЕ списываются.
-       Они используются как визуальный
-       показатель размера зоны.
-    */
-
-    currentUser.roundScore =
-        Math.floor(score);
-
-    joinedThisRound = true;
-
-    saveCurrentUser();
-
-    updateZonesPreview();
-
-    $("joinButton").disabled = true;
-
-    $("joinButton").textContent =
-        "✓ Вы участвуете";
-
-    showToast(
-        "Вы вошли в PvP-раунд"
-    );
-
-}
-
-
-/* =========================================================
-   ZONE CALCULATION
-   ========================================================= */
-
-function calculatePlayers() {
-
-    const meScore =
-        joinedThisRound
-            ? Number(
-                currentUser.roundScore
-            )
-            : 300;
-
-    const players = [
-
-        {
-            name:
-                currentUser
-                    ? currentUser.username
-                    : "Вы",
-
-            avatar: "🧑‍💻",
-
-            score: meScore
-
-        },
-
-        demoPlayers[0],
-
-        demoPlayers[1],
-
-        demoPlayers[2]
-
-    ];
-
-    return players;
-
-}
-
-
-function calculatePercentages(players) {
-
-    const total =
-        players.reduce(
-            (sum, player) =>
-                sum + Number(player.score),
-            0
-        );
-
-    return players.map(
-        player => {
-
-            const percent =
-                total > 0
-                    ? player.score / total * 100
-                    : 25;
-
-            return {
-
-                ...player,
-
-                percent
-
-            };
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ZONE SIZES
-   ========================================================= */
-
-function applyZoneSize(
-    element,
-    percent
-) {
-
-    const normalized =
-        Math.max(
-            12,
-            Math.min(
-                70,
-                percent
-            )
-        );
-
-    element.style.width =
-        (28 + normalized * .55) + "%";
-
-    element.style.height =
-        (26 + normalized * .48) + "%";
-
-}
-
-
-/* =========================================================
-   UPDATE ZONES
-   ========================================================= */
-
-function updateZonesPreview() {
-
-    const players =
-        calculatePercentages(
-            calculatePlayers()
-        );
-
-    const elements = [
-
-        $("zoneMe"),
-
-        $("zonePlayer2"),
-
-        $("zonePlayer3"),
-
-        $("zonePlayer4")
-
-    ];
-
-    players.forEach(
-        (player, index) => {
-
-            const element =
-                elements[index];
-
-            if (!element) return;
-
-            applyZoneSize(
-                element,
-                player.percent
-            );
-
-            const p =
-                player.percent
-                    .toFixed(1) + "%";
-
-            if (index === 0) {
-
-                $("zoneMeName")
-                    .textContent =
-                    player.name;
-
-                $("zoneMePercent")
-                    .textContent =
-                    p;
-
-                $("zoneMeScore")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("playerMeName")
-                    .textContent =
-                    player.name;
-
-                $("playerMeScore")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("playerMePercent")
-                    .textContent =
-                    p;
-
-            }
-
-            if (index === 1) {
-
-                $("zonePlayer2Name")
-                    .textContent =
-                    player.name;
-
-                $("zonePlayer2Percent")
-                    .textContent =
-                    p;
-
-                $("zonePlayer2Score")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPlayer2")
-                    .textContent =
-                    player.name;
-
-                $("listScore2")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPercent2")
-                    .textContent =
-                    p;
-
-            }
-
-            if (index === 2) {
-
-                $("zonePlayer3Name")
-                    .textContent =
-                    player.name;
-
-                $("zonePlayer3Percent")
-                    .textContent =
-                    p;
-
-                $("zonePlayer3Score")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPlayer3")
-                    .textContent =
-                    player.name;
-
-                $("listScore3")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPercent3")
-                    .textContent =
-                    p;
-
-            }
-
-            if (index === 3) {
-
-                $("zonePlayer4Name")
-                    .textContent =
-                    player.name;
-
-                $("zonePlayer4Percent")
-                    .textContent =
-                    p;
-
-                $("zonePlayer4Score")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPlayer4")
-                    .textContent =
-                    player.name;
-
-                $("listScore4")
-                    .textContent =
-                    formatNumber(
-                        player.score
-                    );
-
-                $("listPercent4")
-                    .textContent =
-                    p;
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ROUND LOOP
-   ========================================================= */
-
-function startRoundLoop() {
-
-    if (roundInterval) {
-
-        clearInterval(
-            roundInterval
-        );
-
-    }
-
-    roundPhase = "waiting";
-
-    timer = CONFIG.ROUND_WAIT;
-
-    updateRoundUI();
-
-    roundInterval =
-        setInterval(
-            roundTick,
-            1000
-        );
-
-}
-
-
-function roundTick() {
-
-    timer--;
-
-    updateRoundUI();
-
-    if (timer <= 0) {
-
-        if (roundPhase === "waiting") {
-
-            startSpin();
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   ROUND UI
-   ========================================================= */
-
-function updateRoundUI() {
-
-    $("timerNumber")
-        .textContent =
-        Math.max(
-            0,
-            timer
-        );
-
-    $("timerNumber")
-        .classList.toggle(
-            "warning",
-            timer <= 5
-        );
-
-    if (
-        roundPhase === "waiting"
-    ) {
-
-        $("roundStatus")
-            .textContent =
-            "Приём действий";
-
-        $("joinButton")
-            .disabled =
-            joinedThisRound;
-
-    }
-
-    if (
-        roundPhase === "spinning"
-    ) {
-
-        $("roundStatus")
-            .textContent =
-            "Шар определяет результат";
-
-        $("joinButton")
-            .disabled =
-            true;
-
-    }
-
-}
-
-
-/* =========================================================
-   SPIN
-   ========================================================= */
-
-function startSpin() {
-
-    roundPhase = "spinning";
-
-    timer = 0;
-
-    updateRoundUI();
-
-    $("ball")
-        .classList.add(
-            "spinning"
-        );
-
-    /*
-       Движение шара по нескольким
-       случайным координатам.
-    */
-
-    const arena =
-        $("arena");
-
-    const ball =
-        $("ball");
-
-    const moves = 8;
-
-    let currentMove = 0;
-
-    const moveInterval =
-        setInterval(
-            () => {
-
-                currentMove++;
-
-                const maxX =
-                    arena.clientWidth - 60;
-
-                const maxY =
-                    arena.clientHeight - 60;
-
-                const x =
-                    20 +
-                    Math.random() *
-                    Math.max(
-                        20,
-                        maxX - 20
-                    );
-
-                const y =
-                    20 +
-                    Math.random() *
-                    Math.max(
-                        20,
-                        maxY - 20
-                    );
-
-                ball.style.left =
-                    x + "px";
-
-                ball.style.top =
-                    y + "px";
-
-                if (
-                    currentMove >= moves
-                ) {
-
-                    clearInterval(
-                        moveInterval
-                    );
-
-                }
-
-            },
-            CONFIG.SPIN_TIME / moves
-        );
-
-    spinTimeout =
-        setTimeout(
-            finishRound,
-            CONFIG.SPIN_TIME
-        );
-
-}
-
-
-/* =========================================================
-   FINISH ROUND
-   ========================================================= */
-
-function finishRound() {
-
-    roundPhase = "result";
-
-    $("ball")
-        .classList.remove(
-            "spinning"
-        );
-
-    $("ball")
-        .classList.add(
-            "result"
-        );
-
-    const players =
-        calculatePercentages(
-            calculatePlayers()
-        );
-
-    /*
-       Выбираем результат только
-       как игровой PvP-результат.
-       Никаких выплат или списания.
-    */
-
-    const random =
-        Math.random() * 100;
-
-    let cumulative = 0;
-
-    let winner =
-        players[0];
-
-    for (
-        const player of players
-    ) {
-
-        cumulative +=
-            player.percent;
-
-        if (
-            random <= cumulative
-        ) {
-
-            winner = player;
-
-            break;
-
-        }
-
-    }
-
-    lastResult = winner;
-
-    showResult(
-        winner
-    );
-
-    updateStatsAfterRound(
-        winner
-    );
-
-    vibrateResult();
-
-    createParticles();
-
-    setTimeout(
-        prepareNextRound,
-        2300
-    );
-
-}
-
-
-/* =========================================================
-   RESULT
-   ========================================================= */
-
-function showResult(
-    winner
-) {
-
-    $("resultIcon")
-        .textContent =
-        winner.avatar;
-
-    $("resultTitle")
-        .textContent =
-        winner.name;
-
-    $("resultSub")
-        .textContent =
-        "Результат раунда";
-
-    $("resultOverlay")
-        .classList.add(
-            "show"
-        );
-
-}
-
-
-/* =========================================================
-   NEXT ROUND
-   ========================================================= */
-
-function prepareNextRound() {
-
-    $("resultOverlay")
-        .classList.remove(
-            "show"
-        );
-
-    $("ball")
-        .classList.remove(
-            "result"
-        );
-
-    $("ball").style.left =
-        "50%";
-
-    $("ball").style.top =
-        "50%";
-
-    roundNumber++;
-
-    $("roundNumber")
-        .textContent =
-        "Раунд #" +
-        roundNumber;
-
-    roundPhase = "waiting";
-
-    timer = CONFIG.ROUND_WAIT;
-
-    joinedThisRound = false;
-
-    if (currentUser) {
-
-        currentUser.roundScore = 500;
-
-        saveCurrentUser();
-
-    }
-
-    $("scoreInput")
-        .value = 500;
-
-    $("joinButton")
-        .disabled = false;
-
-    $("joinButton")
-        .textContent =
-        "⚔️ Войти в раунд";
-
-    randomizeDemoPlayers();
-
-    updateZonesPreview();
-
-    updateRoundUI();
-
-}
-
-
-/* =========================================================
-   PLAYER STATS
-   ========================================================= */
-
-function updateStatsAfterRound(
-    winner
-) {
-
-    if (!currentUser) return;
-
-    currentUser.rounds++;
-
-    if (
-        winner.name ===
-        currentUser.username
-    ) {
-
-        currentUser.wins++;
-
-        currentUser.xp += 100;
-
-        showToast(
-            "🏆 Победа! +100 XP"
-        );
-
-    } else {
-
-        currentUser.xp += 20;
-
-        showToast(
-            "⚡ Раунд завершён! +20 XP"
-        );
-
-    }
-
-    currentUser.level =
-        calculateLevel();
-
-    saveCurrentUser();
-
-    updateAllUI();
-
-}
-
-
-/* =========================================================
-   RANDOM DEMO PLAYERS
-   ========================================================= */
-
-function randomizeDemoPlayers() {
-
-    const names = [
-
-        [
-            "FrogMaster",
-            "🐸"
-        ],
-
-        [
-            "FoxPlayer",
-            "🦊"
-        ],
-
-        [
-            "PandaX",
-            "🐼"
-        ],
-
-        [
-            "DarkWolf",
-            "🐺"
-        ],
-
-        [
-            "TigerOne",
-            "🐯"
-        ],
-
-        [
-            "OctoPlay",
-            "🐙"
-        ],
-
-        [
-            "RocketKid",
-            "🚀"
-        ],
-
-        [
-            "NeonCat",
-            "🐱"
-        ]
-
-    ];
-
-    for (
-        let i = 0;
-        i < demoPlayers.length;
-        i++
-    ) {
-
-        const data =
-            names[
-                Math.floor(
-                    Math.random() *
-                    names.length
-                )
-            ];
-
-        demoPlayers[i] = {
-
-            name: data[0],
-
-            avatar: data[1],
-
-            score:
-                Math.floor(
-                    100 +
-                    Math.random() *
-                    700
-                )
-
-        };
-
-    }
-
-}
-
-
-/* =========================================================
-   ONLINE
-   ========================================================= */
-
-function updateOnline() {
-
-    const count =
-        18 +
-        Math.floor(
-            Math.random() * 15
-        );
-
-    $("onlineStat")
-        .textContent =
-        count;
-
-    $("onlineCount")
-        .textContent =
-        count +
-        " онлайн";
-
-    const avatars = [
-        "🐸",
-        "🦊",
-        "🐼",
-        "🐺",
-        "🐯",
-        "🐙",
-        "🚀",
-        "🐱"
-    ];
-
-    $("avatarStack")
-        .innerHTML = "";
-
-    avatars.forEach(
-        avatar => {
-
-            const el =
-                document.createElement(
-                    "div"
-                );
-
-            el.className =
-                "stack-avatar";
-
-            el.textContent =
-                avatar;
-
-            $("avatarStack")
-                .appendChild(el);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   VIBRATION
-   ========================================================= */
-
-function vibrate(pattern) {
-
-    if (!vibrationEnabled) return;
-
-    if (
-        "vibrate" in navigator
-    ) {
-
-        try {
-
-            navigator.vibrate(
-                pattern
-            );
-
-        } catch (error) {}
-
-    }
-
-}
-
-
-function vibrateResult() {
-
-    vibrate(
-        [
-            80,
-            50,
-            120,
-            60,
-            180
-        ]
-    );
-
-}
-
-
-/* =========================================================
-   SOUND
-   ========================================================= */
-
-function playClick() {
-
-    if (!soundEnabled) return;
-
-    try {
-
-        if (!audioContext) {
-
-            audioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
-
-        }
-
-        const oscillator =
-            audioContext
-                .createOscillator();
-
-        const gain =
-            audioContext
-                .createGain();
-
-        oscillator.type =
-            "sine";
-
-        oscillator.frequency.value =
-            520;
-
-        gain.gain.setValueAtTime(
-            .04,
-            audioContext.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            audioContext.currentTime + .08
-        );
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            audioContext.destination
-        );
-
-        oscillator.start();
-
-        oscillator.stop(
-            audioContext.currentTime + .08
-        );
-
-    } catch (error) {}
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function showToast(message) {
-
-    const container =
-        $("toastContainer");
-
-    const toast =
-        document.createElement(
-            "div"
-        );
-
-    toast.className =
-        "toast";
-
-    toast.textContent =
-        message;
-
-    container.appendChild(
-        toast
-    );
-
-    setTimeout(
-        () => {
-
-            toast.remove();
-
-        },
-        3200
-    );
-
-}
-
-
-/* =========================================================
-   PARTICLES
-   ========================================================= */
-
-function createParticles() {
-
-    const amount = 28;
-
-    for (
-        let i = 0;
-        i < amount;
-        i++
-    ) {
-
-        const p =
-            document.createElement(
-                "div"
-            );
-
-        p.className =
-            "particle";
-
-        p.style.left =
-            (
-                window.innerWidth / 2
-            ) + "px";
-
-        p.style.top =
-            (
-                window.innerHeight / 2
-            ) + "px";
-
-        p.style.setProperty(
-            "--dx",
-            (
-                Math.random() *
-                260 -
-                130
-            ) + "px"
-        );
-
-        p.style.setProperty(
-            "--dy",
-            (
-                Math.random() *
-                260 -
-                130
-            ) + "px"
-        );
-
-        document.body
-            .appendChild(p);
-
-        setTimeout(
-            () => p.remove(),
-            900
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SHOP
-   ========================================================= */
-
-function buySkin(
-    skin,
-    price
-) {
-
-    if (!currentUser) return;
-
-    if (
-        currentUser.skins
-            .includes(skin)
-    ) {
-
-        currentUser.selectedSkin =
-            skin;
-
-        updateProfile();
-
-        showToast(
-            "Скин выбран"
-        );
-
-        return;
-
-    }
-
-    if (
-        currentUser.balance <
-        price
-    ) {
-
-        showToast(
-            "Недостаточно jCoin"
-        );
-
-        return;
-
-    }
-
-    /*
-       В магазине jCoin используются
-       только для покупки косметики.
-    */
-
-    currentUser.balance -=
-        price;
-
-    currentUser.skins.push(
-        skin
-    );
-
-    currentUser.selectedSkin =
-        skin;
-
-    saveCurrentUser();
-
-    updateAllUI();
-
-    showToast(
-        "🎨 Скин куплен!"
-    );
-
-}
-
-
-/* =========================================================
-   SETTINGS
-   ========================================================= */
-
-function toggleVibration() {
-
-    vibrationEnabled =
-        !vibrationEnabled;
-
-    const settings =
-        getSettings();
-
-    settings.vibration =
-        vibrationEnabled;
-
-    saveSettings(
-        settings
-    );
-
-    $("vibrationToggle")
-        .textContent =
-        vibrationEnabled
-            ? "ON"
-            : "OFF";
-
-    vibrate(40);
-
-}
-
-
-function toggleSound() {
-
-    soundEnabled =
-        !soundEnabled;
-
-    const settings =
-        getSettings();
-
-    settings.sound =
-        soundEnabled;
-
-    saveSettings(
-        settings
-    );
-
-    $("soundToggle")
-        .textContent =
-        soundEnabled
-            ? "ON"
-            : "OFF";
-
-    playClick();
-
-}
-
-
-/* =========================================================
-   MODALS
-   ========================================================= */
-
-function openModal(id) {
-
-    $(id)
-        .classList.add(
-            "open"
-        );
-
-}
-
-
-function closeModal(id) {
-
-    $(id)
-        .classList.remove(
-            "open"
-        );
-
-}
-
-
-function closeModalOutside(event) {
-
-    if (
-        event.target ===
-        event.currentTarget
-    ) {
-
-        event.currentTarget
-            .classList.remove(
-                "open"
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   UPDATE ALL UI
-   ========================================================= */
-
-function updateAllUI() {
-
-    if (!currentUser) return;
-
-    updateBalance();
-
-    updateLevel();
-
-    updateStats();
-
-    updateProfile();
-
-    updateOnline();
-
-    updateZonesPreview();
-
-}
-
-
-/* =========================================================
-   LOAD SETTINGS
-   ========================================================= */
-
-function loadSettings() {
-
-    const settings =
-        getSettings();
-
-    if (
-        typeof settings.vibration ===
-        "boolean"
-    ) {
-
-        vibrationEnabled =
-            settings.vibration;
-
-    }
-
-    if (
-        typeof settings.sound ===
-        "boolean"
-    ) {
-
-        soundEnabled =
-            settings.sound;
-
-    }
-
-    $("vibrationToggle")
-        .textContent =
-        vibrationEnabled
-            ? "ON"
-            : "OFF";
-
-    $("soundToggle")
-        .textContent =
-        soundEnabled
-            ? "ON"
-            : "OFF";
-
-}
-
-
-/* =========================================================
-   INPUT LIMIT
-   ========================================================= */
-
-$("scoreInput")
-    .addEventListener(
-        "input",
-        function() {
-
-            let value =
-                Number(
-                    this.value
-                );
-
-            if (
-                value >
-                CONFIG.MAX_SCORE
-            ) {
-
-                value =
-                    CONFIG.MAX_SCORE;
-
-                this.value =
-                    value;
-
-            }
-
-            updateZonesPreview();
-
-        }
-    );
-
-
-/* =========================================================
-   BUTTON CLICK FEEDBACK
-   ========================================================= */
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target.closest(
-                "button"
-            )
-        ) {
-
-            playClick();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   PREVENT ACCIDENTAL ZOOM
-   ========================================================= */
-
-document.addEventListener(
-    "gesturestart",
-    function(event) {
-
-        event.preventDefault();
-
-    }
-);
-
-
-/* =========================================================
-   SWIPE PROTECTION
-   ========================================================= */
-
-let touchStartY = 0;
-
-document.addEventListener(
-    "touchstart",
-    function(event) {
-
-        if (
-            event.touches.length === 1
-        ) {
-
-            touchStartY =
-                event.touches[0].clientY;
-
-        }
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-document.addEventListener(
-    "touchmove",
-    function(event) {
-
-        if (
-            event.touches.length !== 1
-        ) return;
-
-        const y =
-            event.touches[0].clientY;
-
-        const diff =
-            y - touchStartY;
-
-        /*
-           Не блокируем обычную прокрутку.
-        */
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-/* =========================================================
-   KEYBOARD SHORTCUTS
-   ========================================================= */
+/* ESC */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(e){
 
-        if (
-            event.key === "Enter" &&
-            document.activeElement ===
-            $("scoreInput")
-        ) {
-
-            joinRound();
-
-        }
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            document
-                .querySelectorAll(
-                    ".modal.open"
-                )
-                .forEach(
-                    modal =>
-                        modal.classList
-                            .remove("open")
-                );
-
+        if(e.key === "Escape"){
+            closeModal();
         }
 
     }
 );
-
-
-/* =========================================================
-   VISIBILITY
-   ========================================================= */
-
-document.addEventListener(
-    "visibilitychange",
-    function() {
-
-        if (
-            document.visibilityState ===
-            "visible"
-        ) {
-
-            updateOnline();
-
-            updateZonesPreview();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   RANDOM ONLINE UPDATE
-   ========================================================= */
-
-setInterval(
-    function() {
-
-        if (
-            currentUser &&
-            !$("app")
-                .classList
-                .contains("hidden")
-        ) {
-
-            updateOnline();
-
-        }
-
-    },
-    7000
-);
-
-
-/* =========================================================
-   SPLASH START
-   ========================================================= */
-
-setTimeout(
-    function() {
-
-        $("splash")
-            .classList.add(
-                "hide"
-            );
-
-        setTimeout(
-            function() {
-
-                loadSettings();
-
-                checkSession();
-
-            },
-            450
-        );
-
-    },
-    1800
-);
-
-
-/* =========================================================
-   INITIAL DEMO VALUES
-   ========================================================= */
-
-updateZonesPreview();
-
-
-/* =========================================================
-   EXTRA VISUAL LOOP
-   ========================================================= */
-
-let visualTime = 0;
-
-function visualLoop() {
-
-    visualTime += .016;
-
-    const ball =
-        $("ball");
-
-    if (
-        ball &&
-        roundPhase === "waiting"
-    ) {
-
-        const scale =
-            1 +
-            Math.sin(
-                visualTime * 2
-            ) * .025;
-
-        ball.style.transform =
-            "scale(" +
-            scale +
-            ")";
-
-    }
-
-    requestAnimationFrame(
-        visualLoop
-    );
-
-}
-
-visualLoop();
-
-
-/* =========================================================
-   AUTO SAVE
-   ========================================================= */
-
-setInterval(
-    function() {
-
-        if (currentUser) {
-
-            saveCurrentUser();
-
-        }
-
-    },
-    10000
-);
-
-
-/* =========================================================
-   EXTRA PLAYER ACTIVITY
-   ========================================================= */
-
-setInterval(
-    function() {
-
-        if (
-            roundPhase === "waiting"
-        ) {
-
-            /*
-               Демо-игроки иногда меняют
-               размер визуальной зоны.
-            */
-
-            demoPlayers.forEach(
-                player => {
-
-                    const change =
-                        Math.floor(
-                            Math.random() *
-                            101
-                        ) - 50;
-
-                    player.score =
-                        Math.max(
-                            100,
-                            player.score +
-                            change
-                        );
-
-                }
-            );
-
-            updateZonesPreview();
-
-        }
-
-    },
-    3500
-);
-
-
-/* =========================================================
-   MOBILE APP FEEL
-   ========================================================= */
-
-window.addEventListener(
-    "resize",
-    function() {
-
-        updateZonesPreview();
-
-    }
-);
-
-
-/* =========================================================
-   FINAL INIT
-   ========================================================= */
-
-(function init() {
-
-    roundNumber =
-        1001 +
-        Math.floor(
-            Math.random() * 100
-        );
-
-    $("roundNumber")
-        .textContent =
-        "Раунд #" +
-        roundNumber;
-
-    updateOnline();
-
-})();
-
-
-/* =========================================================
-   END JAVASCRIPT
-   ========================================================= */
 
 </script>
 
