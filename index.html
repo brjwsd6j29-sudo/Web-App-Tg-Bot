@@ -3,783 +3,1445 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07080c">
-
-<title>Lira Game — Telegram Bot Project</title>
+<meta name="theme-color" content="#080b12">
+<title>Romb — Форум</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Inter,Arial,sans-serif;
-    background:#06070a;
-    color:#fff;
-    overflow-x:hidden;
-}
-
-body:before{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:radial-gradient(circle,rgba(120,80,255,.13),transparent 65%);
-    top:-300px;
-    left:-250px;
-    pointer-events:none;
-    z-index:-1;
-}
-
-body:after{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:radial-gradient(circle,rgba(0,190,255,.09),transparent 65%);
-    right:-300px;
-    bottom:-300px;
-    pointer-events:none;
-    z-index:-1;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-button{
-    font-family:inherit;
-}
-
-/* HEADER */
-
-.header{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:72px;
-    z-index:1000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(6,7,10,.72);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-.nav{
-    width:min(1150px,92%);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    font-weight:800;
-    font-size:20px;
-}
-
-.logo-icon{
-    width:40px;
-    height:40px;
-    border-radius:13px;
-    display:grid;
-    place-items:center;
-    background:linear-gradient(135deg,#7c4dff,#3f8cff);
-    box-shadow:0 0 30px rgba(100,70,255,.35);
-}
-
-.nav-links{
-    display:flex;
-    gap:26px;
-    color:#999;
-    font-size:14px;
-}
-
-.nav-links a{
-    transition:.25s;
-}
-
-.nav-links a:hover{
-    color:#fff;
-}
-
-.nav-btn{
-    padding:11px 18px;
-    border-radius:12px;
-    background:#fff;
-    color:#000;
-    font-size:13px;
-    font-weight:800;
-}
-
-/* HERO */
-
-.hero{
-    min-height:760px;
-    padding-top:160px;
-    width:min(1150px,92%);
-    margin:auto;
-    display:flex;
-    align-items:center;
-    position:relative;
-}
-
-.hero-content{
-    width:65%;
-}
-
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 14px;
-    border-radius:999px;
-    background:rgba(124,77,255,.1);
-    border:1px solid rgba(124,77,255,.25);
-    color:#bdaeff;
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:25px;
-}
-
-.dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#62ff9b;
-    box-shadow:0 0 12px #62ff9b;
-}
-
-.hero h1{
-    font-size:clamp(48px,7vw,88px);
-    line-height:.95;
-    letter-spacing:-5px;
-    margin-bottom:28px;
-}
-
-.gradient{
-    background:linear-gradient(90deg,#fff,#a995ff,#62cfff);
-    -webkit-background-clip:text;
-    color:transparent;
-}
-
-.hero p{
-    max-width:650px;
-    color:#9499a5;
-    font-size:18px;
-    line-height:1.7;
-    margin-bottom:35px;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:13px;
-    flex-wrap:wrap;
-}
-
-.btn{
-    padding:15px 23px;
-    border-radius:14px;
-    font-size:14px;
-    font-weight:800;
-    border:1px solid rgba(255,255,255,.1);
-    transition:.25s;
-    cursor:pointer;
-}
-
-.btn-primary{
-    background:#fff;
-    color:#000;
-}
-
-.btn-primary:hover{
-    transform:translateY(-2px);
-    box-shadow:0 15px 35px rgba(255,255,255,.12);
-}
-
-.btn-dark{
-    background:rgba(255,255,255,.04);
-    color:#fff;
-}
-
-.btn-dark:hover{
-    background:rgba(255,255,255,.08);
-}
-
-.hero-card{
-    position:absolute;
-    right:0;
-    width:330px;
-    height:420px;
-    border-radius:28px;
-    padding:24px;
-    background:linear-gradient(145deg,#11131b,#090a0e);
-    border:1px solid rgba(255,255,255,.09);
-    box-shadow:0 40px 100px rgba(0,0,0,.55);
-    transform:rotate(4deg);
-}
-
-.phone-top{
-    display:flex;
-    justify-content:space-between;
-    color:#777;
-    font-size:11px;
-    margin-bottom:30px;
-}
-
-.bot-avatar{
-    width:80px;
-    height:80px;
-    margin:auto;
-    border-radius:25px;
-    display:grid;
-    place-items:center;
-    font-size:38px;
-    background:linear-gradient(135deg,#6c45ff,#238dff);
-    box-shadow:0 15px 40px rgba(90,60,255,.3);
-}
-
-.hero-card h3{
-    text-align:center;
-    margin-top:17px;
-}
-
-.hero-card small{
-    display:block;
-    text-align:center;
-    color:#777;
-    margin-top:6px;
-}
-
-.balance{
-    margin-top:25px;
-    padding:18px;
-    border-radius:18px;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.06);
-}
-
-.balance span{
-    display:block;
-    color:#777;
-    font-size:11px;
-    margin-bottom:5px;
-}
-
-.balance strong{
-    font-size:26px;
-}
-
-.mini-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-    margin-top:10px;
-}
-
-.mini-buttons div{
-    background:#151720;
-    border-radius:11px;
-    padding:11px;
-    text-align:center;
-    font-size:11px;
-    color:#bbb;
-}
-
-/* GENERAL */
-
-.section{
-    width:min(1150px,92%);
-    margin:auto;
-    padding:100px 0;
-}
-
-.section-head{
-    margin-bottom:45px;
-}
-
-.section-head span{
-    color:#8e75ff;
-    font-size:12px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:2px;
-}
-
-.section-head h2{
-    margin-top:12px;
-    font-size:42px;
-    letter-spacing:-2px;
-}
-
-.section-head p{
-    color:#777d89;
-    margin-top:12px;
-    line-height:1.6;
-}
-
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-}
-
-.stat{
-    padding:28px;
-    border:1px solid rgba(255,255,255,.07);
-    background:rgba(255,255,255,.025);
-    border-radius:20px;
-}
-
-.stat strong{
-    display:block;
-    font-size:34px;
-    margin-bottom:7px;
-}
-
-.stat span{
-    color:#777;
-    font-size:13px;
-}
-
-/* FEATURES */
-
-.features{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.feature{
-    min-height:210px;
-    padding:25px;
-    border-radius:22px;
-    background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
-    border:1px solid rgba(255,255,255,.07);
-    transition:.3s;
-}
-
-.feature:hover{
-    transform:translateY(-5px);
-    border-color:rgba(142,117,255,.3);
-}
-
-.feature-icon{
-    width:45px;
-    height:45px;
-    border-radius:14px;
-    display:grid;
-    place-items:center;
-    background:rgba(124,77,255,.12);
-    font-size:22px;
-    margin-bottom:18px;
-}
-
-.feature h3{
-    margin-bottom:9px;
-    font-size:18px;
-}
-
-.feature p{
-    color:#7e838e;
-    font-size:13px;
-    line-height:1.6;
-}
-
-/* GAMES */
-
-.games{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.game{
-    padding:20px;
-    min-height:150px;
-    border-radius:18px;
-    background:#0c0e13;
-    border:1px solid rgba(255,255,255,.07);
-    cursor:pointer;
-    transition:.25s;
-}
-
-.game:hover{
-    background:#11131a;
-    transform:translateY(-3px);
-    border-color:rgba(142,117,255,.25);
-}
-
-.game-icon{
-    font-size:29px;
-    margin-bottom:17px;
-}
-
-.game h3{
-    font-size:15px;
-}
-
-.game p{
-    color:#686e79;
-    font-size:11px;
-    margin-top:5px;
-}
-
-/* ADMIN */
-
-.admin-layout{
-    display:grid;
-    grid-template-columns:280px 1fr;
-    gap:18px;
-}
-
-.admin-menu{
-    padding:15px;
-    border-radius:22px;
-    background:#0b0d12;
-    border:1px solid rgba(255,255,255,.07);
-}
-
-.admin-menu button{
-    width:100%;
-    text-align:left;
-    padding:13px 15px;
-    margin-bottom:5px;
-    border:0;
-    border-radius:11px;
-    color:#999;
-    background:transparent;
-    cursor:pointer;
-}
-
-.admin-menu button:hover,
-.admin-menu button.active{
-    color:#fff;
-    background:rgba(124,77,255,.12);
-}
-
-.admin-window{
-    min-height:420px;
-    padding:28px;
-    border-radius:22px;
-    background:#0b0d12;
-    border:1px solid rgba(255,255,255,.07);
-}
-
-.admin-title{
-    font-size:22px;
-    margin-bottom:22px;
-}
-
-.admin-cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.admin-card{
-    padding:18px;
-    background:rgba(255,255,255,.035);
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,.05);
-}
-
-.admin-card strong{
-    display:block;
-    margin-bottom:7px;
-}
-
-.admin-card span{
-    color:#727782;
-    font-size:12px;
-    line-height:1.5;
-}
-
-/* COMMANDS */
-
-.commands{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.command-box{
-    background:#0b0d12;
-    border:1px solid rgba(255,255,255,.07);
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.command-head{
-    padding:17px 20px;
-    border-bottom:1px solid rgba(255,255,255,.06);
-    font-weight:800;
-}
-
-.command-list{
-    padding:8px;
-}
-
-.command{
-    padding:12px;
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    border-radius:9px;
-}
-
-.command:hover{
-    background:rgba(255,255,255,.035);
-}
-
-.command code{
-    color:#a995ff;
-    font-family:monospace;
-}
-
-.command span{
-    color:#666c77;
-    font-size:11px;
-    text-align:right;
-}
-
-/* DATABASE */
-
-.database{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.db-card{
-    padding:25px;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.07);
-    background:#0b0d12;
-}
-
-.db-card h3{
-    margin-bottom:12px;
-}
-
-.db-card p{
-    color:#777d88;
-    font-size:13px;
-    line-height:1.7;
-}
-
-.tag{
-    display:inline-block;
-    padding:6px 9px;
-    margin:3px;
-    border-radius:8px;
-    background:rgba(124,77,255,.1);
-    color:#aaa0ff;
-    font-size:10px;
-}
-
-/* SALE */
-
-.sale{
-    padding:75px 40px;
-    text-align:center;
-    border-radius:30px;
+/* =========================================================
+   ROMB FORUM
+   ========================================================= */
+
+:root {
+    --bg: #070a10;
+    --bg2: #0b0f18;
+    --panel: #101520;
+    --panel2: #151b28;
+    --panel3: #1a2130;
+    --border: rgba(255,255,255,.07);
+    --border2: rgba(255,255,255,.12);
+    --text: #f5f7fb;
+    --muted: #8b94a7;
+    --muted2: #626b7d;
+    --blue: #4c8dff;
+    --blue2: #6ea4ff;
+    --purple: #8b5cf6;
+    --green: #39d98a;
+    --red: #ff5d6c;
+    --yellow: #f5c451;
+    --orange: #ff9d4d;
+    --shadow: 0 20px 60px rgba(0,0,0,.35);
+    --radius: 18px;
+    --radius2: 12px;
+    --max: 1420px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
     background:
-        radial-gradient(circle at 50% 0%,rgba(125,80,255,.22),transparent 55%),
-        #0b0d12;
-    border:1px solid rgba(255,255,255,.08);
+        radial-gradient(circle at 15% 10%, rgba(76,141,255,.10), transparent 28%),
+        radial-gradient(circle at 85% 5%, rgba(139,92,246,.08), transparent 25%),
+        var(--bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    overflow-x: hidden;
 }
 
-.sale h2{
-    font-size:48px;
-    letter-spacing:-2px;
-    margin-bottom:15px;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
-.sale p{
-    max-width:650px;
-    margin:auto;
-    color:#777d89;
-    line-height:1.7;
+button {
+    cursor: pointer;
 }
 
-.sale-buttons{
-    margin-top:30px;
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* FOOTER */
-
-footer{
-    border-top:1px solid rgba(255,255,255,.06);
-    padding:35px 0;
-    color:#555b65;
-    font-size:12px;
+::selection {
+    background: rgba(76,141,255,.35);
 }
 
-.footer-inner{
-    width:min(1150px,92%);
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:2000;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(10px);
+::-webkit-scrollbar-track {
+    background: #080b11;
 }
 
-.modal.show{
-    display:flex;
+::-webkit-scrollbar-thumb {
+    background: #252d3d;
+    border-radius: 20px;
 }
 
-.modal-box{
-    width:min(600px,100%);
-    max-height:85vh;
-    overflow:auto;
-    padding:30px;
-    border-radius:25px;
-    background:#0d0f15;
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 40px 100px #000;
+::-webkit-scrollbar-thumb:hover {
+    background: #364158;
 }
 
-.modal-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    background: rgba(7,10,16,.82);
+    border-bottom: 1px solid var(--border);
 }
 
-.close{
-    width:35px;
-    height:35px;
-    border:0;
-    border-radius:10px;
-    background:#181a21;
-    color:#aaa;
-    cursor:pointer;
+.topbar-inner {
+    width: min(var(--max), calc(100% - 32px));
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
 
-.modal-content{
-    color:#858b96;
-    line-height:1.7;
-    font-size:14px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 180px;
 }
 
-.modal-content ul{
-    padding-left:20px;
-    margin-top:12px;
+.logo-mark {
+    width: 39px;
+    height: 39px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(135deg, #5b9bff, #754cff);
+    box-shadow:
+        0 8px 28px rgba(76,141,255,.30);
+    font-size: 20px;
+    font-weight: 900;
+    transform: rotate(0deg);
 }
 
-.modal-content li{
-    margin:7px 0;
+.logo-text {
+    font-weight: 850;
+    letter-spacing: -.4px;
+    font-size: 20px;
 }
 
-/* RESPONSIVE */
-
-@media(max-width:900px){
-
-    .hero{
-        min-height:auto;
-        padding-top:140px;
-        padding-bottom:90px;
-    }
-
-    .hero-content{
-        width:100%;
-    }
-
-    .hero-card{
-        display:none;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .features{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .games{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .admin-layout{
-        grid-template-columns:1fr;
-    }
-
-    .nav-links{
-        display:none;
-    }
-
+.logo-text span {
+    color: var(--blue2);
 }
 
-@media(max-width:600px){
+/* =========================================================
+   SEARCH
+   ========================================================= */
 
-    .hero h1{
-        font-size:52px;
-        letter-spacing:-3px;
+.search-wrap {
+    flex: 1;
+    max-width: 620px;
+    position: relative;
+}
+
+.search {
+    width: 100%;
+    height: 43px;
+    padding: 0 45px 0 43px;
+    border-radius: 13px;
+    outline: none;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.045);
+    color: var(--text);
+    transition: .2s;
+}
+
+.search:focus {
+    border-color: rgba(76,141,255,.5);
+    background: rgba(255,255,255,.065);
+    box-shadow: 0 0 0 4px rgba(76,141,255,.08);
+}
+
+.search::placeholder {
+    color: var(--muted2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+}
+
+.search-key {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted2);
+    font-size: 11px;
+    border: 1px solid var(--border);
+    padding: 4px 7px;
+    border-radius: 6px;
+}
+
+/* =========================================================
+   TOP ACTIONS
+   ========================================================= */
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.035);
+    color: var(--muted);
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    transition: .2s;
+}
+
+.icon-btn:hover {
+    color: var(--text);
+    background: rgba(255,255,255,.07);
+    border-color: var(--border2);
+    transform: translateY(-1px);
+}
+
+.profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 4px 8px 4px 4px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: rgba(255,255,255,.035);
+    cursor: pointer;
+}
+
+.profile-mini:hover {
+    background: rgba(255,255,255,.065);
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 11px;
+    object-fit: cover;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    background:
+        linear-gradient(135deg,#253758,#5b77b7);
+}
+
+.profile-mini-name {
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.profile-mini-status {
+    color: var(--green);
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.page {
+    width: min(var(--max), calc(100% - 32px));
+    margin: 28px auto 80px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr) 300px;
+    gap: 22px;
+    align-items: start;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: sticky;
+    top: 94px;
+}
+
+.side-section {
+    margin-bottom: 22px;
+}
+
+.side-title {
+    color: var(--muted2);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin: 0 0 9px 12px;
+}
+
+.side-nav {
+    display: grid;
+    gap: 3px;
+}
+
+.side-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 11px 12px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-align: left;
+    transition: .18s;
+}
+
+.side-item:hover {
+    background: rgba(255,255,255,.045);
+    color: var(--text);
+}
+
+.side-item.active {
+    background: rgba(76,141,255,.12);
+    color: #dce8ff;
+}
+
+.side-item.active .side-icon {
+    color: var(--blue2);
+}
+
+.side-icon {
+    width: 20px;
+    text-align: center;
+    color: var(--muted2);
+}
+
+.side-count {
+    margin-left: auto;
+    color: var(--muted2);
+    font-size: 11px;
+}
+
+/* =========================================================
+   MAIN HEADER
+   ========================================================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    min-height: 210px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(117,76,255,.20), transparent 34%),
+        radial-gradient(circle at 65% 100%, rgba(76,141,255,.12), transparent 38%),
+        linear-gradient(135deg,#101827,#0d121d);
+    box-shadow: var(--shadow);
+}
+
+.hero::after {
+    content: "◆";
+    position: absolute;
+    right: 55px;
+    top: 30px;
+    font-size: 110px;
+    color: rgba(255,255,255,.025);
+    transform: rotate(45deg);
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px;
+    border: 1px solid rgba(76,141,255,.2);
+    background: rgba(76,141,255,.08);
+    border-radius: 999px;
+    color: #a9c8ff;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.hero h1 {
+    margin-top: 14px;
+    font-size: clamp(26px, 4vw, 42px);
+    line-height: 1;
+    letter-spacing: -1.7px;
+}
+
+.hero p {
+    margin-top: 12px;
+    color: var(--muted);
+    max-width: 650px;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 9px;
+    margin-top: 22px;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    height: 40px;
+    border-radius: 11px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.045);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+    transition: .18s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.075);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,#4d8eff,#7054ed);
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(76,141,255,.20);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 11px 30px rgba(76,141,255,.28);
+}
+
+/* =========================================================
+   SECTION BAR
+   ========================================================= */
+
+.section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 26px 2px 11px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.3px;
+}
+
+.section-sub {
+    color: var(--muted2);
+    font-size: 12px;
+}
+
+.sort {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--muted);
+    padding: 8px 11px;
+    border-radius: 9px;
+    outline: none;
+}
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+}
+
+.category {
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: rgba(255,255,255,.025);
+    transition: .2s;
+    cursor: pointer;
+}
+
+.category:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.045);
+    border-color: var(--border2);
+}
+
+.category-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.category-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(76,141,255,.10);
+    font-size: 18px;
+}
+
+.category h3 {
+    font-size: 13px;
+}
+
+.category p {
+    color: var(--muted2);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.category-stat {
+    margin-left: auto;
+    color: var(--muted2);
+    font-size: 11px;
+}
+
+/* =========================================================
+   TOPIC LIST
+   ========================================================= */
+
+.topic-list {
+    display: grid;
+    gap: 7px;
+}
+
+.topic {
+    display: grid;
+    grid-template-columns: 43px minmax(0,1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    border-radius: 14px;
+    transition: .18s;
+    cursor: pointer;
+}
+
+.topic:hover {
+    background: rgba(255,255,255,.05);
+    border-color: var(--border2);
+    transform: translateX(2px);
+}
+
+.topic-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #151d2b;
+    color: var(--blue2);
+    font-size: 18px;
+}
+
+.topic-main {
+    min-width: 0;
+}
+
+.topic-title {
+    font-weight: 760;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topic-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted2);
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.topic-meta .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--muted2);
+}
+
+.topic-right {
+    text-align: right;
+    min-width: 75px;
+}
+
+.topic-replies {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.topic-time {
+    color: var(--muted2);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: rgba(76,141,255,.10);
+    color: #8fb9ff;
+    font-size: 9px;
+    font-weight: 750;
+}
+
+.tag.green {
+    background: rgba(57,217,138,.09);
+    color: #6fe3aa;
+}
+
+.tag.red {
+    background: rgba(255,93,108,.09);
+    color: #ff8792;
+}
+
+.tag.yellow {
+    background: rgba(245,196,81,.09);
+    color: #f6d477;
+}
+
+/* =========================================================
+   RIGHT PANEL
+   ========================================================= */
+
+.right-card {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.card-link {
+    color: var(--blue2);
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 7px;
+}
+
+.stat {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: rgba(255,255,255,.02);
+}
+
+.stat-value {
+    font-size: 19px;
+    font-weight: 850;
+}
+
+.stat-label {
+    color: var(--muted2);
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+/* =========================================================
+   ONLINE USERS
+   ========================================================= */
+
+.online-user {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 0;
+}
+
+.online-user + .online-user {
+    border-top: 1px solid var(--border);
+}
+
+.online-avatar {
+    position: relative;
+}
+
+.online-avatar::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    right: -1px;
+    bottom: -1px;
+    border: 2px solid var(--panel);
+    background: var(--green);
+    border-radius: 50%;
+}
+
+.user-name {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.user-role {
+    color: var(--muted2);
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   RANKING
+   ========================================================= */
+
+.rank-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+}
+
+.rank-num {
+    width: 20px;
+    color: var(--muted2);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.rank-info {
+    flex: 1;
+}
+
+.rank-name {
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.rank-coins {
+    color: #7db0ff;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.rank-level {
+    color: var(--yellow);
+    font-size: 10px;
+}
+
+/* =========================================================
+   ANNOUNCEMENT
+   ========================================================= */
+
+.announcement {
+    padding: 13px;
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg,rgba(76,141,255,.10),rgba(139,92,246,.08));
+    border: 1px solid rgba(76,141,255,.14);
+}
+
+.announcement-title {
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.announcement-text {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.55;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0,0,0,.68);
+    backdrop-filter: blur(12px);
+}
+
+.modal-overlay.active {
+    display: flex;
+    animation: fadeIn .18s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal {
+    width: min(700px,100%);
+    max-height: 90vh;
+    overflow: auto;
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    background: #0d121b;
+    box-shadow: 0 30px 100px rgba(0,0,0,.6);
+    animation: modalIn .2s ease;
+}
+
+@keyframes modalIn {
+    from {
+        transform: translateY(12px) scale(.98);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-head {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.modal-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 750;
+    margin-bottom: 7px;
+    color: #c7cfdd;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: #090d14;
+    color: var(--text);
+    border-radius: 11px;
+    outline: none;
+    padding: 12px 13px;
+}
+
+.input:focus,
+.textarea:focus {
+    border-color: rgba(76,141,255,.5);
+    box-shadow: 0 0 0 3px rgba(76,141,255,.07);
+}
+
+.textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast-container {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 900;
+    display: grid;
+    gap: 8px;
+}
+
+.toast {
+    width: min(360px, calc(100vw - 36px));
+    padding: 13px 15px;
+    border: 1px solid var(--border2);
+    border-radius: 13px;
+    background: #111722;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    animation: toastIn .22s ease;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toast-title {
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.toast-text {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+/* =========================================================
+   THREAD VIEW
+   ========================================================= */
+
+.thread {
+    display: none;
+}
+
+.thread.active {
+    display: block;
+}
+
+.forum-home.hidden {
+    display: none;
+}
+
+.thread-head {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: rgba(255,255,255,.025);
+}
+
+.thread-breadcrumb {
+    color: var(--muted2);
+    font-size: 10px;
+    margin-bottom: 12px;
+}
+
+.thread-title {
+    font-size: 25px;
+    letter-spacing: -.8px;
+}
+
+.thread-info {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 9px;
+}
+
+.post {
+    display: grid;
+    grid-template-columns: 155px minmax(0,1fr);
+    margin-top: 9px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,.025);
+}
+
+.post-user {
+    padding: 20px;
+    background: rgba(255,255,255,.018);
+    border-right: 1px solid var(--border);
+    text-align: center;
+}
+
+.post-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    font-size: 21px;
+    font-weight: 900;
+    background: linear-gradient(135deg,#304d81,#6c5ad2);
+}
+
+.post-name {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.post-role {
+    color: var(--blue2);
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+.post-coins {
+    color: var(--muted2);
+    font-size: 9px;
+    margin-top: 8px;
+}
+
+.post-content {
+    padding: 20px;
+}
+
+.post-date {
+    color: var(--muted2);
+    font-size: 9px;
+    margin-bottom: 15px;
+}
+
+.post-text {
+    color: #d7dce6;
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+.post-actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 20px;
+}
+
+.post-action {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 10px;
+}
+
+.post-action:hover {
+    color: var(--text);
+    background: rgba(255,255,255,.05);
+}
+
+.post-action.liked {
+    color: #ff7080;
+    border-color: rgba(255,93,108,.2);
+    background: rgba(255,93,108,.07);
+}
+
+/* =========================================================
+   PROFILE MODAL
+   ========================================================= */
+
+.profile-cover {
+    height: 130px;
+    background:
+        radial-gradient(circle at 70% 30%,rgba(139,92,246,.35),transparent 30%),
+        linear-gradient(135deg,#172541,#101521);
+}
+
+.profile-body {
+    padding: 0 20px 22px;
+}
+
+.profile-big-avatar {
+    width: 84px;
+    height: 84px;
+    margin-top: -42px;
+    border: 5px solid #0d121b;
+    border-radius: 25px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#477df0,#7553dc);
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: 850;
+    margin-top: 9px;
+}
+
+.profile-handle {
+    color: var(--muted2);
+    font-size: 11px;
+}
+
+.profile-bio {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.profile-stat {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    border-radius: 11px;
+    padding: 11px;
+}
+
+.profile-stat strong {
+    display: block;
+    font-size: 15px;
+}
+
+.profile-stat span {
+    color: var(--muted2);
+    font-size: 9px;
+}
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notifications {
+    position: absolute;
+    top: 57px;
+    right: 0;
+    width: 310px;
+    display: none;
+    padding: 8px;
+    border: 1px solid var(--border2);
+    border-radius: 15px;
+    background: #0e141e;
+    box-shadow: var(--shadow);
+}
+
+.notifications.active {
+    display: block;
+}
+
+.notification {
+    display: flex;
+    gap: 9px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.notification:hover {
+    background: rgba(255,255,255,.04);
+}
+
+.notification-icon {
+    width: 31px;
+    height: 31px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    background: rgba(76,141,255,.10);
+}
+
+.notification-text {
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.notification-time {
+    color: var(--muted2);
+    font-size: 8px;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.empty {
+    display: none;
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted2);
+}
+
+.empty-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.empty-title {
+    color: var(--text);
+    font-weight: 800;
+}
+
+.empty-text {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    margin-top: 50px;
+    padding: 25px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted2);
+    font-size: 10px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1120px) {
+    .layout {
+        grid-template-columns: 190px minmax(0,1fr);
     }
 
-    .hero p{
-        font-size:15px;
+    .right-column {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .topbar {
+        height: 62px;
     }
 
-    .section{
-        padding:70px 0;
+    .topbar-inner {
+        width: calc(100% - 20px);
+        gap: 8px;
     }
 
-    .section-head h2{
-        font-size:32px;
+    .logo {
+        min-width: auto;
     }
 
-    .stats,
-    .features,
-    .games,
-    .commands,
-    .database{
-        grid-template-columns:1fr;
+    .logo-text {
+        display: none;
     }
 
-    .sale{
-        padding:50px 20px;
+    .search-wrap {
+        max-width: none;
     }
 
-    .sale h2{
-        font-size:35px;
+    .search-key {
+        display: none;
     }
 
-    .footer-inner{
-        flex-direction:column;
-        gap:10px;
+    .profile-mini {
+        padding: 3px;
+    }
+
+    .profile-mini-name,
+    .profile-mini-status {
+        display: none;
+    }
+
+    .page {
+        width: calc(100% - 18px);
+        margin-top: 12px;
+    }
+
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        display: flex;
+        overflow-x: auto;
+        position: static;
+        margin-bottom: 10px;
+        padding-bottom: 3px;
+    }
+
+    .side-section {
+        display: flex;
+        gap: 5px;
+        margin: 0;
+    }
+
+    .side-title {
+        display: none;
+    }
+
+    .side-nav {
+        display: flex;
+        gap: 5px;
+    }
+
+    .side-item {
+        width: auto;
+        white-space: nowrap;
+        padding: 9px 11px;
+    }
+
+    .side-count {
+        display: none;
+    }
+
+    .hero {
+        padding: 21px;
+        min-height: 190px;
+    }
+
+    .categories {
+        grid-template-columns: 1fr;
+    }
+
+    .topic {
+        grid-template-columns: 38px minmax(0,1fr);
+    }
+
+    .topic-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .topic-right {
+        display: none;
+    }
+
+    .post {
+        grid-template-columns: 1fr;
+    }
+
+    .post-user {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 10px;
+        padding: 12px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .post-avatar {
+        width: 43px;
+        height: 43px;
+        border-radius: 13px;
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .post-coins {
+        margin-top: 2px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-actions .icon-btn:first-child {
+        display: none;
+    }
+
+    .hero-actions {
+        flex-wrap: wrap;
+    }
+
+    .section-bar {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .thread-title {
+        font-size: 20px;
+    }
+
+    .profile-stats {
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -787,1254 +1449,2506 @@ footer{
 
 <body>
 
-<header class="header">
-    <nav class="nav">
+<!-- =========================================================
+     TOPBAR
+     ========================================================= -->
 
-        <a href="#" class="logo">
-            <div class="logo-icon">₽</div>
-            Lira Game
-        </a>
+<header class="topbar">
+    <div class="topbar-inner">
 
-        <div class="nav-links">
-            <a href="#features">Функции</a>
-            <a href="#games">Игры</a>
-            <a href="#admin">Админ-панель</a>
-            <a href="#database">Система</a>
+        <div class="logo" onclick="goHome()">
+            <div class="logo-mark">◆</div>
+            <div class="logo-text">
+                ROMB <span>FORUM</span>
+            </div>
         </div>
 
-        <a href="#sale" class="nav-btn">
-            Проект на продаже
-        </a>
+        <div class="search-wrap">
+            <span class="search-icon">⌕</span>
 
-    </nav>
+            <input
+                id="searchInput"
+                class="search"
+                type="text"
+                placeholder="Поиск тем, пользователей..."
+                autocomplete="off"
+            >
+
+            <span class="search-key">CTRL K</span>
+        </div>
+
+        <div class="top-actions">
+
+            <button
+                class="icon-btn"
+                title="Главная"
+                onclick="goHome()"
+            >
+                ⌂
+            </button>
+
+            <div style="position:relative;">
+                <button
+                    class="icon-btn"
+                    id="notificationButton"
+                    title="Уведомления"
+                    onclick="toggleNotifications()"
+                >
+                    ♢
+                </button>
+
+                <div
+                    class="notifications"
+                    id="notifications"
+                >
+                    <div class="notification">
+                        <div class="notification-icon">♥</div>
+                        <div>
+                            <div class="notification-text">
+                                <b>MateX</b> лайкнул вашу тему
+                            </div>
+                            <div class="notification-time">
+                                2 минуты назад
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <div class="notification-icon">✦</div>
+                        <div>
+                            <div class="notification-text">
+                                Новый официальный анонс Romb
+                            </div>
+                            <div class="notification-time">
+                                15 минут назад
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <div class="notification-icon">💬</div>
+                        <div>
+                            <div class="notification-text">
+                                Azvaren ответил на вашу тему
+                            </div>
+                            <div class="notification-time">
+                                1 час назад
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="profile-mini"
+                onclick="openProfile('Dias')"
+            >
+                <div class="avatar">D</div>
+
+                <div>
+                    <div class="profile-mini-name">
+                        Dias
+                    </div>
+
+                    <div class="profile-mini-status">
+                        ● online
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </header>
 
 
-<!-- HERO -->
-
-<section class="hero">
-
-    <div class="hero-content">
-
-        <div class="badge">
-            <span class="dot"></span>
-            Telegram Game Bot • Full Project
-        </div>
-
-        <h1>
-            Lira<br>
-            <span class="gradient">Game</span>
-        </h1>
-
-        <p>
-            Полноценный игровой Telegram-бот с собственной экономикой,
-            множеством игр, профилями игроков, статистикой, базой данных
-            и расширенной административной системой.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#features" class="btn btn-primary">
-                Смотреть функционал
-            </a>
-
-            <a href="#admin" class="btn btn-dark">
-                Админ-панель →
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div class="hero-card">
-
-        <div class="phone-top">
-            <span>9:41</span>
-            <span>● ● ●</span>
-        </div>
-
-        <div class="bot-avatar">₽</div>
-
-        <h3>Lira Game</h3>
-        <small>Игровой Telegram Bot</small>
-
-        <div class="balance">
-            <span>ВАШ БАЛАНС</span>
-            <strong>125 500 ₺</strong>
-        </div>
-
-        <div class="mini-buttons">
-            <div>🎮 Игры</div>
-            <div>👤 Профиль</div>
-            <div>🏆 Топ</div>
-            <div>🎁 Бонус</div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- STATS -->
-
-<section class="section">
-
-    <div class="stats">
-
-        <div class="stat">
-            <strong>17+</strong>
-            <span>игровых механик</span>
-        </div>
-
-        <div class="stat">
-            <strong>12</strong>
-            <span>разделов админ-панели</span>
-        </div>
-
-        <div class="stat">
-            <strong>SQLite</strong>
-            <span>система хранения данных</span>
-        </div>
-
-        <div class="stat">
-            <strong>Aiogram</strong>
-            <span>Telegram Bot API</span>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- FEATURES -->
-
-<section class="section" id="features">
-
-    <div class="section-head">
-
-        <span>01 — Functional</span>
-
-        <h2>Функционал бота</h2>
-
-        <p>
-            Основные возможности проекта, реализованные в текущем коде.
-        </p>
-
-    </div>
-
-
-    <div class="features">
-
-        <div class="feature">
-            <div class="feature-icon">💰</div>
-            <h3>Экономика</h3>
-            <p>
-                Баланс игроков, банк, переводы, выдача и списание игровой
-                валюты, ежедневные показатели и управление экономикой.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">👤</div>
-            <h3>Профили</h3>
-            <p>
-                Профиль игрока, никнейм, описание, репутация, отображение
-                баланса и дополнительные настройки приватности.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🎁</div>
-            <h3>Бонусная система</h3>
-            <p>
-                Бонусы, ежедневные активности, промокоды и дополнительные
-                механики для удержания игроков.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🏆</div>
-            <h3>Рейтинги</h3>
-            <p>
-                ТОП игроков, чемпионы дня, статистика заработка и
-                отображение лидеров.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">📊</div>
-            <h3>Статистика</h3>
-            <p>
-                Глобальная статистика игр, количество игроков, ставки,
-                выигрыши, RTP и популярность игровых режимов.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">💬</div>
-            <h3>Чаты</h3>
-            <p>
-                Учёт групп и супергрупп, VIP-чаты и управление игровыми
-                возможностями для отдельных чатов.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🛡️</div>
-            <h3>Анти-мульт</h3>
-            <p>
-                Инструменты проверки игроков и защиты игровой экономики
-                от мультиаккаунтов.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">📢</div>
-            <h3>Рассылки</h3>
-            <p>
-                Массовая рассылка сообщений, фото и видео пользователям
-                с обработкой ошибок доставки.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🔐</div>
-            <h3>Админ-доступ</h3>
-            <p>
-                Отдельная административная панель и проверка прав
-                администратора перед выполнением операций.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- GAMES -->
-
-<section class="section" id="games">
-
-    <div class="section-head">
-
-        <span>02 — Games</span>
-
-        <h2>Игровой зал</h2>
-
-        <p>
-            В проекте реализован большой набор игровых режимов.
-            Нажмите на игру, чтобы посмотреть описание.
-        </p>
-
-    </div>
-
-
-    <div class="games">
-
-        <div class="game" onclick="openGame('x50')">
-            <div class="game-icon">🎡</div>
-            <h3>Х50</h3>
-            <p>Цветные коэффициенты</p>
-        </div>
-
-        <div class="game" onclick="openGame('mega')">
-            <div class="game-icon">🎡</div>
-            <h3>Мегавил</h3>
-            <p>Колесо с секторами</p>
-        </div>
-
-        <div class="game" onclick="openGame('hilo')">
-            <div class="game-icon">🧮</div>
-            <h3>Хило</h3>
-            <p>Карточная механика</p>
-        </div>
-
-        <div class="game" onclick="openGame('blackjack')">
-            <div class="game-icon">🃏</div>
-            <h3>Блэкджек</h3>
-            <p>Карточная игра</p>
-        </div>
-
-        <div class="game" onclick="openGame('mines')">
-            <div class="game-icon">💣</div>
-            <h3>Мины</h3>
-            <p>Риск и множители</p>
-        </div>
-
-        <div class="game" onclick="openGame('tower')">
-            <div class="game-icon">🗼</div>
-            <h3>Башня</h3>
-            <p>Несколько уровней</p>
-        </div>
-
-        <div class="game" onclick="openGame('bridges')">
-            <div class="game-icon">🌉</div>
-            <h3>Мосты</h3>
-            <p>Пошаговая игра</p>
-        </div>
-
-        <div class="game" onclick="openGame('pirate')">
-            <div class="game-icon">🏴‍☠️</div>
-            <h3>Пират</h3>
-            <p>Рискованная игра</p>
-        </div>
-
-        <div class="game" onclick="openGame('roulette')">
-            <div class="game-icon">🔫</div>
-            <h3>Рулетка</h3>
-            <p>Групповая игра</p>
-        </div>
-
-        <div class="game" onclick="openGame('flip')">
-            <div class="game-icon">🪙</div>
-            <h3>Флип</h3>
-            <p>Монетка</p>
-        </div>
-
-        <div class="game" onclick="openGame('overgo')">
-            <div class="game-icon">🚀</div>
-            <h3>ОверГо</h3>
-            <p>Коэффициенты</p>
-        </div>
-
-        <div class="game" onclick="openGame('slots')">
-            <div class="game-icon">🍬</div>
-            <h3>Слоты</h3>
-            <p>Игровые комбинации</p>
-        </div>
-
-        <div class="game" onclick="openGame('hunt')">
-            <div class="game-icon">🏹</div>
-            <h3>Охота</h3>
-            <p>Обычная игра</p>
-        </div>
-
-        <div class="game" onclick="openGame('jackpot')">
-            <div class="game-icon">🎟️</div>
-            <h3>Джекпот</h3>
-            <p>Джекпот-механика</p>
-        </div>
-
-        <div class="game" onclick="openGame('emoji')">
-            <div class="game-icon">🎯</div>
-            <h3>Эмодзи-игры</h3>
-            <p>Дартс • Боулинг • Спин</p>
-        </div>
-
-        <div class="game" onclick="openGame('sports')">
-            <div class="game-icon">⚽</div>
-            <h3>Спортивные</h3>
-            <p>Футбол • Баскетбол • Кубик</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ADMIN -->
-
-<section class="section" id="admin">
-
-    <div class="section-head">
-
-        <span>03 — Administration</span>
-
-        <h2>Функции админов</h2>
-
-        <p>
-            Расширенная панель управления проектом.
-        </p>
-
-    </div>
-
-
-    <div class="admin-layout">
-
-        <div class="admin-menu">
-
-            <button class="active" onclick="adminTab(this,'stats')">
-                📊 Статистика
-            </button>
-
-            <button onclick="adminTab(this,'users')">
-                👥 Пользователи
-            </button>
-
-            <button onclick="adminTab(this,'economy')">
-                💰 Экономика
-            </button>
-
-            <button onclick="adminTab(this,'mail')">
-                📢 Рассылка
-            </button>
-
-            <button onclick="adminTab(this,'promo')">
-                🎁 Промокоды
-            </button>
-
-            <button onclick="adminTab(this,'gamesAdmin')">
-                🎮 Игры
-            </button>
-
-            <button onclick="adminTab(this,'tools')">
-                🔧 Инструменты
-            </button>
-
-            <button onclick="adminTab(this,'databaseAdmin')">
-                🗄 База игроков
-            </button>
-
-            <button onclick="adminTab(this,'chats')">
-                💬 Чаты
-            </button>
-
-        </div>
-
-
-        <div class="admin-window" id="adminWindow">
-
-            <div class="admin-title">
-                📊 Статистика
+<!-- =========================================================
+     PAGE
+     ========================================================= -->
+
+<div class="page">
+
+    <div class="layout">
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <div class="side-section">
+
+                <div class="side-title">
+                    Навигация
+                </div>
+
+                <div class="side-nav">
+
+                    <button
+                        class="side-item active"
+                        onclick="goHome()"
+                    >
+                        <span class="side-icon">⌂</span>
+                        Форум
+                    </button>
+
+                    <button
+                        class="side-item"
+                        onclick="filterCategory('Общение')"
+                    >
+                        <span class="side-icon">☷</span>
+                        Общение
+                    </button>
+
+                    <button
+                        class="side-item"
+                        onclick="filterCategory('Игры')"
+                    >
+                        <span class="side-icon">♢</span>
+                        Игры
+                    </button>
+
+                    <button
+                        class="side-item"
+                        onclick="filterCategory('Новости')"
+                    >
+                        <span class="side-icon">⚡</span>
+                        Новости
+                    </button>
+
+                    <button
+                        class="side-item"
+                        onclick="filterCategory('Помощь')"
+                    >
+                        <span class="side-icon">?</span>
+                        Помощь
+                    </button>
+
+                </div>
             </div>
 
-            <div class="admin-cards">
 
-                <div class="admin-card">
-                    <strong>👥 Игроки</strong>
-                    <span>
-                        Просмотр общего количества игроков,
-                        активных и заблокированных пользователей.
-                    </span>
+            <div class="side-section">
+
+                <div class="side-title">
+                    Сообщество
                 </div>
 
-                <div class="admin-card">
-                    <strong>💰 Экономика</strong>
-                    <span>
-                        Общая сумма валюты на балансах и в банках.
-                    </span>
-                </div>
+                <div class="side-nav">
 
-                <div class="admin-card">
-                    <strong>🎮 Игровая статистика</strong>
-                    <span>
-                        Количество игр, ставки, выигрыши и RTP.
-                    </span>
-                </div>
+                    <button class="side-item">
+                        <span class="side-icon">♛</span>
+                        Топ игроков
+                        <span class="side-count">24</span>
+                    </button>
 
-                <div class="admin-card">
-                    <strong>🏆 Богатейший игрок</strong>
-                    <span>
-                        Определение лидера по совокупному состоянию.
-                    </span>
-                </div>
+                    <button class="side-item">
+                        <span class="side-icon">★</span>
+                        VIP
+                    </button>
 
+                    <button class="side-item">
+                        <span class="side-icon">♧</span>
+                        Участники
+                    </button>
+
+                    <button class="side-item">
+                        <span class="side-icon">⚑</span>
+                        Правила
+                    </button>
+
+                </div>
             </div>
 
-        </div>
 
-    </div>
+            <div class="side-section">
 
-</section>
+                <div class="side-title">
+                    Игры Romb
+                </div>
 
+                <div class="side-nav">
 
-<!-- COMMANDS -->
+                    <button class="side-item">
+                        <span class="side-icon">♦</span>
+                        Хило
+                    </button>
 
-<section class="section">
+                    <button class="side-item">
+                        <span class="side-icon">♠</span>
+                        Мины
+                    </button>
 
-    <div class="section-head">
+                    <button class="side-item">
+                        <span class="side-icon">♣</span>
+                        Башня
+                    </button>
 
-        <span>04 — Commands</span>
+                    <button class="side-item">
+                        <span class="side-icon">🎰</span>
+                        Рулетка
+                    </button>
 
-        <h2>Команды проекта</h2>
-
-        <p>
-            Основные пользовательские и административные команды.
-        </p>
-
-    </div>
-
-
-    <div class="commands">
-
-        <div class="command-box">
-
-            <div class="command-head">
-                👤 Пользовательские
+                </div>
             </div>
 
-            <div class="command-list">
+        </aside>
 
-                <div class="command">
-                    <code>Б</code>
-                    <span>Баланс</span>
-                </div>
 
-                <div class="command">
-                    <code>Банк</code>
-                    <span>Банк игрока</span>
-                </div>
+        <!-- =================================================
+             MAIN
+             ================================================= -->
 
-                <div class="command">
-                    <code>Профиль</code>
-                    <span>Профиль</span>
-                </div>
+        <main>
 
-                <div class="command">
-                    <code>Дать [сумма]</code>
-                    <span>Перевод</span>
-                </div>
+            <!-- =============================================
+                 FORUM HOME
+                 ============================================= -->
 
-                <div class="command">
-                    <code>Чд</code>
-                    <span>Чемпионы дня</span>
-                </div>
-
-                <div class="command">
-                    <code>Бонус</code>
-                    <span>Бонусная система</span>
-                </div>
-
-                <div class="command">
-                    <code>Помощь</code>
-                    <span>Игровой зал</span>
-                </div>
-
-                <div class="command">
-                    <code>Ласт</code>
-                    <span>История</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="command-box">
-
-            <div class="command-head">
-                🛡️ Администраторские
-            </div>
-
-            <div class="command-list">
-
-                <div class="command">
-                    <code>/admin</code>
-                    <span>Админ-панель</span>
-                </div>
-
-                <div class="command">
-                    <code>/give</code>
-                    <span>Выдача валюты</span>
-                </div>
-
-                <div class="command">
-                    <code>/addpromo</code>
-                    <span>Создание промо</span>
-                </div>
-
-                <div class="command">
-                    <code>/fast</code>
-                    <span>Фаст-конкурс</span>
-                </div>
-
-                <div class="command">
-                    <code>/ban_duper</code>
-                    <span>Блокировка</span>
-                </div>
-
-                <div class="command">
-                    <code>/unban_duper</code>
-                    <span>Разблокировка</span>
-                </div>
-
-                <div class="command">
-                    <code>/on</code>
-                    <span>Включить бота</span>
-                </div>
-
-                <div class="command">
-                    <code>/off</code>
-                    <span>Выключить бота</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- DATABASE -->
-
-<section class="section" id="database">
-
-    <div class="section-head">
-
-        <span>05 — System</span>
-
-        <h2>Система проекта</h2>
-
-        <p>
-            Архитектура и основные элементы, присутствующие в проекте.
-        </p>
-
-    </div>
-
-
-    <div class="database">
-
-        <div class="db-card">
-
-            <h3>🗄 SQLite</h3>
-
-            <p>
-                Хранение пользователей, балансов, банков,
-                игровой статистики, логов и активных игровых сессий.
-            </p>
-
-            <br>
-
-            <span class="tag">users</span>
-            <span class="tag">games_log</span>
-            <span class="tag">chats</span>
-            <span class="tag">promo</span>
-
-        </div>
-
-
-        <div class="db-card">
-
-            <h3>🎮 Active Games</h3>
-
-            <p>
-                Активные игровые состояния сохраняются для отдельных
-                режимов, включая игры с пошаговой механикой.
-            </p>
-
-            <br>
-
-            <span class="tag">Tower</span>
-            <span class="tag">Mines</span>
-            <span class="tag">Bridges</span>
-            <span class="tag">Flip</span>
-
-        </div>
-
-
-        <div class="db-card">
-
-            <h3>📜 Логи</h3>
-
-            <p>
-                Система игровых логов позволяет администратору
-                просматривать историю игровых операций и результаты.
-            </p>
-
-            <br>
-
-            <span class="tag">Bet</span>
-            <span class="tag">Win</span>
-            <span class="tag">Coefficient</span>
-            <span class="tag">Game</span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ADMIN DETAILS -->
-
-<section class="section">
-
-    <div class="section-head">
-
-        <span>06 — Admin Tools</span>
-
-        <h2>Что может администратор</h2>
-
-    </div>
-
-
-    <div class="features">
-
-        <div class="feature">
-            <div class="feature-icon">👥</div>
-            <h3>Управление игроками</h3>
-            <p>
-                Поиск по ID, просмотр последних игроков,
-                просмотр богатейших игроков, бан и разбан.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">💸</div>
-            <h3>Управление валютой</h3>
-            <p>
-                Выдать, забрать, обнулить баланс или раздать валюту
-                всем игрокам.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🎁</div>
-            <h3>Промокоды</h3>
-            <p>
-                Создание, просмотр, удаление, настройка количества
-                использований и тестирование промокодов.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">📢</div>
-            <h3>Массовая рассылка</h3>
-            <p>
-                Рассылка текста, фото или видео всем пользователям
-                с отображением успешных и неудачных отправок.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">⭐</div>
-            <h3>Уровни игроков</h3>
-            <p>
-                Просмотр уровней, установка уровня отдельному игроку
-                или массовое изменение.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">💬</div>
-            <h3>VIP-чаты</h3>
-            <p>
-                Добавление, удаление и просмотр VIP-чатов.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🧹</div>
-            <h3>Сбросы</h3>
-            <p>
-                Сброс лимитов, чемпионов дня и отдельные инструменты
-                управления экономикой.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🔴</div>
-            <h3>On / Off</h3>
-            <p>
-                Возможность быстро отключить или включить работу бота.
-            </p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">📜</div>
-            <h3>Глобальные логи</h3>
-            <p>
-                Просмотр истории игровых операций с пагинацией
-                и обновлением данных.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- SALE -->
-
-<section class="section" id="sale">
-
-    <div class="sale">
-
-        <div class="badge">
-            💼 PROJECT FOR SALE
-        </div>
-
-        <h2>Готовый Telegram-проект</h2>
-
-        <p>
-            Полный исходный код игрового Telegram-бота,
-            система экономики, игры, админ-панель и база данных.
-            Подходит для дальнейшего развития, ребрендинга
-            и запуска собственного игрового проекта.
-        </p>
-
-        <div class="sale-buttons">
-
-            <a
-                href="https://t.me/azvaren"
-                target="_blank"
-                class="btn btn-primary"
+            <div
+                id="forumHome"
+                class="forum-home"
             >
-                🧑‍💻 Связаться с разработчиком
-            </a>
 
-            <a
-                href="https://t.me/LiraGame_Bot"
-                target="_blank"
-                class="btn btn-dark"
+                <section class="hero">
+
+                    <div class="hero-badge">
+                        ◆ ОФИЦИАЛЬНОЕ СООБЩЕСТВО ROMB
+                    </div>
+
+                    <h1>
+                        Форум Romb
+                    </h1>
+
+                    <p>
+                        Общайся с игроками, обсуждай обновления,
+                        делись идеями, находи баги и следи за
+                        развитием проекта.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="openNewTopic()"
+                        >
+                            ＋ Создать тему
+                        </button>
+
+                        <button
+                            class="btn"
+                            onclick="showToast('Правила', 'Открываем правила форума')"
+                        >
+                            ⚑ Правила
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================================
+                     CATEGORIES
+                     ========================================= -->
+
+                <div class="section-bar">
+
+                    <div>
+                        <div class="section-title">
+                            Разделы форума
+                        </div>
+
+                        <div class="section-sub">
+                            Выбери интересующую категорию
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <section class="categories">
+
+                    <div
+                        class="category"
+                        onclick="filterCategory('Новости')"
+                    >
+                        <div class="category-top">
+
+                            <div class="category-icon">
+                                ⚡
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Новости Romb
+                                </h3>
+
+                                <p>
+                                    Обновления и объявления
+                                </p>
+                            </div>
+
+                            <div class="category-stat">
+                                42
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div
+                        class="category"
+                        onclick="filterCategory('Игры')"
+                    >
+                        <div class="category-top">
+
+                            <div class="category-icon">
+                                🎮
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Игры
+                                </h3>
+
+                                <p>
+                                    Хило, мины, башня и другое
+                                </p>
+                            </div>
+
+                            <div class="category-stat">
+                                128
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div
+                        class="category"
+                        onclick="filterCategory('Общение')"
+                    >
+                        <div class="category-top">
+
+                            <div class="category-icon">
+                                💬
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Общение
+                                </h3>
+
+                                <p>
+                                    Общение игроков Romb
+                                </p>
+                            </div>
+
+                            <div class="category-stat">
+                                317
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div
+                        class="category"
+                        onclick="filterCategory('Помощь')"
+                    >
+                        <div class="category-top">
+
+                            <div class="category-icon">
+                                🛠
+                            </div>
+
+                            <div>
+                                <h3>
+                                    Помощь
+                                </h3>
+
+                                <p>
+                                    Вопросы и решение проблем
+                                </p>
+                            </div>
+
+                            <div class="category-stat">
+                                76
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- =========================================
+                     TOPICS
+                     ========================================= -->
+
+                <div class="section-bar">
+
+                    <div>
+                        <div class="section-title">
+                            Последние обсуждения
+                        </div>
+
+                        <div class="section-sub">
+                            Что сейчас обсуждает сообщество
+                        </div>
+                    </div>
+
+                    <select
+                        class="sort"
+                        id="sortSelect"
+                        onchange="sortTopics()"
+                    >
+                        <option value="new">
+                            Новые
+                        </option>
+
+                        <option value="hot">
+                            Популярные
+                        </option>
+
+                        <option value="replies">
+                            Обсуждаемые
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div
+                    class="topic-list"
+                    id="topicList"
+                >
+
+                    <article
+                        class="topic"
+                        data-category="Новости"
+                        data-search="обновление ромб форум хило"
+                        data-replies="38"
+                        data-time="10"
+                        onclick="openThread(1)"
+                    >
+
+                        <div class="topic-icon">
+                            ⚡
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                🔥 Большое обновление Romb — что нового?
+                            </div>
+
+                            <div class="topic-meta">
+                                <span class="tag green">
+                                    Официально
+                                </span>
+
+                                <span>
+                                    MateX
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    10 минут назад
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                38
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Игры"
+                        data-search="хило стратегия игра карты туз король"
+                        data-replies="94"
+                        data-time="20"
+                        onclick="openThread(2)"
+                    >
+
+                        <div class="topic-icon">
+                            ♦
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Хило — кто уже тестировал новую механику?
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag">
+                                    Хило
+                                </span>
+
+                                <span>
+                                    Azvaren
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    20 минут назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                94
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Общение"
+                        data-search="ромб игроки знакомство общение"
+                        data-replies="61"
+                        data-time="30"
+                        onclick="openThread(3)"
+                    >
+
+                        <div class="topic-icon">
+                            💬
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Кто играет в Romb каждый день?
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag yellow">
+                                    Общение
+                                </span>
+
+                                <span>
+                                    Dias
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    30 минут назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                61
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Помощь"
+                        data-search="ошибка бот лаги проблема помощь"
+                        data-replies="17"
+                        data-time="45"
+                        onclick="openThread(4)"
+                    >
+
+                        <div class="topic-icon">
+                            🛠
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                У кого сегодня были проблемы с ботом?
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag red">
+                                    Помощь
+                                </span>
+
+                                <span>
+                                    RombUser
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    45 минут назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                17
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Игры"
+                        data-search="мины стратегия коэффициент"
+                        data-replies="73"
+                        data-time="60"
+                        onclick="openThread(5)"
+                    >
+
+                        <div class="topic-icon">
+                            ♠
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Мины — какие коэффициенты вам нравятся?
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag">
+                                    Мины
+                                </span>
+
+                                <span>
+                                    Player777
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    1 час назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                73
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Новости"
+                        data-search="сервер хостинг мощный сервер обновление"
+                        data-replies="29"
+                        data-time="90"
+                        onclick="openThread(6)"
+                    >
+
+                        <div class="topic-icon">
+                            🚀
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Новый сервер Romb — меньше лагов
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag green">
+                                    Сервер
+                                </span>
+
+                                <span>
+                                    Администрация
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    1 час назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                29
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Общение"
+                        data-search="топ игрок ромб баланс монеты"
+                        data-replies="112"
+                        data-time="120"
+                        onclick="openThread(7)"
+                    >
+
+                        <div class="topic-icon">
+                            ♛
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Показываем свой баланс в Romb 💎
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag yellow">
+                                    Флуд
+                                </span>
+
+                                <span>
+                                    KingRomb
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    2 часа назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                112
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="topic"
+                        data-category="Помощь"
+                        data-search="донат платеж перевод ромб"
+                        data-replies="24"
+                        data-time="180"
+                        onclick="openThread(8)"
+                    >
+
+                        <div class="topic-icon">
+                            💳
+                        </div>
+
+                        <div class="topic-main">
+
+                            <div class="topic-title">
+                                Вопрос по донату и пополнению
+                            </div>
+
+                            <div class="topic-meta">
+
+                                <span class="tag red">
+                                    Помощь
+                                </span>
+
+                                <span>
+                                    DiamondBoy
+                                </span>
+
+                                <span class="dot"></span>
+
+                                <span>
+                                    3 часа назад
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="topic-right">
+
+                            <div class="topic-replies">
+                                24
+                            </div>
+
+                            <div class="topic-time">
+                                ответов
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div
+                    class="empty"
+                    id="emptySearch"
+                >
+                    <div class="empty-icon">
+                        ⌕
+                    </div>
+
+                    <div class="empty-title">
+                        Ничего не найдено
+                    </div>
+
+                    <div class="empty-text">
+                        Попробуй изменить запрос
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 THREAD
+                 ================================================= -->
+
+            <div
+                class="thread"
+                id="thread"
             >
-                🤖 Открыть бота
-            </a>
 
+                <button
+                    class="btn"
+                    onclick="goHome()"
+                    style="margin-bottom:10px;"
+                >
+                    ← Назад к форуму
+                </button>
+
+
+                <div class="thread-head">
+
+                    <div class="thread-breadcrumb">
+                        Форум / Новости / Обновления
+                    </div>
+
+                    <h1
+                        class="thread-title"
+                        id="threadTitle"
+                    >
+                        Большое обновление Romb
+                    </h1>
+
+                    <div
+                        class="thread-info"
+                        id="threadInfo"
+                    >
+                        Создано MateX · сегодня
+                    </div>
+
+                </div>
+
+
+                <div id="posts">
+
+                    <article class="post">
+
+                        <div class="post-user">
+
+                            <div class="post-avatar">
+                                M
+                            </div>
+
+                            <div>
+
+                                <div class="post-name">
+                                    MateX
+                                </div>
+
+                                <div class="post-role">
+                                    ADMIN
+                                </div>
+
+                                <div class="post-coins">
+                                    ◆ 48.2M монет
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="post-content">
+
+                            <div class="post-date">
+                                #1 · Сегодня, 11:20
+                            </div>
+
+                            <div class="post-text">
+
+                                Всем привет.
+
+                                <br><br>
+
+                                Мы подготовили большое обновление
+                                Romb. Сейчас продолжаем улучшать
+                                производительность, игры и интерфейс.
+
+                                <br><br>
+
+                                В ближайших обновлениях планируется
+                                ещё больше функций для игроков.
+
+                                <br><br>
+
+                                Если нашли ошибку или у вас есть
+                                идея — пишите прямо здесь.
+
+                            </div>
+
+
+                            <div class="post-actions">
+
+                                <button
+                                    class="post-action"
+                                    onclick="likePost(this)"
+                                >
+                                    ♥ 24
+                                </button>
+
+                                <button
+                                    class="post-action"
+                                    onclick="focusReply()"
+                                >
+                                    💬 Ответить
+                                </button>
+
+                                <button
+                                    class="post-action"
+                                    onclick="copyThreadLink()"
+                                >
+                                    🔗 Ссылка
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="post">
+
+                        <div class="post-user">
+
+                            <div class="post-avatar">
+                                A
+                            </div>
+
+                            <div>
+
+                                <div class="post-name">
+                                    Azvaren
+                                </div>
+
+                                <div class="post-role">
+                                    DEVELOPER
+                                </div>
+
+                                <div class="post-coins">
+                                    ◆ 21.7M монет
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="post-content">
+
+                            <div class="post-date">
+                                #2 · Сегодня, 11:34
+                            </div>
+
+                            <div class="post-text">
+
+                                По технической части тоже есть
+                                изменения.
+
+                                <br><br>
+
+                                Оптимизировали некоторые запросы
+                                базы данных и работу фоновых задач.
+
+                                <br><br>
+
+                                Если заметите странное поведение
+                                игры — обязательно сообщайте.
+
+                            </div>
+
+
+                            <div class="post-actions">
+
+                                <button
+                                    class="post-action"
+                                    onclick="likePost(this)"
+                                >
+                                    ♥ 17
+                                </button>
+
+                                <button
+                                    class="post-action"
+                                    onclick="focusReply()"
+                                >
+                                    💬 Ответить
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- =============================================
+                     REPLY
+                     ============================================= -->
+
+                <div
+                    class="right-card"
+                    id="replyBox"
+                    style="margin-top:10px;"
+                >
+
+                    <div class="card-title">
+                        Написать ответ
+                    </div>
+
+                    <textarea
+                        id="replyText"
+                        class="textarea"
+                        placeholder="Напиши сообщение..."
+                    ></textarea>
+
+                    <div class="form-footer">
+
+                        <button
+                            class="btn"
+                            onclick="document.getElementById('replyText').value=''"
+                        >
+                            Очистить
+                        </button>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="sendReply()"
+                        >
+                            Отправить
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- =================================================
+             RIGHT COLUMN
+             ================================================= -->
+
+        <aside class="right-column">
+
+            <div class="right-card">
+
+                <div class="card-title">
+                    Статистика
+                    <span class="card-link">
+                        Сегодня
+                    </span>
+                </div>
+
+                <div class="stats-grid">
+
+                    <div class="stat">
+                        <div class="stat-value">
+                            2.4K
+                        </div>
+
+                        <div class="stat-label">
+                            Участников
+                        </div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-value">
+                            563
+                        </div>
+
+                        <div class="stat-label">
+                            Тем
+                        </div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-value">
+                            8.9K
+                        </div>
+
+                        <div class="stat-label">
+                            Сообщений
+                        </div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-value">
+                            84
+                        </div>
+
+                        <div class="stat-label">
+                            Онлайн
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="right-card">
+
+                <div class="card-title">
+                    Сейчас онлайн
+                    <span class="card-link">
+                        84
+                    </span>
+                </div>
+
+
+                <div class="online-user">
+
+                    <div class="avatar online-avatar">
+                        M
+                    </div>
+
+                    <div>
+                        <div class="user-name">
+                            MateX
+                        </div>
+
+                        <div class="user-role">
+                            Администратор
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="online-user">
+
+                    <div class="avatar online-avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <div class="user-name">
+                            Azvaren
+                        </div>
+
+                        <div class="user-role">
+                            Разработчик
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="online-user">
+
+                    <div class="avatar online-avatar">
+                        D
+                    </div>
+
+                    <div>
+                        <div class="user-name">
+                            Dias
+                        </div>
+
+                        <div class="user-role">
+                            Игрок
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="online-user">
+
+                    <div class="avatar online-avatar">
+                        R
+                    </div>
+
+                    <div>
+                        <div class="user-name">
+                            RombUser
+                        </div>
+
+                        <div class="user-role">
+                            Игрок
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="right-card">
+
+                <div class="card-title">
+                    Топ игроков
+                    <span class="card-link">
+                        Все
+                    </span>
+                </div>
+
+
+                <div class="rank-row">
+
+                    <div class="rank-num">
+                        1
+                    </div>
+
+                    <div class="avatar">
+                        K
+                    </div>
+
+                    <div class="rank-info">
+
+                        <div class="rank-name">
+                            KingRomb
+                        </div>
+
+                        <div class="rank-coins">
+                            ◆ 4.8B
+                        </div>
+
+                    </div>
+
+                    <div class="rank-level">
+                        LVL 11
+                    </div>
+
+                </div>
+
+
+                <div class="rank-row">
+
+                    <div class="rank-num">
+                        2
+                    </div>
+
+                    <div class="avatar">
+                        M
+                    </div>
+
+                    <div class="rank-info">
+
+                        <div class="rank-name">
+                            MateX
+                        </div>
+
+                        <div class="rank-coins">
+                            ◆ 48.2M
+                        </div>
+
+                    </div>
+
+                    <div class="rank-level">
+                        LVL 10
+                    </div>
+
+                </div>
+
+
+                <div class="rank-row">
+
+                    <div class="rank-num">
+                        3
+                    </div>
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div class="rank-info">
+
+                        <div class="rank-name">
+                            Azvaren
+                        </div>
+
+                        <div class="rank-coins">
+                            ◆ 21.7M
+                        </div>
+
+                    </div>
+
+                    <div class="rank-level">
+                        LVL 9
+                    </div>
+
+                </div>
+
+
+                <div class="rank-row">
+
+                    <div class="rank-num">
+                        4
+                    </div>
+
+                    <div class="avatar">
+                        D
+                    </div>
+
+                    <div class="rank-info">
+
+                        <div class="rank-name">
+                            Dias
+                        </div>
+
+                        <div class="rank-coins">
+                            ◆ 8.4M
+                        </div>
+
+                    </div>
+
+                    <div class="rank-level">
+                        LVL 8
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="right-card">
+
+                <div class="card-title">
+                    Объявление
+                </div>
+
+                <div class="announcement">
+
+                    <div class="announcement-title">
+                        🚀 Romb работает
+                    </div>
+
+                    <div class="announcement-text">
+                        Сервер обновлён. Если заметили
+                        проблемы или ошибки — сообщите
+                        администрации.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div>
+            © 2026 Romb Forum · Community
         </div>
 
-    </div>
+        <div class="footer-links">
+            <a href="#" onclick="showToast('Правила','Правила форума')">
+                Правила
+            </a>
 
-</section>
+            <a href="#" onclick="showToast('Помощь','Раздел помощи')">
+                Помощь
+            </a>
 
+            <a href="#" onclick="showToast('Telegram','Открыть Telegram')">
+                Telegram
+            </a>
+        </div>
 
-<footer>
+    </footer>
 
-    <div class="footer-inner">
-
-        <span>
-            © 2026 Lira Game Project
-        </span>
-
-        <span>
-            Telegram Bot • Python • Aiogram • SQLite
-        </span>
-
-    </div>
-
-</footer>
+</div>
 
 
-<!-- MODAL -->
+<!-- =========================================================
+     NEW TOPIC MODAL
+     ========================================================= -->
 
-<div class="modal" id="modal">
+<div
+    class="modal-overlay"
+    id="newTopicModal"
+    onclick="closeModalOutside(event,'newTopicModal')"
+>
 
-    <div class="modal-box">
+    <div class="modal">
 
-        <div class="modal-top">
+        <div class="modal-head">
 
-            <h2 id="modalTitle">
-                Игра
-            </h2>
+            <div class="modal-title">
+                Создать новую тему
+            </div>
 
-            <button class="close" onclick="closeModal()">
-                ✕
+            <button
+                class="modal-close"
+                onclick="closeModal('newTopicModal')"
+            >
+                ×
             </button>
 
         </div>
 
-        <div class="modal-content" id="modalContent"></div>
+
+        <div class="modal-body">
+
+            <div class="field">
+
+                <label>
+                    Заголовок
+                </label>
+
+                <input
+                    class="input"
+                    id="topicTitleInput"
+                    placeholder="Например: Как вам новая версия Хило?"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Раздел
+                </label>
+
+                <select
+                    class="input"
+                    id="topicCategoryInput"
+                >
+
+                    <option>
+                        Общение
+                    </option>
+
+                    <option>
+                        Игры
+                    </option>
+
+                    <option>
+                        Новости
+                    </option>
+
+                    <option>
+                        Помощь
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Сообщение
+                </label>
+
+                <textarea
+                    class="textarea"
+                    id="topicTextInput"
+                    placeholder="Расскажи подробнее..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-footer">
+
+                <button
+                    class="btn"
+                    onclick="closeModal('newTopicModal')"
+                >
+                    Отмена
+                </button>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="createTopic()"
+                >
+                    Опубликовать
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
 
+<!-- =========================================================
+     PROFILE MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="profileModal"
+    onclick="closeModalOutside(event,'profileModal')"
+>
+
+    <div class="modal">
+
+        <div class="profile-cover"></div>
+
+        <div class="profile-body">
+
+            <div class="profile-big-avatar">
+                D
+            </div>
+
+            <div class="profile-name">
+                Dias
+            </div>
+
+            <div class="profile-handle">
+                @dias · Игрок Romb
+            </div>
+
+            <div class="profile-bio">
+                Участник сообщества Romb.
+                Люблю игры, обновления и новые функции проекта.
+            </div>
+
+            <div class="profile-stats">
+
+                <div class="profile-stat">
+                    <strong>148</strong>
+                    <span>Сообщений</span>
+                </div>
+
+                <div class="profile-stat">
+                    <strong>27</strong>
+                    <span>Тем</span>
+                </div>
+
+                <div class="profile-stat">
+                    <strong>8.4M</strong>
+                    <span>Монет</span>
+                </div>
+
+            </div>
+
+            <div class="form-footer">
+
+                <button
+                    class="btn"
+                    onclick="closeModal('profileModal')"
+                >
+                    Закрыть
+                </button>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="showToast('Профиль','Профиль пользователя открыт')"
+                >
+                    Посмотреть профиль
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST CONTAINER
+     ========================================================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
 <script>
+/* =========================================================
+   ROMB FORUM JAVASCRIPT
+   ========================================================= */
 
-/* GAME MODALS */
-
-const games = {
-
-    x50:{
-        title:"🎡 Х50",
-        text:`
-            <p>
-            Игра с выбором цветового исхода и различными
-            коэффициентами выигрыша.
-            </p>
-            <ul>
-                <li>Цветные исходы</li>
-                <li>Система ставок</li>
-                <li>История результатов</li>
-                <li>Игровая статистика</li>
-            </ul>
-        `
+const topics = [
+    {
+        id: 1,
+        title: "🔥 Большое обновление Romb — что нового?",
+        category: "Новости",
+        author: "MateX",
+        replies: 38
     },
-
-    mega:{
-        title:"🎡 Мегавил",
-        text:`
-            <p>
-            Колесо с несколькими секторами и различными
-            коэффициентами.
-            </p>
-            <ul>
-                <li>Сектора 1 / 2 / 5 / 8 / 10 / 15 / 20 / 40</li>
-                <li>Ставки игроков</li>
-                <li>История</li>
-                <li>Повтор игры</li>
-            </ul>
-        `
+    {
+        id: 2,
+        title: "Хило — кто уже тестировал новую механику?",
+        category: "Игры",
+        author: "Azvaren",
+        replies: 94
     },
-
-    hilo:{
-        title:"🧮 Хило",
-        text:`
-            <p>
-            Карточная игра с выбором направления изменения
-            значения карты.
-            </p>
-            <ul>
-                <li>Ставка в Лирах</li>
-                <li>Выбор направления</li>
-                <li>Коэффициенты</li>
-                <li>Статистика</li>
-            </ul>
-        `
-    },
-
-    blackjack:{
-        title:"🃏 Блэкджек",
-        text:`
-            <p>
-            Карточный игровой режим с отдельной игровой логикой.
-            </p>
-            <ul>
-                <li>Игровая сессия</li>
-                <li>Ставка</li>
-                <li>Результат</li>
-                <li>Логирование</li>
-            </ul>
-        `
-    },
-
-    mines:{
-        title:"💣 Мины",
-        text:`
-            <p>
-            Игра с минными ячейками и риском увеличения выигрыша.
-            </p>
-            <ul>
-                <li>Настройка количества мин</li>
-                <li>Пошаговый выбор</li>
-                <li>Активная игровая сессия</li>
-                <li>Выигрыш / проигрыш</li>
-            </ul>
-        `
-    },
-
-    tower:{
-        title:"🗼 Башня",
-        text:`
-            <p>
-            Пошаговая игра с уровнями и коэффициентами.
-            </p>
-            <ul>
-                <li>4 режима сложности</li>
-                <li>7 уровней</li>
-                <li>Сохранение активной игры</li>
-                <li>Восстановление после перезапуска</li>
-            </ul>
-        `
-    },
-
-    bridges:{
-        title:"🌉 Мосты",
-        text:`
-            <p>
-            Пошаговая игровая механика с сохранением
-            состояния активной игры.
-            </p>
-        `
-    },
-
-    pirate:{
-        title:"🏴‍☠️ Пират",
-        text:`
-            <p>
-            Риск-игра с выбором количества мин.
-            </p>
-            <ul>
-                <li>1–2 мины</li>
-                <li>Ставка</li>
-                <li>Результат</li>
-                <li>Логирование</li>
-            </ul>
-        `
-    },
-
-    roulette:{
-        title:"🔫 Рулетка",
-        text:`
-            <p>
-            Групповой режим с приемом ставок игроков
-            и запуском игрового раунда.
-            </p>
-            <ul>
-                <li>Ставки</li>
-                <li>Раунды</li>
-                <li>История</li>
-                <li>Логи</li>
-            </ul>
-        `
-    },
-
-    flip:{
-        title:"🪙 Флип",
-        text:`
-            <p>
-            Быстрая игра с монеткой и сохранением
-            активной игровой сессии.
-            </p>
-        `
-    },
-
-    overgo:{
-        title:"🚀 ОверГо",
-        text:`
-            <p>
-            Игра с коэффициентами и выбором целевого значения.
-            </p>
-            <ul>
-                <li>Ставка</li>
-                <li>Коэффициент</li>
-                <li>Статистика</li>
-            </ul>
-        `
-    },
-
-    slots:{
-        title:"🍬 Слоты",
-        text:`
-            <p>
-            Игровой слот-механизм с результатами и логированием.
-            </p>
-        `
-    },
-
-    hunt:{
-        title:"🏹 Охота",
-        text:`
-            <p>
-            Отдельный игровой режим с игровой валютой
-            и результатом раунда.
-            </p>
-        `
-    },
-
-    jackpot:{
-        title:"🎟️ Джекпот",
-        text:`
-            <p>
-            Джекпот-механика для игрового бота.
-            </p>
-        `
-    },
-
-    emoji:{
-        title:"🎯 Эмодзи-игры",
-        text:`
-            <p>
-            Набор игр на базе Telegram Emoji Dice:
-            </p>
-            <ul>
-                <li>🎯 Дартс</li>
-                <li>🎳 Боулинг</li>
-                <li>🎰 Спин</li>
-                <li>🎲 Кубик</li>
-            </ul>
-        `
-    },
-
-    sports:{
-        title:"⚽ Спортивные игры",
-        text:`
-            <p>
-            Игры на основе Telegram-анимаций:
-            </p>
-            <ul>
-                <li>⚽ Футбол</li>
-                <li>🏀 Баскетбол</li>
-                <li>🎲 Кубик</li>
-            </ul>
-        `
+    {
+        id: 3,
+        title: "Кто играет в Romb каждый день?",
+        category: "Общение",
+        author: "Dias",
+        replies: 61
     }
+];
 
-};
+let currentThread = null;
 
 
-function openGame(id){
+/* =========================================================
+   HOME
+   ========================================================= */
 
-    const game = games[id];
+function goHome() {
 
-    if(!game) return;
+    document
+        .getElementById("forumHome")
+        .classList.remove("hidden");
 
-    document.getElementById("modalTitle").innerHTML =
-        game.title;
+    document
+        .getElementById("thread")
+        .classList.remove("active");
 
-    document.getElementById("modalContent").innerHTML =
-        game.text;
-
-    document.getElementById("modal").classList.add("show");
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
-function closeModal(){
+/* =========================================================
+   OPEN THREAD
+   ========================================================= */
 
-    document.getElementById("modal")
-        .classList.remove("show");
+function openThread(id) {
 
+    currentThread = id;
+
+    const titles = {
+        1: "🔥 Большое обновление Romb — что нового?",
+        2: "Хило — кто уже тестировал новую механику?",
+        3: "Кто играет в Romb каждый день?",
+        4: "У кого сегодня были проблемы с ботом?",
+        5: "Мины — какие коэффициенты вам нравятся?",
+        6: "Новый сервер Romb — меньше лагов",
+        7: "Показываем свой баланс в Romb 💎",
+        8: "Вопрос по донату и пополнению"
+    };
+
+    const authors = {
+        1: "MateX",
+        2: "Azvaren",
+        3: "Dias",
+        4: "RombUser",
+        5: "Player777",
+        6: "Администрация",
+        7: "KingRomb",
+        8: "DiamondBoy"
+    };
+
+    document
+        .getElementById("threadTitle")
+        .textContent = titles[id] || "Тема Romb";
+
+    document
+        .getElementById("threadInfo")
+        .textContent =
+        "Создано " +
+        (authors[id] || "Игрок") +
+        " · сегодня";
+
+    document
+        .getElementById("forumHome")
+        .classList.add("hidden");
+
+    document
+        .getElementById("thread")
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
-document.getElementById("modal").addEventListener(
-    "click",
-    function(e){
+/* =========================================================
+   CATEGORY FILTER
+   ========================================================= */
 
-        if(e.target === this){
-            closeModal();
+function filterCategory(category) {
+
+    goHome();
+
+    const cards = document.querySelectorAll(".topic");
+
+    let visible = 0;
+
+    cards.forEach(card => {
+
+        if (card.dataset.category === category) {
+
+            card.style.display = "grid";
+            visible++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("emptySearch").style.display =
+        visible ? "none" : "block";
+
+    showToast(
+        "Раздел",
+        "Показаны темы: " + category
+    );
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+const searchInput =
+    document.getElementById("searchInput");
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        const query =
+            this.value
+                .trim()
+                .toLowerCase();
+
+        const cards =
+            document.querySelectorAll(".topic");
+
+        let visible = 0;
+
+        cards.forEach(card => {
+
+            const text =
+                (
+                    card.dataset.search +
+                    " " +
+                    card.innerText
+                ).toLowerCase();
+
+            if (
+                !query ||
+                text.includes(query)
+            ) {
+
+                card.style.display = "grid";
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+        document.getElementById("emptySearch").style.display =
+            visible ? "none" : "block";
+    }
+);
+
+
+/* =========================================================
+   CTRL + K
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ) {
+
+            event.preventDefault();
+
+            searchInput.focus();
+
+        }
+
+        if (event.key === "Escape") {
+
+            document
+                .getElementById("notifications")
+                .classList.remove("active");
+
         }
 
     }
 );
 
 
-/* ADMIN TABS */
+/* =========================================================
+   SORT TOPICS
+   ========================================================= */
 
-const adminData = {
+function sortTopics() {
 
-    stats:{
-        title:"📊 Статистика",
-        cards:[
-            ["👥 Игроки","Общее количество игроков, активные и заблокированные."],
-            ["💰 Экономика","Баланс пользователей и средства в банке."],
-            ["🎮 Игры","Количество игр, ставки, выигрыши и RTP."],
-            ["👑 Богатейший","Определение игрока с максимальным состоянием."]
-        ]
-    },
+    const select =
+        document.getElementById("sortSelect");
 
-    users:{
-        title:"👥 Пользователи",
-        cards:[
-            ["🔎 Поиск","Поиск игрока по Telegram ID."],
-            ["👥 Последние","Просмотр последних зарегистрированных игроков."],
-            ["💎 Богатейшие","Список игроков с большим балансом."],
-            ["🚫 Бан / Разбан","Блокировка и разблокировка игроков."]
-        ]
-    },
+    const list =
+        document.getElementById("topicList");
 
-    economy:{
-        title:"💰 Экономика",
-        cards:[
-            ["💰 Выдать","Выдача игровой валюты пользователю."],
-            ["➖ Забрать","Списание валюты."],
-            ["🧹 Обнулить","Сброс баланса пользователя."],
-            ["🎁 Раздать всем","Массовая выдача валюты."]
-        ]
-    },
+    const cards =
+        Array.from(list.querySelectorAll(".topic"));
 
-    mail:{
-        title:"📢 Рассылка",
-        cards:[
-            ["📝 Текст","Массовая отправка текста."],
-            ["🖼 Фото","Рассылка изображений."],
-            ["🎬 Видео","Рассылка видео."],
-            ["📊 Результат","Количество успешных и неудачных отправок."]
-        ]
-    },
+    if (select.value === "replies") {
 
-    promo:{
-        title:"🎁 Промокоды",
-        cards:[
-            ["➕ Создать","Создание нового промокода."],
-            ["📋 Список","Просмотр существующих промокодов."],
-            ["🗑 Удалить","Удаление промокода."],
-            ["⚙️ Настройки","Настройка использования промокодов."]
-        ]
-    },
+        cards.sort(
+            (a,b) =>
+                Number(b.dataset.replies) -
+                Number(a.dataset.replies)
+        );
 
-    gamesAdmin:{
-        title:"🎮 Игры",
-        cards:[
-            ["🃏 Hilo","Информация и управление шансами."],
-            ["📜 Логи","Просмотр игровых логов."],
-            ["📊 Overgo","Статистика Overgo."],
-            ["🗑 Рулетка","Инструмент удаления ставок."]
-        ]
-    },
+    } else if (select.value === "hot") {
 
-    tools:{
-        title:"🔧 Инструменты",
-        cards:[
-            ["➕ VIP-чаты","Добавление VIP-чата."],
-            ["➖ VIP-чаты","Удаление VIP-чата."],
-            ["⭐ Уровни","Управление уровнями игроков."],
-            ["🔄 Лимиты","Сброс лимитов."]
-        ]
-    },
+        cards.sort(
+            (a,b) =>
+                Number(b.dataset.replies) -
+                Number(a.dataset.replies)
+        );
 
-    databaseAdmin:{
-        title:"🗄 База игроков",
-        cards:[
-            ["📥 Экспорт","Выгрузка пользователей в файл."],
-            ["📄 Список","Постраничный список игроков."],
-            ["🔍 Поиск","Поиск по Telegram ID."],
-            ["🛡 Защита","Работа с блокировками и анти-мульт."]
-        ]
-    },
+    } else {
 
-    chats:{
-        title:"💬 Чаты",
-        cards:[
-            ["💬 Список","Просмотр известных чатов."],
-            ["🆔 ID","Хранение Telegram ID чатов."],
-            ["⭐ VIP","Работа с VIP-чатами."],
-            ["🔄 Синхронизация","Обновление списка известных чатов."]
-        ]
+        cards.sort(
+            (a,b) =>
+                Number(a.dataset.time) -
+                Number(b.dataset.time)
+        );
+
     }
 
-};
+    cards.forEach(card =>
+        list.appendChild(card)
+    );
 
-
-function adminTab(button,id){
-
-    document
-        .querySelectorAll(".admin-menu button")
-        .forEach(btn => btn.classList.remove("active"));
-
-    button.classList.add("active");
-
-    const data = adminData[id];
-
-    let html = `
-        <div class="admin-title">
-            ${data.title}
-        </div>
-
-        <div class="admin-cards">
-    `;
-
-    data.cards.forEach(card => {
-
-        html += `
-            <div class="admin-card">
-                <strong>${card[0]}</strong>
-                <span>${card[1]}</span>
-            </div>
-        `;
-
-    });
-
-    html += `</div>`;
-
-    document.getElementById("adminWindow")
-        .innerHTML = html;
+    showToast(
+        "Сортировка",
+        "Список тем обновлён"
+    );
 }
 
 
-/* ESC */
+/* =========================================================
+   NEW TOPIC
+   ========================================================= */
+
+function openNewTopic() {
+
+    document
+        .getElementById("newTopicModal")
+        .classList.add("active");
+
+    setTimeout(() => {
+
+        document
+            .getElementById("topicTitleInput")
+            .focus();
+
+    },100);
+}
+
+
+function createTopic() {
+
+    const title =
+        document
+            .getElementById("topicTitleInput")
+            .value
+            .trim();
+
+    const category =
+        document
+            .getElementById("topicCategoryInput")
+            .value;
+
+    const text =
+        document
+            .getElementById("topicTextInput")
+            .value
+            .trim();
+
+    if (!title) {
+
+        showToast(
+            "Ошибка",
+            "Введите заголовок темы"
+        );
+
+        return;
+    }
+
+    if (!text) {
+
+        showToast(
+            "Ошибка",
+            "Напишите сообщение"
+        );
+
+        return;
+    }
+
+    const list =
+        document.getElementById("topicList");
+
+    const article =
+        document.createElement("article");
+
+    article.className = "topic";
+
+    article.dataset.category = category;
+
+    article.dataset.search =
+        (
+            title +
+            " " +
+            text +
+            " " +
+            category
+        ).toLowerCase();
+
+    article.dataset.replies = "0";
+    article.dataset.time = "0";
+
+    article.innerHTML = `
+        <div class="topic-icon">
+            💬
+        </div>
+
+        <div class="topic-main">
+
+            <div class="topic-title">
+                ${escapeHTML(title)}
+            </div>
+
+            <div class="topic-meta">
+
+                <span class="tag">
+                    ${escapeHTML(category)}
+                </span>
+
+                <span>
+                    Dias
+                </span>
+
+                <span class="dot"></span>
+
+                <span>
+                    только что
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="topic-right">
+
+            <div class="topic-replies">
+                0
+            </div>
+
+            <div class="topic-time">
+                ответов
+            </div>
+
+        </div>
+    `;
+
+    article.onclick = function() {
+
+        openThread(999);
+
+    };
+
+    list.prepend(article);
+
+    closeModal("newTopicModal");
+
+    document
+        .getElementById("topicTitleInput")
+        .value = "";
+
+    document
+        .getElementById("topicTextInput")
+        .value = "";
+
+    showToast(
+        "Готово",
+        "Тема опубликована"
+    );
+}
+
+
+/* =========================================================
+   REPLY
+   ========================================================= */
+
+function sendReply() {
+
+    const textarea =
+        document.getElementById("replyText");
+
+    const text =
+        textarea.value.trim();
+
+    if (!text) {
+
+        showToast(
+            "Ошибка",
+            "Напишите сообщение"
+        );
+
+        return;
+    }
+
+    const posts =
+        document.getElementById("posts");
+
+    const post =
+        document.createElement("article");
+
+    post.className = "post";
+
+    post.innerHTML = `
+        <div class="post-user">
+
+            <div class="post-avatar">
+                D
+            </div>
+
+            <div>
+
+                <div class="post-name">
+                    Dias
+                </div>
+
+                <div class="post-role">
+                    УЧАСТНИК
+                </div>
+
+                <div class="post-coins">
+                    ◆ 8.4M монет
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="post-content">
+
+            <div class="post-date">
+                Новый ответ · только что
+            </div>
+
+            <div class="post-text">
+                ${escapeHTML(text)}
+            </div>
+
+            <div class="post-actions">
+
+                <button
+                    class="post-action"
+                    onclick="likePost(this)"
+                >
+                    ♥ 0
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    posts.appendChild(post);
+
+    textarea.value = "";
+
+    showToast(
+        "Ответ отправлен",
+        "Ваш комментарий добавлен"
+    );
+}
+
+
+/* =========================================================
+   FOCUS REPLY
+   ========================================================= */
+
+function focusReply() {
+
+    const box =
+        document.getElementById("replyBox");
+
+    box.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    setTimeout(() => {
+
+        document
+            .getElementById("replyText")
+            .focus();
+
+    },350);
+}
+
+
+/* =========================================================
+   LIKE
+   ========================================================= */
+
+function likePost(button) {
+
+    const liked =
+        button.classList.contains("liked");
+
+    const match =
+        button.textContent.match(/\d+/);
+
+    let count =
+        match ? Number(match[0]) : 0;
+
+    if (liked) {
+
+        count--;
+
+        button.classList.remove("liked");
+
+    } else {
+
+        count++;
+
+        button.classList.add("liked");
+
+    }
+
+    button.textContent =
+        "♥ " + count;
+}
+
+
+/* =========================================================
+   COPY LINK
+   ========================================================= */
+
+function copyThreadLink() {
+
+    const url =
+        window.location.href;
+
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
+
+        navigator.clipboard
+            .writeText(url)
+            .then(() => {
+
+                showToast(
+                    "Скопировано",
+                    "Ссылка на тему скопирована"
+                );
+
+            });
+
+    } else {
+
+        showToast(
+            "Ссылка",
+            "Скопируй адрес страницы вручную"
+        );
+
+    }
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function toggleNotifications() {
+
+    document
+        .getElementById("notifications")
+        .classList.toggle("active");
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function openProfile(name) {
+
+    const modal =
+        document.getElementById("profileModal");
+
+    modal.classList.add("active");
+
+    const title =
+        modal.querySelector(".profile-name");
+
+    if (title) {
+
+        title.textContent =
+            name || "Игрок";
+
+    }
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("active");
+}
+
+
+function closeModalOutside(
+    event,
+    id
+) {
+
+    if (
+        event.target ===
+        document.getElementById(id)
+    ) {
+
+        closeModal(id);
+
+    }
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(
+    title,
+    text
+) {
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+    const toast =
+        document.createElement("div");
+
+    toast.className = "toast";
+
+    toast.innerHTML = `
+        <div class="toast-title">
+            ${escapeHTML(title)}
+        </div>
+
+        <div class="toast-text">
+            ${escapeHTML(text)}
+        </div>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+
+        toast.style.opacity = "0";
+        toast.style.transform =
+            "translateX(20px)";
+
+        setTimeout(() => {
+
+            toast.remove();
+
+        },220);
+
+    },3000);
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE NOTIFICATIONS
+   ========================================================= */
 
 document.addEventListener(
-    "keydown",
-    function(e){
+    "click",
+    function(event) {
 
-        if(e.key === "Escape"){
-            closeModal();
+        const notifications =
+            document.getElementById(
+                "notifications"
+            );
+
+        const button =
+            document.getElementById(
+                "notificationButton"
+            );
+
+        if (
+            notifications.classList.contains("active") &&
+            !notifications.contains(event.target) &&
+            !button.contains(event.target)
+        ) {
+
+            notifications.classList.remove(
+                "active"
+            );
+
         }
+
+    }
+);
+
+
+/* =========================================================
+   STARTUP
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        showToast(
+            "Добро пожаловать",
+            "Добро пожаловать на форум Romb"
+        );
 
     }
 );
